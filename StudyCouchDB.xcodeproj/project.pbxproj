@@ -1,0 +1,442 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2D92AF2614AA22E6007819D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2514AA22E6007819D7 /* UIKit.framework */; };
+		2D92AF2814AA22E6007819D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2714AA22E6007819D7 /* Foundation.framework */; };
+		2D92AF2A14AA22E6007819D7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2914AA22E6007819D7 /* CoreGraphics.framework */; };
+		2D92AF3014AA22E6007819D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D92AF2E14AA22E6007819D7 /* InfoPlist.strings */; };
+		2D92AF3214AA22E6007819D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D92AF3114AA22E6007819D7 /* main.m */; };
+		2D92AF3614AA22E6007819D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D92AF3514AA22E6007819D7 /* AppDelegate.m */; };
+		2D92AF3914AA22E6007819D7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D92AF3814AA22E6007819D7 /* ViewController.m */; };
+		2D92AF3C14AA22E6007819D7 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D92AF3A14AA22E6007819D7 /* ViewController.xib */; };
+		2D92AF4414AA22E6007819D7 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF4314AA22E6007819D7 /* SenTestingKit.framework */; };
+		2D92AF4514AA22E6007819D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2514AA22E6007819D7 /* UIKit.framework */; };
+		2D92AF4614AA22E6007819D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2714AA22E6007819D7 /* Foundation.framework */; };
+		2D92AF4E14AA22E6007819D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D92AF4C14AA22E6007819D7 /* InfoPlist.strings */; };
+		2D92AF5114AA22E6007819D7 /* StudyCouchDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D92AF5014AA22E6007819D7 /* StudyCouchDBTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2D92AF4714AA22E6007819D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2D92AF1814AA22E6007819D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D92AF2014AA22E6007819D7;
+			remoteInfo = StudyCouchDB;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2D92AF2114AA22E6007819D7 /* StudyCouchDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyCouchDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D92AF2514AA22E6007819D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2D92AF2714AA22E6007819D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2D92AF2914AA22E6007819D7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2D92AF2D14AA22E6007819D7 /* StudyCouchDB-Info.plist */ = {isa = PBXFileReference; path = "StudyCouchDB-Info.plist"; sourceTree = "<group>"; };
+		2D92AF2F14AA22E6007819D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D92AF3114AA22E6007819D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2D92AF3314AA22E6007819D7 /* StudyCouchDB-Prefix.pch */ = {isa = PBXFileReference; path = "StudyCouchDB-Prefix.pch"; sourceTree = "<group>"; };
+		2D92AF3414AA22E6007819D7 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		2D92AF3514AA22E6007819D7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2D92AF3714AA22E6007819D7 /* ViewController.h */ = {isa = PBXFileReference; path = ViewController.h; sourceTree = "<group>"; };
+		2D92AF3814AA22E6007819D7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2D92AF3B14AA22E6007819D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		2D92AF4214AA22E6007819D7 /* StudyCouchDBTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyCouchDBTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D92AF4314AA22E6007819D7 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		2D92AF4B14AA22E6007819D7 /* StudyCouchDBTests-Info.plist */ = {isa = PBXFileReference; path = "StudyCouchDBTests-Info.plist"; sourceTree = "<group>"; };
+		2D92AF4D14AA22E6007819D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D92AF4F14AA22E6007819D7 /* StudyCouchDBTests.h */ = {isa = PBXFileReference; path = StudyCouchDBTests.h; sourceTree = "<group>"; };
+		2D92AF5014AA22E6007819D7 /* StudyCouchDBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StudyCouchDBTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2D92AF1E14AA22E6007819D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D92AF2614AA22E6007819D7 /* UIKit.framework in Frameworks */,
+				2D92AF2814AA22E6007819D7 /* Foundation.framework in Frameworks */,
+				2D92AF2A14AA22E6007819D7 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D92AF3E14AA22E6007819D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D92AF4414AA22E6007819D7 /* SenTestingKit.framework in Frameworks */,
+				2D92AF4514AA22E6007819D7 /* UIKit.framework in Frameworks */,
+				2D92AF4614AA22E6007819D7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2D92AF1614AA22E6007819D7 = {
+			isa = PBXGroup;
+			children = (
+				2D92AF2B14AA22E6007819D7 /* StudyCouchDB */,
+				2D92AF4914AA22E6007819D7 /* StudyCouchDBTests */,
+				2D92AF2414AA22E6007819D7 /* Frameworks */,
+				2D92AF2214AA22E6007819D7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2D92AF2214AA22E6007819D7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2D92AF2114AA22E6007819D7 /* StudyCouchDB.app */,
+				2D92AF4214AA22E6007819D7 /* StudyCouchDBTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2D92AF2414AA22E6007819D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2D92AF2514AA22E6007819D7 /* UIKit.framework */,
+				2D92AF2714AA22E6007819D7 /* Foundation.framework */,
+				2D92AF2914AA22E6007819D7 /* CoreGraphics.framework */,
+				2D92AF4314AA22E6007819D7 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2D92AF2B14AA22E6007819D7 /* StudyCouchDB */ = {
+			isa = PBXGroup;
+			children = (
+				2D92AF3414AA22E6007819D7 /* AppDelegate.h */,
+				2D92AF3514AA22E6007819D7 /* AppDelegate.m */,
+				2D92AF3714AA22E6007819D7 /* ViewController.h */,
+				2D92AF3814AA22E6007819D7 /* ViewController.m */,
+				2D92AF3A14AA22E6007819D7 /* ViewController.xib */,
+				2D92AF2C14AA22E6007819D7 /* Supporting Files */,
+			);
+			path = StudyCouchDB;
+			sourceTree = "<group>";
+		};
+		2D92AF2C14AA22E6007819D7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2D92AF2D14AA22E6007819D7 /* StudyCouchDB-Info.plist */,
+				2D92AF2E14AA22E6007819D7 /* InfoPlist.strings */,
+				2D92AF3114AA22E6007819D7 /* main.m */,
+				2D92AF3314AA22E6007819D7 /* StudyCouchDB-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2D92AF4914AA22E6007819D7 /* StudyCouchDBTests */ = {
+			isa = PBXGroup;
+			children = (
+				2D92AF4F14AA22E6007819D7 /* StudyCouchDBTests.h */,
+				2D92AF5014AA22E6007819D7 /* StudyCouchDBTests.m */,
+				2D92AF4A14AA22E6007819D7 /* Supporting Files */,
+			);
+			path = StudyCouchDBTests;
+			sourceTree = "<group>";
+		};
+		2D92AF4A14AA22E6007819D7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2D92AF4B14AA22E6007819D7 /* StudyCouchDBTests-Info.plist */,
+				2D92AF4C14AA22E6007819D7 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2D92AF2014AA22E6007819D7 /* StudyCouchDB */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D92AF5414AA22E6007819D7 /* Build configuration list for PBXNativeTarget "StudyCouchDB" */;
+			buildPhases = (
+				2D92AF1D14AA22E6007819D7 /* Sources */,
+				2D92AF1E14AA22E6007819D7 /* Frameworks */,
+				2D92AF1F14AA22E6007819D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StudyCouchDB;
+			productName = StudyCouchDB;
+			productReference = 2D92AF2114AA22E6007819D7 /* StudyCouchDB.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2D92AF4114AA22E6007819D7 /* StudyCouchDBTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D92AF5714AA22E6007819D7 /* Build configuration list for PBXNativeTarget "StudyCouchDBTests" */;
+			buildPhases = (
+				2D92AF3D14AA22E6007819D7 /* Sources */,
+				2D92AF3E14AA22E6007819D7 /* Frameworks */,
+				2D92AF3F14AA22E6007819D7 /* Resources */,
+				2D92AF4014AA22E6007819D7 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2D92AF4814AA22E6007819D7 /* PBXTargetDependency */,
+			);
+			name = StudyCouchDBTests;
+			productName = StudyCouchDBTests;
+			productReference = 2D92AF4214AA22E6007819D7 /* StudyCouchDBTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2D92AF1814AA22E6007819D7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 2D92AF1B14AA22E6007819D7 /* Build configuration list for PBXProject "StudyCouchDB" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2D92AF1614AA22E6007819D7;
+			productRefGroup = 2D92AF2214AA22E6007819D7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2D92AF2014AA22E6007819D7 /* StudyCouchDB */,
+				2D92AF4114AA22E6007819D7 /* StudyCouchDBTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2D92AF1F14AA22E6007819D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D92AF3014AA22E6007819D7 /* InfoPlist.strings in Resources */,
+				2D92AF3C14AA22E6007819D7 /* ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D92AF3F14AA22E6007819D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D92AF4E14AA22E6007819D7 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2D92AF4014AA22E6007819D7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2D92AF1D14AA22E6007819D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D92AF3214AA22E6007819D7 /* main.m in Sources */,
+				2D92AF3614AA22E6007819D7 /* AppDelegate.m in Sources */,
+				2D92AF3914AA22E6007819D7 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D92AF3D14AA22E6007819D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D92AF5114AA22E6007819D7 /* StudyCouchDBTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2D92AF4814AA22E6007819D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D92AF2014AA22E6007819D7 /* StudyCouchDB */;
+			targetProxy = 2D92AF4714AA22E6007819D7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2D92AF2E14AA22E6007819D7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D92AF2F14AA22E6007819D7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2D92AF3A14AA22E6007819D7 /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D92AF3B14AA22E6007819D7 /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+		2D92AF4C14AA22E6007819D7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D92AF4D14AA22E6007819D7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2D92AF5214AA22E6007819D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2D92AF5314AA22E6007819D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2D92AF5514AA22E6007819D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StudyCouchDB/StudyCouchDB-Prefix.pch";
+				INFOPLIST_FILE = "StudyCouchDB/StudyCouchDB-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2D92AF5614AA22E6007819D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StudyCouchDB/StudyCouchDB-Prefix.pch";
+				INFOPLIST_FILE = "StudyCouchDB/StudyCouchDB-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		2D92AF5814AA22E6007819D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/StudyCouchDB.app/StudyCouchDB";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StudyCouchDB/StudyCouchDB-Prefix.pch";
+				INFOPLIST_FILE = "StudyCouchDBTests/StudyCouchDBTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		2D92AF5914AA22E6007819D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/StudyCouchDB.app/StudyCouchDB";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StudyCouchDB/StudyCouchDB-Prefix.pch";
+				INFOPLIST_FILE = "StudyCouchDBTests/StudyCouchDBTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D92AF1B14AA22E6007819D7 /* Build configuration list for PBXProject "StudyCouchDB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D92AF5214AA22E6007819D7 /* Debug */,
+				2D92AF5314AA22E6007819D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D92AF5414AA22E6007819D7 /* Build configuration list for PBXNativeTarget "StudyCouchDB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D92AF5514AA22E6007819D7 /* Debug */,
+				2D92AF5614AA22E6007819D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2D92AF5714AA22E6007819D7 /* Build configuration list for PBXNativeTarget "StudyCouchDBTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D92AF5814AA22E6007819D7 /* Debug */,
+				2D92AF5914AA22E6007819D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2D92AF1814AA22E6007819D7 /* Project object */;
+}
