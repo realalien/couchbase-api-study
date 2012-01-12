@@ -20,6 +20,13 @@
 		2D92AF4614AA22E6007819D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2714AA22E6007819D7 /* Foundation.framework */; };
 		2D92AF4E14AA22E6007819D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D92AF4C14AA22E6007819D7 /* InfoPlist.strings */; };
 		2D92AF5114AA22E6007819D7 /* StudyCouchDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D92AF5014AA22E6007819D7 /* StudyCouchDBTests.m */; };
+		2D92AF5B14AA23C1007819D7 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5A14AA23C1007819D7 /* Couchbase.framework */; };
+		2D92AF5D14AA2402007819D7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5C14AA2402007819D7 /* Security.framework */; };
+		2D92AF5F14AA2410007819D7 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5E14AA2410007819D7 /* libstdc++.dylib */; };
+		2D92AF6114AA241D007819D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF6014AA241D007819D7 /* libz.dylib */; };
+		2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */; };
+		2DA8E3AA14BF44F8009AB6A0 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA8E3A914BF44F8009AB6A0 /* MapViewController.m */; };
+		2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,21 +44,29 @@
 		2D92AF2514AA22E6007819D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2D92AF2714AA22E6007819D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2D92AF2914AA22E6007819D7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		2D92AF2D14AA22E6007819D7 /* StudyCouchDB-Info.plist */ = {isa = PBXFileReference; path = "StudyCouchDB-Info.plist"; sourceTree = "<group>"; };
+		2D92AF2D14AA22E6007819D7 /* StudyCouchDB-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StudyCouchDB-Info.plist"; sourceTree = "<group>"; };
 		2D92AF2F14AA22E6007819D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2D92AF3114AA22E6007819D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2D92AF3314AA22E6007819D7 /* StudyCouchDB-Prefix.pch */ = {isa = PBXFileReference; path = "StudyCouchDB-Prefix.pch"; sourceTree = "<group>"; };
-		2D92AF3414AA22E6007819D7 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		2D92AF3314AA22E6007819D7 /* StudyCouchDB-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StudyCouchDB-Prefix.pch"; sourceTree = "<group>"; };
+		2D92AF3414AA22E6007819D7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2D92AF3514AA22E6007819D7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2D92AF3714AA22E6007819D7 /* ViewController.h */ = {isa = PBXFileReference; path = ViewController.h; sourceTree = "<group>"; };
+		2D92AF3714AA22E6007819D7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		2D92AF3814AA22E6007819D7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2D92AF3B14AA22E6007819D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		2D92AF4214AA22E6007819D7 /* StudyCouchDBTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyCouchDBTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D92AF4314AA22E6007819D7 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		2D92AF4B14AA22E6007819D7 /* StudyCouchDBTests-Info.plist */ = {isa = PBXFileReference; path = "StudyCouchDBTests-Info.plist"; sourceTree = "<group>"; };
+		2D92AF4B14AA22E6007819D7 /* StudyCouchDBTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StudyCouchDBTests-Info.plist"; sourceTree = "<group>"; };
 		2D92AF4D14AA22E6007819D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2D92AF4F14AA22E6007819D7 /* StudyCouchDBTests.h */ = {isa = PBXFileReference; path = StudyCouchDBTests.h; sourceTree = "<group>"; };
+		2D92AF4F14AA22E6007819D7 /* StudyCouchDBTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StudyCouchDBTests.h; sourceTree = "<group>"; };
 		2D92AF5014AA22E6007819D7 /* StudyCouchDBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StudyCouchDBTests.m; sourceTree = "<group>"; };
+		2D92AF5A14AA23C1007819D7 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
+		2D92AF5C14AA2402007819D7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		2D92AF5E14AA2410007819D7 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		2D92AF6014AA241D007819D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
+		2DA8E3A814BF44F8009AB6A0 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		2DA8E3A914BF44F8009AB6A0 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +74,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */,
+				2D92AF6114AA241D007819D7 /* libz.dylib in Frameworks */,
+				2D92AF5F14AA2410007819D7 /* libstdc++.dylib in Frameworks */,
+				2D92AF5D14AA2402007819D7 /* Security.framework in Frameworks */,
 				2D92AF2614AA22E6007819D7 /* UIKit.framework in Frameworks */,
 				2D92AF2814AA22E6007819D7 /* Foundation.framework in Frameworks */,
 				2D92AF2A14AA22E6007819D7 /* CoreGraphics.framework in Frameworks */,
+				2D92AF5B14AA23C1007819D7 /* Couchbase.framework in Frameworks */,
+				2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +105,7 @@
 				2D92AF2B14AA22E6007819D7 /* StudyCouchDB */,
 				2D92AF4914AA22E6007819D7 /* StudyCouchDBTests */,
 				2D92AF2414AA22E6007819D7 /* Frameworks */,
+				2D92AF6214AA2443007819D7 /* Libraries */,
 				2D92AF2214AA22E6007819D7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +122,10 @@
 		2D92AF2414AA22E6007819D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */,
+				2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */,
+				2D92AF5C14AA2402007819D7 /* Security.framework */,
+				2D92AF5A14AA23C1007819D7 /* Couchbase.framework */,
 				2D92AF2514AA22E6007819D7 /* UIKit.framework */,
 				2D92AF2714AA22E6007819D7 /* Foundation.framework */,
 				2D92AF2914AA22E6007819D7 /* CoreGraphics.framework */,
@@ -116,6 +142,8 @@
 				2D92AF3714AA22E6007819D7 /* ViewController.h */,
 				2D92AF3814AA22E6007819D7 /* ViewController.m */,
 				2D92AF3A14AA22E6007819D7 /* ViewController.xib */,
+				2DA8E3A814BF44F8009AB6A0 /* MapViewController.h */,
+				2DA8E3A914BF44F8009AB6A0 /* MapViewController.m */,
 				2D92AF2C14AA22E6007819D7 /* Supporting Files */,
 			);
 			path = StudyCouchDB;
@@ -151,6 +179,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		2D92AF6214AA2443007819D7 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				2D92AF6014AA241D007819D7 /* libz.dylib */,
+				2D92AF5E14AA2410007819D7 /* libstdc++.dylib */,
+			);
+			name = Libraries;
+			path = StudyCouchDB;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -161,6 +199,7 @@
 				2D92AF1D14AA22E6007819D7 /* Sources */,
 				2D92AF1E14AA22E6007819D7 /* Frameworks */,
 				2D92AF1F14AA22E6007819D7 /* Resources */,
+				2D92AF6314AA24CF007819D7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -250,6 +289,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		2D92AF6314AA24CF007819D7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -a \"${SRCROOT}/Frameworks/Couchbase.framework/CouchbaseResources\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -260,6 +312,7 @@
 				2D92AF3214AA22E6007819D7 /* main.m in Sources */,
 				2D92AF3614AA22E6007819D7 /* AppDelegate.m in Sources */,
 				2D92AF3914AA22E6007819D7 /* ViewController.m in Sources */,
+				2DA8E3AA14BF44F8009AB6A0 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,10 +408,16 @@
 		2D92AF5514AA22E6007819D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StudyCouchDB/StudyCouchDB-Prefix.pch";
 				INFOPLIST_FILE = "StudyCouchDB/StudyCouchDB-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -366,10 +425,16 @@
 		2D92AF5614AA22E6007819D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StudyCouchDB/StudyCouchDB-Prefix.pch";
 				INFOPLIST_FILE = "StudyCouchDB/StudyCouchDB-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -427,6 +492,7 @@
 				2D92AF5614AA22E6007819D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2D92AF5714AA22E6007819D7 /* Build configuration list for PBXNativeTarget "StudyCouchDBTests" */ = {
 			isa = XCConfigurationList;
@@ -435,6 +501,7 @@
 				2D92AF5914AA22E6007819D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

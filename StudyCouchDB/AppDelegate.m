@@ -8,26 +8,45 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
+#import "MapViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize viewController = _viewController;
+@synthesize navController = _navController;
 
 - (void)dealloc
 {
     [_window release];
-    [_viewController release];
+    [_navController release];
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+
+    // Couchbase database setup
+    CouchbaseMobile* cb = [[CouchbaseMobile alloc] init];
+    cb.delegate = self;
+    NSAssert([cb start], @"Couchbase didn't start: Error = %@", cb.error);
+    
     // Override point for customization after application launch.
-    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
-    self.window.rootViewController = self.viewController;
+//    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
+//    self.window.rootViewController = self.viewController;
+     
+    self.navController = [[UINavigationController alloc] initWithNibName:nil bundle:nil];
+    self.navController.view.backgroundColor = [UIColor whiteColor];
+    // [self.window addSubview:self.navController.view];
+    self.window.rootViewController = self.navController;
+    
+    
+    // TEMP
+    MapViewController *mapVC = [[MapViewController alloc]init ];
+    
+    self.navController.view = mapVC.view;
+    // [self.navController pushViewController:mapVC animated:YES];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -70,5 +89,17 @@
      See also applicationDidEnterBackground:.
      */
 }
+
+#pragma mark -
+#pragma mark CouchbaseDelegate methods
+
+-(void)couchbaseMobile:(CouchbaseMobile*)couchbase didStart:(NSURL*)serverURL{
+    NSLog(@"Couchbase is Ready, go! %@", serverURL);
+}
+
+-(void)couchbaseMobile:(CouchbaseMobile *)couchbase failedToStart:(NSError *)error{
+    NSLog(@"Couchbase failed to start! %@", [error localizedDescription]);
+}
+
 
 @end
