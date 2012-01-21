@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface MapViewController : UIViewController
+@class CouchDatabase;
+
+@interface MapViewController : UIViewController {
+     CouchDatabase *database;
+}
+
+@property (nonatomic, retain) CouchDatabase *database;
+
+-(void)useDatabase:(CouchDatabase*)theDatabase;
 
 @end

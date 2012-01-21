@@ -1,14 +1,14 @@
 //
-//  MapViewController.m
+//  MeshableTablesViewController.m
 //  StudyCouchDB
 //
-//  Created by realalien on 12-1-13.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by d d on 12-1-13.
+//  Copyright (c) 2012年 d. All rights reserved.
 //
 
-#import "MapViewController.h"
+#import "MeshableTablesViewController.h"
 
-@implementation MapViewController
+@implementation MeshableTablesViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,9 +29,8 @@
 
 #pragma mark - View lifecycle
 
-/*
+/**/
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
- */
 - (void)loadView
 {
     CGRect screen = [[UIScreen mainScreen] bounds];
@@ -39,10 +38,12 @@
     self.view = v;
     [v release];
     
-    self.view.backgroundColor = [UIColor blueColor];
-    MKMapView *map = [[MKMapView alloc] init]; 
-    map.frame = CGRectMake(0, 0, 320, 300); 
-    [self.view addSubview:map];
+//    UITableViewController *tv1 = [[UITableViewController alloc]init];
+//    UITableViewController *tv2 = [[UITableViewController alloc]init];
+//    UITableViewController *tv3 = [[UITableViewController alloc]init];
+    
+    // Problem is that we need to 
+    // Potential solution is we subclass UITableViewControllerDelegate and overriding the delegate methods with calling to the super class, so we can inject the performSelector to boardcast 
 }
 
 
