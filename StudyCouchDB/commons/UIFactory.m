@@ -34,6 +34,19 @@
 
 // TODO: make an UI control combined of a label and textfield
 
+// 
+// Note: from previous experience, this only works for normal flow of texts
+//       for text/labels with line break, please calculate by yourself!
++(CGFloat) estimateHeightFromText:(NSString*)text withFont:(UIFont*)font withAllowedWidth:(float)width lineBreakMode:(UILineBreakMode)mode {
+    CGSize withinSize = CGSizeMake(width, FLT_MAX); 
+    CGSize size = [text sizeWithFont:font constrainedToSize:withinSize lineBreakMode:mode];
+    return size.height;
+}
 
++(CGFloat) estimateWidthFromText:(NSString*)text withFont:(UIFont*)font withAllowedHeight:(float)height lineBreakMode:(UILineBreakMode)mode {
+    CGSize withinSize = CGSizeMake(FLT_MAX, height); 
+    CGSize size = [text sizeWithFont:font constrainedToSize:withinSize lineBreakMode:mode];
+    return size.width;
+}
 
 @end

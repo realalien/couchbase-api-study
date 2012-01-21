@@ -12,4 +12,8 @@
 
 +(UILabel*) makeDefaultLabelWithText:(NSString*)humanText andTag:(int)tagging ;
 +(UITextField*) makeDefaultTextFieldWithPlaceholder:(NSString*)p andTag:(int)tagging;
+
++(CGFloat) estimateHeightFromText:(NSString*)text withFont:(UIFont*)font withAllowedWidth:(float)width lineBreakMode:(UILineBreakMode)mode;
++(CGFloat) estimateWidthFromText:(NSString*)text withFont:(UIFont*)font withAllowedHeight:(float)height lineBreakMode:(UILineBreakMode)mode ;
+
 @end

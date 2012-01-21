@@ -25,8 +25,13 @@
 		2D92AF5F14AA2410007819D7 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5E14AA2410007819D7 /* libstdc++.dylib */; };
 		2D92AF6114AA241D007819D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF6014AA241D007819D7 /* libz.dylib */; };
 		2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */; };
-		2DA8E3AA14BF44F8009AB6A0 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA8E3A914BF44F8009AB6A0 /* MapViewController.m */; };
 		2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */; };
+		ABFC501A14CA3DA200BA484B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501614CA3DA200BA484B /* MapViewController.m */; };
+		ABFC501B14CA3DA200BA484B /* MeshableTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */; };
+		ABFC501E14CA3DB100BA484B /* UIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501C14CA3DB100BA484B /* UIFactory.m */; };
+		ABFC502314CA3DC000BA484B /* CountyDeputyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501F14CA3DC000BA484B /* CountyDeputyMapViewController.m */; };
+		ABFC502414CA3DC000BA484B /* AddNewDeputyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC502014CA3DC000BA484B /* AddNewDeputyViewController.m */; };
+		ABFC502714CA42B000BA484B /* DeputyAreaSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC502514CA42AF00BA484B /* DeputyAreaSelectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,9 +69,19 @@
 		2D92AF5E14AA2410007819D7 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		2D92AF6014AA241D007819D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
-		2DA8E3A814BF44F8009AB6A0 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
-		2DA8E3A914BF44F8009AB6A0 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		ABFC501614CA3DA200BA484B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = experimentals/MapViewController.m; sourceTree = "<group>"; };
+		ABFC501714CA3DA200BA484B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = experimentals/MapViewController.h; sourceTree = "<group>"; };
+		ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeshableTablesViewController.m; path = experimentals/MeshableTablesViewController.m; sourceTree = "<group>"; };
+		ABFC501914CA3DA200BA484B /* MeshableTablesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshableTablesViewController.h; path = experimentals/MeshableTablesViewController.h; sourceTree = "<group>"; };
+		ABFC501C14CA3DB100BA484B /* UIFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIFactory.m; path = commons/UIFactory.m; sourceTree = "<group>"; };
+		ABFC501D14CA3DB100BA484B /* UIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIFactory.h; path = commons/UIFactory.h; sourceTree = "<group>"; };
+		ABFC501F14CA3DC000BA484B /* CountyDeputyMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CountyDeputyMapViewController.m; path = Classes/CountyDeputyMapViewController.m; sourceTree = "<group>"; };
+		ABFC502014CA3DC000BA484B /* AddNewDeputyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddNewDeputyViewController.m; path = Classes/AddNewDeputyViewController.m; sourceTree = "<group>"; };
+		ABFC502114CA3DC000BA484B /* AddNewDeputyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddNewDeputyViewController.h; path = Classes/AddNewDeputyViewController.h; sourceTree = "<group>"; };
+		ABFC502214CA3DC000BA484B /* CountyDeputyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CountyDeputyMapViewController.h; path = Classes/CountyDeputyMapViewController.h; sourceTree = "<group>"; };
+		ABFC502514CA42AF00BA484B /* DeputyAreaSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeputyAreaSelectionViewController.m; path = Classes/DeputyAreaSelectionViewController.m; sourceTree = "<group>"; };
+		ABFC502614CA42AF00BA484B /* DeputyAreaSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeputyAreaSelectionViewController.h; path = Classes/DeputyAreaSelectionViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,13 +152,14 @@
 		2D92AF2B14AA22E6007819D7 /* StudyCouchDB */ = {
 			isa = PBXGroup;
 			children = (
+				ABFC501514CA3D7300BA484B /* experimentals */,
+				ABFC501414CA3D6600BA484B /* commons */,
+				ABFC501314CA3D5200BA484B /* Classes */,
 				2D92AF3414AA22E6007819D7 /* AppDelegate.h */,
 				2D92AF3514AA22E6007819D7 /* AppDelegate.m */,
 				2D92AF3714AA22E6007819D7 /* ViewController.h */,
 				2D92AF3814AA22E6007819D7 /* ViewController.m */,
 				2D92AF3A14AA22E6007819D7 /* ViewController.xib */,
-				2DA8E3A814BF44F8009AB6A0 /* MapViewController.h */,
-				2DA8E3A914BF44F8009AB6A0 /* MapViewController.m */,
 				2D92AF2C14AA22E6007819D7 /* Supporting Files */,
 			);
 			path = StudyCouchDB;
@@ -187,6 +203,39 @@
 			);
 			name = Libraries;
 			path = StudyCouchDB;
+			sourceTree = "<group>";
+		};
+		ABFC501314CA3D5200BA484B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				ABFC501F14CA3DC000BA484B /* CountyDeputyMapViewController.m */,
+				ABFC502214CA3DC000BA484B /* CountyDeputyMapViewController.h */,
+				ABFC502014CA3DC000BA484B /* AddNewDeputyViewController.m */,
+				ABFC502114CA3DC000BA484B /* AddNewDeputyViewController.h */,
+				ABFC502514CA42AF00BA484B /* DeputyAreaSelectionViewController.m */,
+				ABFC502614CA42AF00BA484B /* DeputyAreaSelectionViewController.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		ABFC501414CA3D6600BA484B /* commons */ = {
+			isa = PBXGroup;
+			children = (
+				ABFC501C14CA3DB100BA484B /* UIFactory.m */,
+				ABFC501D14CA3DB100BA484B /* UIFactory.h */,
+			);
+			name = commons;
+			sourceTree = "<group>";
+		};
+		ABFC501514CA3D7300BA484B /* experimentals */ = {
+			isa = PBXGroup;
+			children = (
+				ABFC501614CA3DA200BA484B /* MapViewController.m */,
+				ABFC501714CA3DA200BA484B /* MapViewController.h */,
+				ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */,
+				ABFC501914CA3DA200BA484B /* MeshableTablesViewController.h */,
+			);
+			name = experimentals;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,7 +361,12 @@
 				2D92AF3214AA22E6007819D7 /* main.m in Sources */,
 				2D92AF3614AA22E6007819D7 /* AppDelegate.m in Sources */,
 				2D92AF3914AA22E6007819D7 /* ViewController.m in Sources */,
-				2DA8E3AA14BF44F8009AB6A0 /* MapViewController.m in Sources */,
+				ABFC501A14CA3DA200BA484B /* MapViewController.m in Sources */,
+				ABFC501B14CA3DA200BA484B /* MeshableTablesViewController.m in Sources */,
+				ABFC501E14CA3DB100BA484B /* UIFactory.m in Sources */,
+				ABFC502314CA3DC000BA484B /* CountyDeputyMapViewController.m in Sources */,
+				ABFC502414CA3DC000BA484B /* AddNewDeputyViewController.m in Sources */,
+				ABFC502714CA42B000BA484B /* DeputyAreaSelectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

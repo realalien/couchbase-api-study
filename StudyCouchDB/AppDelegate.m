@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "MapViewController.h"
+#import "CountyDeputyMapViewController.h"
 
 @implementation AppDelegate
 
@@ -42,10 +43,12 @@
     
     
     // TEMP
-    MapViewController *mapVC = [[MapViewController alloc]init ];
-    
-    self.navController.view = mapVC.view;
-    // [self.navController pushViewController:mapVC animated:YES];
+//    MapViewController *mapVC = [[MapViewController alloc]init ];
+    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
+    //    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
+
+//    self.navController.view = mapVC.view;
+    [self.navController pushViewController:cdMapVc animated:YES];
     
     [self.window makeKeyAndVisible];
     return YES;

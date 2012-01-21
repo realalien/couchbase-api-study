@@ -7,7 +7,7 @@
 //
 
 #import "AddNewDeputyViewController.h"
-
+#import "UIFactory.h"
 enum {
     kTagUITextFieldDeputyName,
     kTagUIButtonDeputyArea
@@ -90,7 +90,10 @@ enum {
     [self.view addSubview:b];
     [b release];
     
-
+    
+    
+    // IDEA: create a general table view ui for creating key/value attribute, both can be modified.
+    
     
     
 }
@@ -106,16 +109,31 @@ enum {
     // --- Cancel and Done buttons
     UIBarButtonItem *flexibleSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction:)] autorelease];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)];
-    
+//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)];
+    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                                target:self 
+                                                                                action:@selector(doneAction:)] autorelease];
     // --- Title
     // How to add title to the toolbar 
     //REF: http://stackoverflow.com/questions/1319834/proper-way-to-add-a-title-to-a-modal-view-controllers-toolbar
-    NSString *titleString = @"Add a new deputy nominee's information"; //NSLocalizedString(@"Back", nil);
+    
+//    // Title frame option #1
+    NSString *titleString = @"Add a new nominee's information"; //NSLocalizedString(@"Back", nil);
     const CGFloat cancelButtonWidth = [@"Cancel" sizeWithFont:[UIFont boldSystemFontOfSize:[UIFont buttonFontSize]]
                                       constrainedToSize:toolBar.frame.size].width;
     const CGRect titleFrame = {{0.0f, 0.0f},
         {toolBar.frame.size.width - (cancelButtonWidth * 2.0f),50.0f}};
+    
+//    // Title frame option #2
+//    CGFloat textWidth = [UIFactory estimateWidthFromText: @"Add new nominee information"
+//                                                withFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]
+//                                       withAllowedHeight:44.0
+//                                           lineBreakMode:UILineBreakModeWordWrap];
+//    UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake( (toolBar.frame.size.width - textWidth) / 2  ,
+//                                                           10.0f, 
+//                                                           textWidth, 
+//                                                           44.0f )]; 
+    
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
     [titleLabel setText:titleString];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
@@ -128,8 +146,6 @@ enum {
     UIBarButtonItem *titleItem = [[UIBarButtonItem alloc] initWithCustomView:titleLabel];
     [titleLabel release];
 
-    
-    
     NSArray *barButtons  =   [[NSArray alloc] initWithObjects:cancelButton,flexibleSpace,titleItem,flexibleSpace,doneButton,nil];
     [toolBar setItems:barButtons];
     
@@ -137,6 +153,7 @@ enum {
     [toolBar release];
     [barButtons release];
     barButtons = nil;
+    
 }
 
 

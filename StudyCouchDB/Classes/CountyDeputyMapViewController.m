@@ -7,7 +7,6 @@
 //
 
 #import "CountyDeputyMapViewController.h"
-
 #import "AddNewDeputyViewController.h"
 
 enum {
@@ -207,8 +206,9 @@ enum {
     addDeputyVc.modalPresentationStyle = UIModalPresentationFormSheet;
     addDeputyVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:addDeputyVc animated:YES];
-    addDeputyVc.view.superview.frame = CGRectMake(0, 0, 500, 400);//it's important to do this after presentModalViewController
-    addDeputyVc.view.superview.center = self.view.center;
+    // TODO: why the superview? Q: A:
+    addDeputyVc.view.superview.frame =CGRectMake(0,0,500,400);//it's important to do this after presentModalViewController
+    addDeputyVc.view.superview.center=self.view.center;//self.view assumes the base view is doing the launching, if not you might need self.view.superview.center etc.
     
     // Q: Code below may be useful to make navigationViewController to present the modal view. A:
     // addDeputyVc.title = @"Add a new deputy information";
