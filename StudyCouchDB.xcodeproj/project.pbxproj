@@ -29,9 +29,10 @@
 		ABFC501A14CA3DA200BA484B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501614CA3DA200BA484B /* MapViewController.m */; };
 		ABFC501B14CA3DA200BA484B /* MeshableTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */; };
 		ABFC501E14CA3DB100BA484B /* UIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501C14CA3DB100BA484B /* UIFactory.m */; };
-		ABFC502314CA3DC000BA484B /* CountyDeputyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501F14CA3DC000BA484B /* CountyDeputyMapViewController.m */; };
-		ABFC502414CA3DC000BA484B /* AddNewDeputyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC502014CA3DC000BA484B /* AddNewDeputyViewController.m */; };
-		ABFC502714CA42B000BA484B /* DeputyAreaPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC502514CA42AF00BA484B /* DeputyAreaPickerController.m */; };
+		ABFC503714CA92DB00BA484B /* AddNewDeputyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC503214CA92DB00BA484B /* AddNewDeputyViewController.m */; };
+		ABFC503814CA92DB00BA484B /* CountyDeputyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC503414CA92DB00BA484B /* CountyDeputyMapViewController.m */; };
+		ABFC503914CA92DB00BA484B /* DeputyAreaPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC503614CA92DB00BA484B /* DeputyAreaPickerController.m */; };
+		ABFC503C14CAB0DC00BA484B /* CommonDataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC503B14CAB0DC00BA484B /* CommonDataUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,12 +77,14 @@
 		ABFC501914CA3DA200BA484B /* MeshableTablesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshableTablesViewController.h; path = experimentals/MeshableTablesViewController.h; sourceTree = "<group>"; };
 		ABFC501C14CA3DB100BA484B /* UIFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIFactory.m; path = commons/UIFactory.m; sourceTree = "<group>"; };
 		ABFC501D14CA3DB100BA484B /* UIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIFactory.h; path = commons/UIFactory.h; sourceTree = "<group>"; };
-		ABFC501F14CA3DC000BA484B /* CountyDeputyMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CountyDeputyMapViewController.m; path = Classes/CountyDeputyMapViewController.m; sourceTree = "<group>"; };
-		ABFC502014CA3DC000BA484B /* AddNewDeputyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddNewDeputyViewController.m; path = Classes/AddNewDeputyViewController.m; sourceTree = "<group>"; };
-		ABFC502114CA3DC000BA484B /* AddNewDeputyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddNewDeputyViewController.h; path = Classes/AddNewDeputyViewController.h; sourceTree = "<group>"; };
-		ABFC502214CA3DC000BA484B /* CountyDeputyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CountyDeputyMapViewController.h; path = Classes/CountyDeputyMapViewController.h; sourceTree = "<group>"; };
-		ABFC502514CA42AF00BA484B /* DeputyAreaPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeputyAreaPickerController.m; path = Classes/DeputyAreaPickerController.m; sourceTree = "<group>"; };
-		ABFC502614CA42AF00BA484B /* DeputyAreaPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; name = DeputyAreaPickerController.h; path = Classes/DeputyAreaPickerController.h; sourceTree = "<group>"; };
+		ABFC503114CA92DB00BA484B /* AddNewDeputyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddNewDeputyViewController.h; path = VCs/AddNewDeputyViewController.h; sourceTree = "<group>"; };
+		ABFC503214CA92DB00BA484B /* AddNewDeputyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddNewDeputyViewController.m; path = VCs/AddNewDeputyViewController.m; sourceTree = "<group>"; };
+		ABFC503314CA92DB00BA484B /* CountyDeputyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CountyDeputyMapViewController.h; path = VCs/CountyDeputyMapViewController.h; sourceTree = "<group>"; };
+		ABFC503414CA92DB00BA484B /* CountyDeputyMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CountyDeputyMapViewController.m; path = VCs/CountyDeputyMapViewController.m; sourceTree = "<group>"; };
+		ABFC503514CA92DB00BA484B /* DeputyAreaPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeputyAreaPickerController.h; path = VCs/DeputyAreaPickerController.h; sourceTree = "<group>"; };
+		ABFC503614CA92DB00BA484B /* DeputyAreaPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeputyAreaPickerController.m; path = VCs/DeputyAreaPickerController.m; sourceTree = "<group>"; };
+		ABFC503A14CAB0DB00BA484B /* CommonDataUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonDataUtil.h; path = commons/CommonDataUtil.h; sourceTree = "<group>"; };
+		ABFC503B14CAB0DC00BA484B /* CommonDataUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonDataUtil.m; path = commons/CommonDataUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +157,7 @@
 			children = (
 				ABFC501514CA3D7300BA484B /* experimentals */,
 				ABFC501414CA3D6600BA484B /* commons */,
-				ABFC501314CA3D5200BA484B /* Classes */,
+				ABFC501314CA3D5200BA484B /* VCs */,
 				2D92AF3414AA22E6007819D7 /* AppDelegate.h */,
 				2D92AF3514AA22E6007819D7 /* AppDelegate.m */,
 				2D92AF3714AA22E6007819D7 /* ViewController.h */,
@@ -205,17 +208,17 @@
 			path = StudyCouchDB;
 			sourceTree = "<group>";
 		};
-		ABFC501314CA3D5200BA484B /* Classes */ = {
+		ABFC501314CA3D5200BA484B /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				ABFC501F14CA3DC000BA484B /* CountyDeputyMapViewController.m */,
-				ABFC502214CA3DC000BA484B /* CountyDeputyMapViewController.h */,
-				ABFC502014CA3DC000BA484B /* AddNewDeputyViewController.m */,
-				ABFC502114CA3DC000BA484B /* AddNewDeputyViewController.h */,
-				ABFC502514CA42AF00BA484B /* DeputyAreaPickerController.m */,
-				ABFC502614CA42AF00BA484B /* DeputyAreaPickerController.h */,
+				ABFC503114CA92DB00BA484B /* AddNewDeputyViewController.h */,
+				ABFC503214CA92DB00BA484B /* AddNewDeputyViewController.m */,
+				ABFC503314CA92DB00BA484B /* CountyDeputyMapViewController.h */,
+				ABFC503414CA92DB00BA484B /* CountyDeputyMapViewController.m */,
+				ABFC503514CA92DB00BA484B /* DeputyAreaPickerController.h */,
+				ABFC503614CA92DB00BA484B /* DeputyAreaPickerController.m */,
 			);
-			name = Classes;
+			name = VCs;
 			sourceTree = "<group>";
 		};
 		ABFC501414CA3D6600BA484B /* commons */ = {
@@ -223,6 +226,8 @@
 			children = (
 				ABFC501C14CA3DB100BA484B /* UIFactory.m */,
 				ABFC501D14CA3DB100BA484B /* UIFactory.h */,
+				ABFC503A14CAB0DB00BA484B /* CommonDataUtil.h */,
+				ABFC503B14CAB0DC00BA484B /* CommonDataUtil.m */,
 			);
 			name = commons;
 			sourceTree = "<group>";
@@ -364,9 +369,10 @@
 				ABFC501A14CA3DA200BA484B /* MapViewController.m in Sources */,
 				ABFC501B14CA3DA200BA484B /* MeshableTablesViewController.m in Sources */,
 				ABFC501E14CA3DB100BA484B /* UIFactory.m in Sources */,
-				ABFC502314CA3DC000BA484B /* CountyDeputyMapViewController.m in Sources */,
-				ABFC502414CA3DC000BA484B /* AddNewDeputyViewController.m in Sources */,
-				ABFC502714CA42B000BA484B /* DeputyAreaPickerController.m in Sources */,
+				ABFC503714CA92DB00BA484B /* AddNewDeputyViewController.m in Sources */,
+				ABFC503814CA92DB00BA484B /* CountyDeputyMapViewController.m in Sources */,
+				ABFC503914CA92DB00BA484B /* DeputyAreaPickerController.m in Sources */,
+				ABFC503C14CAB0DC00BA484B /* CommonDataUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

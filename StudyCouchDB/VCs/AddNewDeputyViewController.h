@@ -12,9 +12,17 @@
 @interface AddNewDeputyViewController : UIViewController <AreaPickerDelegate> {
     DeputyAreaPickerController* areaPicker ;
     UIPopoverController *areaPickerPopup;
+    
+    // NOTE: the problem here is that the Nominee's data object is not supposed to be static, attributes will be added like key/value pair.
+    // Q: can we create a a dict here, but can access using .dot notation? Only way I know about is the @dynamic attribute, 
+    
+    // IDEA: not using object, just plain dictionary .
+    NSMutableDictionary* tempData;
 }
 
 @property (nonatomic, retain) DeputyAreaPickerController* areaPicker ;
 @property (nonatomic, retain) UIPopoverController *areaPickerPopup;
+@property (nonatomic, retain) NSMutableDictionary* tempData;
+
 
 @end

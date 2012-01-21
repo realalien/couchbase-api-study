@@ -19,7 +19,12 @@ enum {
 @end
 
 
+static NSString* DATA_KEY_nominee_area = @"NOMINEE_AREA";
+static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
+
 @implementation AddNewDeputyViewController
+
+@synthesize tempData;
 
 @synthesize areaPicker ;
 @synthesize areaPickerPopup;
@@ -72,22 +77,11 @@ enum {
     
     // Thumbernail for user guide
     
-    
-    // Deputy name
-    CGFloat widthTextField = 250;
-    CGFloat heightTextField = 20;
-    UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake( (width-widthTextField)/2, 125, widthTextField, heightTextField) ]; 
-    tf.placeholder = @"Input the nominee's name"; // TODO: l10n
-    tf.borderStyle = UITextBorderStyleRoundedRect;
-    tf.tag = kTagUITextFieldDeputyName;
-    [self.view addSubview:tf];
-    [tf release];
-    
     // nominee's political area + number , use a button and a picker(within a popup)
     CGFloat widthAreaLabel = 250;
     CGFloat heightAreaLabel = 20;
     UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
-    b.frame = CGRectMake( (width-widthAreaLabel)/2, 175, widthAreaLabel, heightAreaLabel);
+    b.frame = CGRectMake( (width-widthAreaLabel)/2, 125, widthAreaLabel, heightAreaLabel);
     [b setTitle:@"Select the area of the anominee" forState:UIControlStateNormal];
     b.tag = kTagUIButtonDeputyArea;
     [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -96,6 +90,24 @@ enum {
     [b release];
     
     // Q: If we use multiple controller, how to pass around the data  A:
+    
+    // Deputy name
+    // NOTE: only a minority of people will input the name, most people should select from a list or their nominees and 
+    CGFloat widthTextField = 250;
+    CGFloat heightTextField = 20;
+    UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake( (width-widthTextField)/2, 175, widthTextField, heightTextField) ]; 
+    tf.placeholder = @"Input the nominee's name"; // TODO: l10n
+    tf.borderStyle = UITextBorderStyleRoundedRect;
+    tf.tag = kTagUITextFieldDeputyName;
+    [self.view addSubview:tf];
+    [tf release];
+    
+    
+    
+    
+    // a check box for indicating current user location is in the nominee's area, for later data minding.
+    // REF: a quick solution can be retrieved from: http://stackoverflow.com/questions/5368196/how-create-simple-checkbox
+    
     
     
     
@@ -161,6 +173,9 @@ enum {
     [barButtons release];
     barButtons = nil;
     
+    
+    self.tempData = [[NSMutableDictionary alloc] initWithCapacity:0];
+    
 }
 
 
@@ -186,6 +201,8 @@ enum {
 }
 
 -(void) dealloc{
+    [tempData release];
+    
     [areaPicker release];
     [areaPickerPopup release];
 }
@@ -195,10 +212,12 @@ enum {
 
 - (void)areaNameSelected:(NSString *)areaName{
     NSLog(@"areaName : %@  selected!", areaName);
+    [self.tempData setValue:areaName forKey:DATA_KEY_nominee_area];
 }
 
 - (void)areaNumberSelected:(NSString *)areaNumber{
     NSLog(@"areaNumber : %@  selected!", areaNumber);
+    [self.tempData setValue:areaNumber forKey:DATA_KEY_nominee_number];
 }
 
 
