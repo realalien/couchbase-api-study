@@ -8,6 +8,7 @@
 
 #import "AddNewDeputyViewController.h"
 #import "UIFactory.h"
+#import "DeputyAreaPickerController.h"
 enum {
     kTagUITextFieldDeputyName,
     kTagUIButtonDeputyArea
@@ -19,6 +20,9 @@ enum {
 
 
 @implementation AddNewDeputyViewController
+
+@synthesize areaPicker ;
+@synthesize areaPickerPopup;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,8 +91,11 @@ enum {
     [b setTitle:@"Select the area of the anominee" forState:UIControlStateNormal];
     b.tag = kTagUIButtonDeputyArea;
     [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [b addTarget:self action:@selector(selectAreaButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:b];
     [b release];
+    
+    // Q: If we use multiple controller, how to pass around the data  A:
     
     
     
@@ -178,6 +185,22 @@ enum {
 	return YES;
 }
 
+-(void) dealloc{
+    [areaPicker release];
+    [areaPickerPopup release];
+}
+
+#pragma mark -
+#pragma mark AreaPickerDelegate methods
+
+- (void)areaNameSelected:(NSString *)areaName{
+    NSLog(@"areaName : %@  selected!", areaName);
+}
+
+- (void)areaNumberSelected:(NSString *)areaNumber{
+    NSLog(@"areaNumber : %@  selected!", areaNumber);
+}
+
 
 #pragma mark -
 #pragma mark callback methods
@@ -195,6 +218,28 @@ enum {
     
     // or navigate to other view controll for sharing or data digging!
 }
+
+-(void)selectAreaButtonClicked:(id)sender{
+    
+    if (areaPicker == nil) {
+        areaPicker = [[DeputyAreaPickerController alloc] init]; 
+        areaPicker.delegate = self;
+        self.areaPickerPopup = [[[UIPopoverController alloc] 
+                                    initWithContentViewController:areaPicker] autorelease];               
+    }
+    
+    [self.areaPickerPopup presentPopoverFromRect:[self.view viewWithTag:kTagUIButtonDeputyArea].frame
+                                          inView:self.view
+                        permittedArrowDirections:UIPopoverArrowDirectionUp
+                                        animated:YES];
+    
+    // NOTE: can't use presentPopoverFromBarButtonItem... as the popup comes from a UIButton who has no uiview as instance.
+//    [self.areaPickerPopup presentPopoverFromBarButtonItem:sender 
+//                                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
+}
+
+
 
 
 @end

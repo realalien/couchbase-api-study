@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DeputyAreaPickerController.h"
 
-@interface AddNewDeputyViewController : UIViewController
+@interface AddNewDeputyViewController : UIViewController <AreaPickerDelegate> {
+    DeputyAreaPickerController* areaPicker ;
+    UIPopoverController *areaPickerPopup;
+}
+
+@property (nonatomic, retain) DeputyAreaPickerController* areaPicker ;
+@property (nonatomic, retain) UIPopoverController *areaPickerPopup;
 
 @end
