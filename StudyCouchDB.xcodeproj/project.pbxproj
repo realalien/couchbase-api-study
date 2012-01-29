@@ -32,6 +32,7 @@
 		ABF5600914D533E400872408 /* switchOffPlain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600414D533E400872408 /* switchOffPlain.png */; };
 		ABF5600A14D533E400872408 /* switchThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600514D533E400872408 /* switchThumb.png */; };
 		ABF5600B14D533E400872408 /* UICustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF5600714D533E400872408 /* UICustomSwitch.m */; };
+		ABF5600D14D5455300872408 /* Roadmap_selfguided.txt in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600C14D5455300872408 /* Roadmap_selfguided.txt */; };
 		ABFC501A14CA3DA200BA484B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501614CA3DA200BA484B /* MapViewController.m */; };
 		ABFC501B14CA3DA200BA484B /* MeshableTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */; };
 		ABFC501E14CA3DB100BA484B /* UIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501C14CA3DB100BA484B /* UIFactory.m */; };
@@ -86,6 +87,7 @@
 		ABF5600514D533E400872408 /* switchThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchThumb.png; path = libraries/UICustomSwitch/switchThumb.png; sourceTree = "<group>"; };
 		ABF5600614D533E400872408 /* UICustomSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICustomSwitch.h; path = libraries/UICustomSwitch/UICustomSwitch.h; sourceTree = "<group>"; };
 		ABF5600714D533E400872408 /* UICustomSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICustomSwitch.m; path = libraries/UICustomSwitch/UICustomSwitch.m; sourceTree = "<group>"; };
+		ABF5600C14D5455300872408 /* Roadmap_selfguided.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Roadmap_selfguided.txt; sourceTree = "<group>"; };
 		ABFC501614CA3DA200BA484B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = experimentals/MapViewController.m; sourceTree = "<group>"; };
 		ABFC501714CA3DA200BA484B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = experimentals/MapViewController.h; sourceTree = "<group>"; };
 		ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeshableTablesViewController.m; path = experimentals/MeshableTablesViewController.m; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				2D92AF2E14AA22E6007819D7 /* InfoPlist.strings */,
 				2D92AF3114AA22E6007819D7 /* main.m */,
 				2D92AF3314AA22E6007819D7 /* StudyCouchDB-Prefix.pch */,
+				ABF5600C14D5455300872408 /* Roadmap_selfguided.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				ABF5600814D533E400872408 /* switchBlueBg.png in Resources */,
 				ABF5600914D533E400872408 /* switchOffPlain.png in Resources */,
 				ABF5600A14D533E400872408 /* switchThumb.png in Resources */,
+				ABF5600D14D5455300872408 /* Roadmap_selfguided.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -378,9 +378,12 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
 #pragma mark -
 #pragma mark UIAlertViewDelegate methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-     [self dismissModalViewControllerAnimated:YES];
+    if (alertView.tag == kTagAlertSaveDocumentSuccess) {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
+    // if error occurs, user should retry 'Save/Done' or 'Cancel' explicitly.
 }
-               
 
 
 #pragma mark -

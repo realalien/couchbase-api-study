@@ -1,0 +1,24 @@
+
+
+(from bottom to top)
+
+
+
+>  Create a detailed view (stacked vc) to dig the data (with local analyse)
+    > try out different solution of interactive art/design/solutions
+
+>  Create a data filter bar to filter data (similar to the area selection like 'Dianping HD')
+    > ...
+
+
+>  Show existing deputy data on the mapview   <<<<<<<<<<<<<<
+    > can aggregate data
+    > can auto zoom to the correctscale
+
+
+
+>  create a data entry vc for input
+    > use popoverview and area picker, and interactions/data
+    > use CouchCocoa lib
+
+>  create a mapview for background, later for mkannotation
