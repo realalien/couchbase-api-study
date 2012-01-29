@@ -11,6 +11,7 @@
 
 static const int AREA_NAME_PICKER_COMPONENT = 0;
 static const int AREA_NUMBER_PICKER_COMPONENT = 1;
+static int MAX_AREA_NUMBER_FOR_PICKER = 30;
 
 enum {
   kTagUIAreaPicker
@@ -19,11 +20,12 @@ enum {
 
 @implementation DeputyAreaPickerController
 
-@synthesize areas;
+//@synthesize areas;
+@synthesize areaNames;
 @synthesize delegate;
 
-@synthesize currentAreaNameSelectionIndex ; 
-@synthesize currentAreaNumberSelectionIndex ; 
+@synthesize currentAreaNameSelection ; 
+@synthesize currentAreaNumberSelection ; 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,24 +68,43 @@ enum {
 //    [self.view addSubview:areaName];
     [areaName release];
     
-    
     //    self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(300.0, 200.0);
-    self.areas = [NSMutableDictionary dictionary];
+//    self.areas = [NSMutableDictionary dictionary];
     
+    areaNames = [[NSMutableArray alloc] initWithCapacity:0];
     
+    // Q: how to manage localization of the data? for data storage and for client?
+    // A: 
+//    [areaNames addObjectsFromArray:[NSArray arrayWithObjects:@"Pudong New",@"Huangpu", // @"Luwan" merged into Huangpu in 2011.7.9,
+//                                    @"Xuhui",@"Changning",
+//                                    @"Jing'an",@"Putuo", @"Zhaobei",
+//                                    @"Hongkou",@"Yangpu",@"Baoshan",
+//                                    @"Minhang",@"Jiading",@"Jinshan",
+//                                    @"Songjaing",@"Fengxian",@"Qingpu", nil] ];
     
+    // EXP, storage to be human readable form
+    [areaNames addObjectsFromArray:[NSArray arrayWithObjects:@"浦东新区",@"黄浦区", // @"卢湾区" merged into Huangpu in 2011.7.9,
+                                    @"徐汇区",@"长宁区",
+                                    @"静安区",@"普陀区", @"闸北区",
+                                    @"虹口区",@"杨浦区",@"宝山区",
+                                    @"闵行区",@"嘉定区",@"金山区",
+                                    @"松江区",@"奉贤区",@"青浦区", nil] ];
     
-    // Dummy data
-    NSString* Hongkou = @"HongKou";
-    NSString* BaoShan = @"BaoShan";
-    NSString* ZhaBei = @"ZhaoBei";
-    [areas setValue:[NSArray  arrayWithObjects:@"1",@"2",@"3", nil] forKey:Hongkou];
-    [areas setValue:[NSArray  arrayWithObjects:@"1",@"2",@"3",@"4", nil] forKey:BaoShan];
-    [areas setValue:[NSArray  arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6", nil] forKey:ZhaBei];
+    // IDEA:  we shall listen to an official web page to keep track of changes, e.g. two district merges.
     
-    self.currentAreaNameSelectionIndex = -1 ;   // -1:no selection
-    self.currentAreaNumberSelectionIndex = -1; 
+    // IDEA: ESP. to make i18n simple when dealing with UI, we can borrow the idea of common select data objects. EXP. to see if we can setup data structure to avoid static modeling, i.e. parse the data by rules(e.g. singel record should have data for i18n, )
+    
+//    // Dummy data
+//    NSString* Hongkou = @"HongKou";
+//    NSString* BaoShan = @"BaoShan";
+//    NSString* ZhaBei = @"ZhaoBei";
+//    [areas setValue:[NSArray  arrayWithObjects:@"1",@"2",@"3", nil] forKey:Hongkou];
+//    [areas setValue:[NSArray  arrayWithObjects:@"1",@"2",@"3",@"4", nil] forKey:BaoShan];
+//    [areas setValue:[NSArray  arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6", nil] forKey:ZhaBei];
+    
+//    self.currentAreaNameSelection = nil ;   // -1:no selection
+//    self.currentAreaNumberSelection =  nil; 
     
 }
 
@@ -94,6 +115,28 @@ enum {
 {
     [super viewDidLoad];
     
+    // TODO: such iteration is tedious, try to make it more general! E.G. study the xms's app!
+    if (self.currentAreaNameSelection) {
+        for (int i=0; i< [areaNames count]; i++) {
+            if ([[areaNames objectAtIndex:i] isEqualToString:self.currentAreaNameSelection ]) {
+                [((UIPickerView*)[self.view viewWithTag:kTagUIAreaPicker]) selectRow:i 
+                                                                         inComponent:AREA_NAME_PICKER_COMPONENT
+                                                                            animated:YES];
+                break;
+            }
+        }
+    }
+    
+    if (self.currentAreaNumberSelection) {
+        for (int i=0; i< MAX_AREA_NUMBER_FOR_PICKER; i++) {
+            if ([[areaNames objectAtIndex:i] isEqualToString:self.currentAreaNameSelection ]) {
+                [((UIPickerView*)[self.view viewWithTag:kTagUIAreaPicker]) selectRow:i 
+                                                                         inComponent:AREA_NUMBER_PICKER_COMPONENT
+                                                                            animated:YES];
+                break;
+            }
+        }
+    }
 
 }
 
@@ -115,7 +158,9 @@ enum {
 
 -(void)dealloc {
     // Q: What's the point of release and set to nil?  A: 
-    [areas release]; areas = nil;
+//    [areas release]; areas = nil;
+    [areaNames release]; areaNames = nil;
+    
     delegate = nil;
 }
 
@@ -132,14 +177,10 @@ enum {
     
     if ( delegate !=  nil) {
         if (component == AREA_NAME_PICKER_COMPONENT) {
-            NSString *areaName = [[self.areas allKeys] objectAtIndex:row];
+            NSString *areaName = [areaNames objectAtIndex:row];
             [delegate areaNameSelected:areaName];
         } else if (component == AREA_NUMBER_PICKER_COMPONENT) {
-            
-            // FIXME: the keys is not determined, can't get value from row info!
-            NSString *areaNameKey = [[self.areas allKeys] objectAtIndex:row]; // TODO: should depend on the first component!
-            NSString *areaNumber = [[self.areas valueForKey:areaNameKey] objectAtIndex:row];
-            [delegate areaNumberSelected:areaNumber];
+            [delegate areaNumberSelected:[NSString stringWithFormat:@"%d", row + 1]]; // human count starting from 1 instead of 0.
         }                                
     }
 }
@@ -149,9 +190,9 @@ enum {
 // A: 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == AREA_NAME_PICKER_COMPONENT) { // area name
-        return [[self.areas allKeys] count];
+        return [areaNames count];
     }else if( component == AREA_NUMBER_PICKER_COMPONENT) {
-        return 3;
+        return MAX_AREA_NUMBER_FOR_PICKER; // TODO: give an estimate or interface for changing. better not hard coded!
     }
     return 0;
 }
@@ -166,10 +207,9 @@ enum {
     NSString *title = nil ;
     // title = @""; [@"" stringByAppendingFormat:@"%d",row];
     if (component == AREA_NAME_PICKER_COMPONENT ) {
-        title = [[self.areas allKeys] objectAtIndex:row];
+        title = [ areaNames objectAtIndex:row];
     }else if ( component == AREA_NUMBER_PICKER_COMPONENT ) {
-        NSString *areaNameKey = [[self.areas allKeys] objectAtIndex:row]; // TODO: should depend on the first component!
-        title = [[self.areas valueForKey:areaNameKey] objectAtIndex:row];
+        title = [ NSString stringWithFormat:@"第%d选区", row + 1];
     }
 
     return title;
@@ -179,9 +219,9 @@ enum {
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     int sectionWidth = 0 ;
     if ( component == AREA_NAME_PICKER_COMPONENT ) {
-        sectionWidth = 180 ; // TODO: estimate based on the longest text length.
+        sectionWidth = 160 ; // TODO: estimate based on the longest text length.
     }else if ( component == AREA_NUMBER_PICKER_COMPONENT) {
-        sectionWidth = 120 ;
+        sectionWidth = 140 ;  // IDEA: if better using golden line!
     }
     
     return sectionWidth;

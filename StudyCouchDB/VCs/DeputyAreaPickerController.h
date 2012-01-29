@@ -15,19 +15,28 @@
 
 
 @interface DeputyAreaPickerController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource>{
+    // Deprecatd: it's unsafe to use dict for row indexing, 
     // 2D array, 1st dimension is area name, 2nd dimensio is area number. e.g. "Hongkou" ("1"-"19")
-    NSMutableDictionary *areas;  
+//    NSMutableDictionary *areas;  
+    
+    
+    // NOTE: the area name and area number are kept seperate, here they are mainly used for UI usage.
+    NSMutableArray *areaNames; // data are the names of Shanghai area, 'HongKou', 'HuangPu', etc.
+    
     id<AreaPickerDelegate> delegate;
     
-    int currentAreaNameSelectionIndex ; 
-    int currentAreaNumberSelectionIndex ; 
+    NSString* currentAreaNameSelection ; 
+    NSString* currentAreaNumberSelection ; 
     
 }
 
-@property (nonatomic, retain) NSMutableDictionary *areas;
+//@property (nonatomic, retain) NSMutableDictionary *areas;
+
+@property (nonatomic, retain) NSMutableArray *areaNames;
+
 @property (nonatomic, assign) id<AreaPickerDelegate> delegate;
 
-@property int currentAreaNameSelectionIndex ; 
-@property int currentAreaNumberSelectionIndex ; 
+@property (nonatomic, retain) NSString* currentAreaNameSelection ; 
+@property (nonatomic, retain) NSString* currentAreaNumberSelection ; 
 
 @end

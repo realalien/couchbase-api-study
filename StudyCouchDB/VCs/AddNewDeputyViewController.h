@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "DeputyAreaPickerController.h"
+#import "CouchbaseServerManager.h"
 
-@interface AddNewDeputyViewController : UIViewController <AreaPickerDelegate> {
+@interface AddNewDeputyViewController : UIViewController <AreaPickerDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate> {
     DeputyAreaPickerController* areaPicker ;
     UIPopoverController *areaPickerPopup;
     
@@ -23,6 +24,8 @@
 @property (nonatomic, retain) DeputyAreaPickerController* areaPicker ;
 @property (nonatomic, retain) UIPopoverController *areaPickerPopup;
 @property (nonatomic, retain) NSMutableDictionary* tempData;
+
+@property (nonatomic, retain) CouchDatabase *database;
 
 
 @end

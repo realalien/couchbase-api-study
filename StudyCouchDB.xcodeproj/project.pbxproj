@@ -20,12 +20,18 @@
 		2D92AF4614AA22E6007819D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2714AA22E6007819D7 /* Foundation.framework */; };
 		2D92AF4E14AA22E6007819D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D92AF4C14AA22E6007819D7 /* InfoPlist.strings */; };
 		2D92AF5114AA22E6007819D7 /* StudyCouchDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D92AF5014AA22E6007819D7 /* StudyCouchDBTests.m */; };
-		2D92AF5B14AA23C1007819D7 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5A14AA23C1007819D7 /* Couchbase.framework */; };
 		2D92AF5D14AA2402007819D7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5C14AA2402007819D7 /* Security.framework */; };
 		2D92AF5F14AA2410007819D7 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5E14AA2410007819D7 /* libstdc++.dylib */; };
 		2D92AF6114AA241D007819D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF6014AA241D007819D7 /* libz.dylib */; };
 		2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */; };
 		2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */; };
+		AB39FAE114D4EE47005C7F70 /* UIKit-AddsOn.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */; };
+		AB39FAE914D509C9005C7F70 /* CouchbaseServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */; };
+		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
+		ABF5600814D533E400872408 /* switchBlueBg.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600314D533E400872408 /* switchBlueBg.png */; };
+		ABF5600914D533E400872408 /* switchOffPlain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600414D533E400872408 /* switchOffPlain.png */; };
+		ABF5600A14D533E400872408 /* switchThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600514D533E400872408 /* switchThumb.png */; };
+		ABF5600B14D533E400872408 /* UICustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF5600714D533E400872408 /* UICustomSwitch.m */; };
 		ABFC501A14CA3DA200BA484B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501614CA3DA200BA484B /* MapViewController.m */; };
 		ABFC501B14CA3DA200BA484B /* MeshableTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */; };
 		ABFC501E14CA3DB100BA484B /* UIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501C14CA3DB100BA484B /* UIFactory.m */; };
@@ -65,12 +71,21 @@
 		2D92AF4D14AA22E6007819D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2D92AF4F14AA22E6007819D7 /* StudyCouchDBTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StudyCouchDBTests.h; sourceTree = "<group>"; };
 		2D92AF5014AA22E6007819D7 /* StudyCouchDBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StudyCouchDBTests.m; sourceTree = "<group>"; };
-		2D92AF5A14AA23C1007819D7 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
 		2D92AF5C14AA2402007819D7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2D92AF5E14AA2410007819D7 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		2D92AF6014AA241D007819D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
 		2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		AB39FADF14D4EE47005C7F70 /* UIKit-AddsOn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIKit-AddsOn.h"; path = "commons/UIKit-AddsOn.h"; sourceTree = "<group>"; };
+		AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIKit-AddsOn.m"; path = "commons/UIKit-AddsOn.m"; sourceTree = "<group>"; };
+		AB39FAE714D509C9005C7F70 /* CouchbaseServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CouchbaseServerManager.h; path = commons/CouchbaseServerManager.h; sourceTree = "<group>"; };
+		AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CouchbaseServerManager.m; path = commons/CouchbaseServerManager.m; sourceTree = "<group>"; };
+		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
+		ABF5600314D533E400872408 /* switchBlueBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchBlueBg.png; path = libraries/UICustomSwitch/switchBlueBg.png; sourceTree = "<group>"; };
+		ABF5600414D533E400872408 /* switchOffPlain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchOffPlain.png; path = libraries/UICustomSwitch/switchOffPlain.png; sourceTree = "<group>"; };
+		ABF5600514D533E400872408 /* switchThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchThumb.png; path = libraries/UICustomSwitch/switchThumb.png; sourceTree = "<group>"; };
+		ABF5600614D533E400872408 /* UICustomSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICustomSwitch.h; path = libraries/UICustomSwitch/UICustomSwitch.h; sourceTree = "<group>"; };
+		ABF5600714D533E400872408 /* UICustomSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICustomSwitch.m; path = libraries/UICustomSwitch/UICustomSwitch.m; sourceTree = "<group>"; };
 		ABFC501614CA3DA200BA484B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = experimentals/MapViewController.m; sourceTree = "<group>"; };
 		ABFC501714CA3DA200BA484B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = experimentals/MapViewController.h; sourceTree = "<group>"; };
 		ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeshableTablesViewController.m; path = experimentals/MeshableTablesViewController.m; sourceTree = "<group>"; };
@@ -99,8 +114,8 @@
 				2D92AF2614AA22E6007819D7 /* UIKit.framework in Frameworks */,
 				2D92AF2814AA22E6007819D7 /* Foundation.framework in Frameworks */,
 				2D92AF2A14AA22E6007819D7 /* CoreGraphics.framework in Frameworks */,
-				2D92AF5B14AA23C1007819D7 /* Couchbase.framework in Frameworks */,
 				2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */,
+				ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,10 +155,10 @@
 		2D92AF2414AA22E6007819D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABF55FFE14D5259600872408 /* CouchCocoa.framework */,
 				2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */,
 				2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */,
 				2D92AF5C14AA2402007819D7 /* Security.framework */,
-				2D92AF5A14AA23C1007819D7 /* Couchbase.framework */,
 				2D92AF2514AA22E6007819D7 /* UIKit.framework */,
 				2D92AF2714AA22E6007819D7 /* Foundation.framework */,
 				2D92AF2914AA22E6007819D7 /* CoreGraphics.framework */,
@@ -158,6 +173,7 @@
 				ABFC501514CA3D7300BA484B /* experimentals */,
 				ABFC501414CA3D6600BA484B /* commons */,
 				ABFC501314CA3D5200BA484B /* VCs */,
+				ABF5600114D533B800872408 /* Libraries */,
 				2D92AF3414AA22E6007819D7 /* AppDelegate.h */,
 				2D92AF3514AA22E6007819D7 /* AppDelegate.m */,
 				2D92AF3714AA22E6007819D7 /* ViewController.h */,
@@ -208,6 +224,26 @@
 			path = StudyCouchDB;
 			sourceTree = "<group>";
 		};
+		ABF5600114D533B800872408 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				ABF5600214D533D200872408 /* UICustomSwitch */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		ABF5600214D533D200872408 /* UICustomSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				ABF5600314D533E400872408 /* switchBlueBg.png */,
+				ABF5600414D533E400872408 /* switchOffPlain.png */,
+				ABF5600514D533E400872408 /* switchThumb.png */,
+				ABF5600614D533E400872408 /* UICustomSwitch.h */,
+				ABF5600714D533E400872408 /* UICustomSwitch.m */,
+			);
+			name = UICustomSwitch;
+			sourceTree = "<group>";
+		};
 		ABFC501314CA3D5200BA484B /* VCs */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +264,10 @@
 				ABFC501D14CA3DB100BA484B /* UIFactory.h */,
 				ABFC503A14CAB0DB00BA484B /* CommonDataUtil.h */,
 				ABFC503B14CAB0DC00BA484B /* CommonDataUtil.m */,
+				AB39FADF14D4EE47005C7F70 /* UIKit-AddsOn.h */,
+				AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */,
+				AB39FAE714D509C9005C7F70 /* CouchbaseServerManager.h */,
+				AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */,
 			);
 			name = commons;
 			sourceTree = "<group>";
@@ -316,6 +356,9 @@
 			files = (
 				2D92AF3014AA22E6007819D7 /* InfoPlist.strings in Resources */,
 				2D92AF3C14AA22E6007819D7 /* ViewController.xib in Resources */,
+				ABF5600814D533E400872408 /* switchBlueBg.png in Resources */,
+				ABF5600914D533E400872408 /* switchOffPlain.png in Resources */,
+				ABF5600A14D533E400872408 /* switchThumb.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +416,9 @@
 				ABFC503814CA92DB00BA484B /* CountyDeputyMapViewController.m in Sources */,
 				ABFC503914CA92DB00BA484B /* DeputyAreaPickerController.m in Sources */,
 				ABFC503C14CAB0DC00BA484B /* CommonDataUtil.m in Sources */,
+				AB39FAE114D4EE47005C7F70 /* UIKit-AddsOn.m in Sources */,
+				AB39FAE914D509C9005C7F70 /* CouchbaseServerManager.m in Sources */,
+				ABF5600B14D533E400872408 /* UICustomSwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +522,7 @@
 				GCC_PREFIX_HEADER = "StudyCouchDB/StudyCouchDB-Prefix.pch";
 				INFOPLIST_FILE = "StudyCouchDB/StudyCouchDB-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;

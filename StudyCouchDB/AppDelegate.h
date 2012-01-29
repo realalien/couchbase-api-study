@@ -11,7 +11,7 @@
 
 @class ViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, CouchbaseDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>  // CouchbaseDelegate
 
 @property (strong, nonatomic) UIWindow *window;
 

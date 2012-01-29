@@ -9,18 +9,34 @@
 #import "AddNewDeputyViewController.h"
 #import "UIFactory.h"
 #import "DeputyAreaPickerController.h"
+
+#import "UIKit-AddsOn.h"
+#import "UICustomSwitch.h"
+
+#define kDeputyNominees @"deputy-nominees"
+
 enum {
-    kTagUITextFieldDeputyName,
-    kTagUIButtonDeputyArea
+    kTagUITextFieldDeputyName = 10, // TODO: strange that in callback method, the view with zero index is self.view?!
+    kTagUIButtonDeputyArea,
+    
+    kTagUILabelreportGPSprompt, //
+    kTagUISwitchIsReportGPS,
+    
+    kTagAlertSaveDocumentSuccess
 };
 
 @interface AddNewDeputyViewController  ()
--(void)createToolbar ;
+-(void)createToolbar;
+-(void)refreshAreaUI;
+-(void)handleReportGPSSwitch:(id)sender;
+
+- (void)showErrorAlert: (NSString*)message forOperation: (RESTOperation*)op;
 @end
 
 
 static NSString* DATA_KEY_nominee_area = @"NOMINEE_AREA";
 static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
+static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
 
 @implementation AddNewDeputyViewController
 
@@ -28,6 +44,8 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
 
 @synthesize areaPicker ;
 @synthesize areaPickerPopup;
+
+@synthesize database;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,11 +96,11 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
     // Thumbernail for user guide
     
     // nominee's political area + number , use a button and a picker(within a popup)
-    CGFloat widthAreaLabel = 250;
+    CGFloat widthAreaLabel = 350;
     CGFloat heightAreaLabel = 20;
     UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
     b.frame = CGRectMake( (width-widthAreaLabel)/2, 125, widthAreaLabel, heightAreaLabel);
-    [b setTitle:@"Select the area of the anominee" forState:UIControlStateNormal];
+    [b setTitle:@"请选择代表人所在的行政区和选区编号" forState:UIControlStateNormal];
     b.tag = kTagUIButtonDeputyArea;
     [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [b addTarget:self action:@selector(selectAreaButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -96,23 +114,33 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
     CGFloat widthTextField = 250;
     CGFloat heightTextField = 20;
     UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake( (width-widthTextField)/2, 175, widthTextField, heightTextField) ]; 
-    tf.placeholder = @"Input the nominee's name"; // TODO: l10n
+    tf.placeholder = @"请填写代表人的姓名"; // TODO: l10n
+    tf.textAlignment = UITextAlignmentCenter;
     tf.borderStyle = UITextBorderStyleRoundedRect;
     tf.tag = kTagUITextFieldDeputyName;
     [self.view addSubview:tf];
     [tf release];
     
-    
-    
-    
     // a check box for indicating current user location is in the nominee's area, for later data minding.
     // REF: a quick solution can be retrieved from: http://stackoverflow.com/questions/5368196/how-create-simple-checkbox
     
+    // EXP.
+    CGFloat widthGPSLabel = 350;
+    CGFloat heightGPSLabel = 20;
+    UILabel *reportGPSprompt = [UIFactory makeDefaultLabelWithText:@"请确认您当前位置是否在代表人的选区" andTag:kTagUILabelreportGPSprompt];
+    reportGPSprompt.frame = CGRectMake( (width-widthGPSLabel)/2 - 30, 225, widthGPSLabel, heightGPSLabel);
+    [self.view addSubview:reportGPSprompt];
+    [reportGPSprompt release];
     
+    UICustomSwitch *isReportGPS = [UICustomSwitch switchWithLeftText:@"是" andRight:@"不是"];
+    isReportGPS.frame = CGRectMake((width-widthGPSLabel)/2 + 300, 225, 95,27);
+    isReportGPS.on = NO;  // default is NO
+    isReportGPS.tag = kTagUISwitchIsReportGPS;
+    [isReportGPS addTarget:self action:@selector(handleReportGPSSwitch:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:isReportGPS];
+    [isReportGPS release];
     
-    
-    // IDEA: create a general table view ui for creating key/value attribute, both can be modified.
-    
+    // IDEA: create a general table view ui for creating key/value attribute, both can be modified.    
     
     
 }
@@ -127,18 +155,20 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
     
     // --- Cancel and Done buttons
     UIBarButtonItem *flexibleSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction:)] autorelease];
+    UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction:)] autorelease];
 //    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)];
-    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                                target:self 
-                                                                                action:@selector(doneAction:)] autorelease];
+    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)] autorelease]; // TODO: highlight!
+    
+//    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+//                                                                                target:self 
+//                                                                                action:@selector(doneAction:)] autorelease];
     // --- Title
     // How to add title to the toolbar 
     //REF: http://stackoverflow.com/questions/1319834/proper-way-to-add-a-title-to-a-modal-view-controllers-toolbar
     
 //    // Title frame option #1
-    NSString *titleString = @"Add a new nominee's information"; //NSLocalizedString(@"Back", nil);
-    const CGFloat cancelButtonWidth = [@"Cancel" sizeWithFont:[UIFont boldSystemFontOfSize:[UIFont buttonFontSize]]
+    NSString *titleString = @"添加代表人信息"; //NSLocalizedString(@"Back", nil);
+    const CGFloat cancelButtonWidth = [@"取消" sizeWithFont:[UIFont boldSystemFontOfSize:[UIFont buttonFontSize]]
                                       constrainedToSize:toolBar.frame.size].width;
     const CGRect titleFrame = {{0.0f, 0.0f},
         {toolBar.frame.size.width - (cancelButtonWidth * 2.0f),50.0f}};
@@ -174,18 +204,24 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
     barButtons = nil;
     
     
-    self.tempData = [[NSMutableDictionary alloc] initWithCapacity:0];
-    
-}
+ }
 
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    self.tempData = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [tempData setValue:[NSNumber numberWithBool:YES] forKey:DATA_KEY_USE_GPS]; // set default , TODO: should load from preset if existing data.
+    
+    // temp: for test
+    UICustomSwitch* reportGPS = (UICustomSwitch*)[self.view viewWithTag:kTagUISwitchIsReportGPS];
+    [reportGPS setOn:YES animated:YES];
+    
 }
-*/
 
 - (void)viewDidUnload
 {
@@ -213,11 +249,16 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
 - (void)areaNameSelected:(NSString *)areaName{
     NSLog(@"areaName : %@  selected!", areaName);
     [self.tempData setValue:areaName forKey:DATA_KEY_nominee_area];
+    
+    [self refreshAreaUI];
 }
 
 - (void)areaNumberSelected:(NSString *)areaNumber{
     NSLog(@"areaNumber : %@  selected!", areaNumber);
     [self.tempData setValue:areaNumber forKey:DATA_KEY_nominee_number];
+    
+    [self refreshAreaUI];
+
 }
 
 
@@ -231,8 +272,56 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
 
 -(void)doneAction:(id)sender{
     // data validation
-    
-    // save to database
+    // TODO: more robust sanity check like active_record, IDEA: more validation be handled at the server side?!
+    UIView* target = [self.view viewWithTag:kTagUITextFieldDeputyName];
+    NSString* name = ((UITextField*)target).text;
+    if ([tempData valueForKey:DATA_KEY_nominee_area]
+        && [tempData valueForKey:DATA_KEY_nominee_number]
+        && ([name isNotEmpty]) ) {
+        // save to database
+        NSLog(@"Going to save to the database");
+        
+        // Ensure database creation
+        self.database = [[CouchbaseServerManager getServer] databaseNamed: kDeputyNominees];
+//#if !INSTALL_CANNED_DATABASE && !defined(USE_REMOTE_SERVER)
+        // Create the database on the first run of the app.
+        NSError* error;
+        if (![self.database ensureCreated: &error]) {
+            [self showAlert: @"Couldn't create local database." error: error fatal: YES];
+            return;
+        }
+//#endif
+        database.tracksChanges = YES;
+
+        // Insert data
+        // Create the new document's properties:
+        NSDictionary *inDocument = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    [tempData valueForKey:DATA_KEY_nominee_area], @"area_name",
+                                    [tempData valueForKey:DATA_KEY_nominee_number], @"area_number",
+                                    name,@"nominee_name",
+                                    [tempData valueForKey:DATA_KEY_USE_GPS], @"is_report_gps",
+                                    @"(123,31)", @"lat_lng", // TODO: get user gps
+                                    [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
+                                    nil];
+        
+        // Save the document, asynchronously:
+        CouchDocument* doc = [database untitledDocument];
+        RESTOperation* op = [doc putProperties:inDocument];
+        [op onCompletion: ^{
+            [inDocument release]; // TODO: research on best place for release.
+            if (op.error){
+                [self showErrorAlert: @"Couldn't save the new item" forOperation: op];
+            }else {
+                // TODO: handle the different responses from the server side. e.g. add more 
+                [self showAlert:@"保存成功！" tag:kTagAlertSaveDocumentSuccess];
+            }
+            // Re-run the query:
+//            [self.dataSource.query start];
+        }];
+        [op start];
+        
+        
+    }
     
     
     // or navigate to other view controll for sharing or data digging!
@@ -244,7 +333,18 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
         areaPicker = [[DeputyAreaPickerController alloc] init]; 
         areaPicker.delegate = self;
         self.areaPickerPopup = [[[UIPopoverController alloc] 
-                                    initWithContentViewController:areaPicker] autorelease];               
+                                    initWithContentViewController:areaPicker] autorelease]; 
+        self.areaPickerPopup.delegate = self;
+    }
+    
+    // selection data for the picker.
+    // IDEA: Better if in the middle of the picker selection.
+    if ([tempData valueForKey:DATA_KEY_nominee_area]) {
+        areaPicker.currentAreaNameSelection = [tempData valueForKey:DATA_KEY_nominee_area];
+    }
+    
+    if ([tempData valueForKey:DATA_KEY_nominee_number] ) {
+        areaPicker.currentAreaNumberSelection = [tempData valueForKey:DATA_KEY_nominee_number];
     }
     
     [self.areaPickerPopup presentPopoverFromRect:[self.view viewWithTag:kTagUIButtonDeputyArea].frame
@@ -259,6 +359,63 @@ static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
 }
 
 
+#pragma mark -
+#pragma mark UIPopoverControllerDelegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
+    if (![tempData valueForKey:DATA_KEY_nominee_area]) {
+        [self.tempData setValue:@"浦东新区" forKey:DATA_KEY_nominee_area]; // TODO: code smell
+    }
+    
+    if (![tempData valueForKey:DATA_KEY_nominee_number]) {
+        [self.tempData setValue:@"1" forKey:DATA_KEY_nominee_number];
+    }
+    
+    [self refreshAreaUI];
+    
+}
 
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+     [self dismissModalViewControllerAnimated:YES];
+}
+               
+
+
+#pragma mark -
+#pragma mark utilities
+
+-(void)refreshAreaUI{
+    UIButton* areaButton = (UIButton*)[self.view viewWithTag:kTagUIButtonDeputyArea];
+    if ( [self.tempData valueForKey:DATA_KEY_nominee_area]
+        &&  [self.tempData valueForKey:DATA_KEY_nominee_number]) {
+        NSString* areaInfo = [NSString stringWithFormat:@"%@ 第%@选区",
+                                        [self.tempData valueForKey:DATA_KEY_nominee_area], 
+                                        [self.tempData valueForKey:DATA_KEY_nominee_number] ];
+        [areaButton setTitle:areaInfo forState:UIControlStateNormal];
+    }
+}
+
+- (void)showErrorAlert: (NSString*)message forOperation: (RESTOperation*)op {
+    [super showAlert: message error: op.error fatal: NO];
+}
+
+
+#pragma mark -
+#pragma mark callback methods
+-(void)handleReportGPSSwitch:(id)sender {
+    UICustomSwitch* reportGPS = (UICustomSwitch*)[self.view viewWithTag:kTagUISwitchIsReportGPS];
+    
+    if (reportGPS != nil) {
+        if (reportGPS.on) {
+            [reportGPS setOn:NO animated:YES];
+            [tempData setValue:[NSNumber numberWithBool:NO] forKey:DATA_KEY_USE_GPS];
+        }else {
+            [reportGPS setOn:YES animated:YES];
+            [tempData setValue:[NSNumber numberWithBool:YES] forKey:DATA_KEY_USE_GPS];
+        }
+    }
+}
 
 @end

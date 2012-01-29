@@ -27,10 +27,10 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
-    // Couchbase database setup
-    CouchbaseMobile* cb = [[CouchbaseMobile alloc] init];
-    cb.delegate = self;
-    NSAssert([cb start], @"Couchbase didn't start: Error = %@", cb.error);
+//    // Couchbase database setup
+//    CouchbaseMobile* cb = [[CouchbaseMobile alloc] init];
+//    cb.delegate = self;
+//    NSAssert([cb start], @"Couchbase didn't start: Error = %@", cb.error);
     
     // Override point for customization after application launch.
 //    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
@@ -93,16 +93,16 @@
      */
 }
 
-#pragma mark -
-#pragma mark CouchbaseDelegate methods
-
--(void)couchbaseMobile:(CouchbaseMobile*)couchbase didStart:(NSURL*)serverURL{
-    NSLog(@"Couchbase is Ready, go! %@", serverURL);
-}
-
--(void)couchbaseMobile:(CouchbaseMobile *)couchbase failedToStart:(NSError *)error{
-    NSLog(@"Couchbase failed to start! %@", [error localizedDescription]);
-}
+//#pragma mark -
+//#pragma mark CouchbaseDelegate methods
+//
+//-(void)couchbaseMobile:(CouchbaseMobile*)couchbase didStart:(NSURL*)serverURL{
+//    NSLog(@"Couchbase is Ready, go! %@", serverURL);
+//}
+//
+//-(void)couchbaseMobile:(CouchbaseMobile *)couchbase failedToStart:(NSError *)error{
+//    NSLog(@"Couchbase failed to start! %@", [error localizedDescription]);
+//}
 
 
 @end
