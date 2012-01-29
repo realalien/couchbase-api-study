@@ -1,5 +1,10 @@
 
 
+TO_FIX:
+* AddNewDeputyViewController will crash on device, complaining 'modifying layer that is being finalized - 0x473510'
+
+
+
 (from bottom to top)
 
 
@@ -14,6 +19,7 @@
 >  Show existing deputy data on the mapview   <<<<<<<<<<<<<<
     > can aggregate data
     > can auto zoom to the correctscale
+    > use modal view to config display of the map. e.g. satellite/road
 
 
 

@@ -9,6 +9,8 @@
 #import "CountyDeputyMapViewController.h"
 #import "AddNewDeputyViewController.h"
 
+#define METERS_PER_MILE 1609.344
+
 enum {
     kTagUIMapView=100
 };
@@ -79,6 +81,23 @@ enum {
 }
 
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
+    // 1
+    CLLocationCoordinate2D zoomLocation;
+    zoomLocation.latitude = 31.264588;
+    zoomLocation.longitude = 121.50512;
+    // 2
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 5.5*METERS_PER_MILE, 5.5*METERS_PER_MILE);
+    // 3
+    MKCoordinateRegion adjustedRegion = [mapView regionThatFits:viewRegion];                
+    // 4
+    [mapView setRegion:adjustedRegion animated:YES];  
+}
+
+
 /*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -106,8 +125,8 @@ enum {
 -(void)mapView:(MKMapView *)mv regionWillChangeAnimated:(BOOL)animated {
     //---print out the region span - aka zoom level---
     MKCoordinateRegion region = mv.region;
-    NSLog(@"%f",region.span.latitudeDelta);
-    NSLog(@"%f",region.span.longitudeDelta); 
+    NSLog(@"region.span.latitudeDelta : %f",region.span.latitudeDelta);
+    NSLog(@"region.span.longitudeDelta : %f",region.span.longitudeDelta); 
     
 }
 
