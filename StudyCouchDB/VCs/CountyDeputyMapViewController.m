@@ -8,6 +8,8 @@
 
 #import "CountyDeputyMapViewController.h"
 #import "AddNewDeputyViewController.h"
+#import "DeputyAnnotation.h"
+#import "DeputyAnnotationView.h"
 
 #define METERS_PER_MILE 1609.344
 
@@ -41,6 +43,32 @@ enum {
 }
 
 #pragma mark - View lifecycle
+
+// temp
+// IDEA: should group together if some people are affliated to one organization.
+-(void)loadAnnotations {
+    CLLocationCoordinate2D workingCoordinate;
+    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
+    
+    workingCoordinate.latitude = 31.264588;
+    workingCoordinate.longitude = 121.50512;
+    
+    DeputyAnnotation* d1 = [[DeputyAnnotation alloc] initWithCoordinate:workingCoordinate];
+    [d1 setTitle:@"测试人1"];
+    [d1 setSubtitle:@"虹口区2011年度区县人大选举－候选代表"];
+    [d1 setDeputyAnnotationType:DeputyAnnotationTypeLatestNomineeMale];
+    [mapView addAnnotation:d1];
+    
+    workingCoordinate.latitude = 31.274588;
+    workingCoordinate.longitude = 121.50612;
+    
+    DeputyAnnotation* d2 = [[DeputyAnnotation alloc] initWithCoordinate:workingCoordinate];
+    [d2 setTitle:@"测试人2"];
+    [d2 setSubtitle:@"虹口区2011年度区县人大选举－当选代表"];
+    [d2 setDeputyAnnotationType:DeputyAnnotationTypeLatestElectedMale];
+    [mapView addAnnotation:d2];
+}
+
 
 /**/
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -95,16 +123,101 @@ enum {
     MKCoordinateRegion adjustedRegion = [mapView regionThatFits:viewRegion];                
     // 4
     [mapView setRegion:adjustedRegion animated:YES];  
+
 }
 
 
-/*
+
+- (DeputyAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
+    DeputyAnnotationView* annoView = nil;
+    
+    DeputyAnnotation* anno = (DeputyAnnotation*)annotation;
+//    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
+    
+    // TODO: code smell bad!
+    if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedMale) {
+        NSString* identifier = @"LatestElectedMale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousElectedMale) {
+        NSString* identifier = @"PreviousElectedMale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestNomineeMale) {
+        NSString* identifier = @"LatestNomineeMale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousNomineeMale) {
+        NSString* identifier = @"PreviousNomineeMale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }
+    
+    // else
+    if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedFemale) {
+        NSString* identifier = @"LatestElectedFemale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousElectedFemale) {
+        NSString* identifier = @"PreviousElectedFemale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestNomineeFemale) {
+        NSString* identifier = @"LatestNomineeFemale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousNomineeFemale) {
+        NSString* identifier = @"PreviousNomineeFemale";
+        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (newAnnoView == nil) {
+            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        }
+        
+        annoView = newAnnoView;
+    }
+    
+    [annoView setEnabled:YES];
+    [annoView setCanShowCallout:YES];
+    
+    return annoView;
+}
+
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self loadAnnotations];
 }
-*/
 
 - (void)viewDidUnload
 {
