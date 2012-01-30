@@ -16,6 +16,8 @@ TO_FIX:
     > ...
 
 
+? Research and Design the interaction first before writing any code. See what info. is important to track and present.
+
 >  Show existing deputy data on the mapview   <<<<<<<<<<<<<<
     > can aggregate data
     > can auto zoom to the correctscale

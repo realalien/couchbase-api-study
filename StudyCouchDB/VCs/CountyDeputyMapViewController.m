@@ -126,13 +126,44 @@ enum {
 
 }
 
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self loadAnnotations];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+	return YES;
+}
+
+#pragma mark -
+#pragma mark MKMapViewDelegate
+
+-(void)mapView:(MKMapView *)mv regionWillChangeAnimated:(BOOL)animated {
+    //---print out the region span - aka zoom level---
+    MKCoordinateRegion region = mv.region;
+    NSLog(@"region.span.latitudeDelta : %f",region.span.latitudeDelta);
+    NSLog(@"region.span.longitudeDelta : %f",region.span.longitudeDelta); 
+    
+}
 
 
 - (DeputyAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
     DeputyAnnotationView* annoView = nil;
     
     DeputyAnnotation* anno = (DeputyAnnotation*)annotation;
-//    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
+    //    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
     
     // TODO: code smell bad!
     if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedMale) {
@@ -169,8 +200,8 @@ enum {
         annoView = newAnnoView;
     }
     
-    // else
-    if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedFemale) {
+    // female
+    else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedFemale) {
         NSString* identifier = @"LatestElectedFemale";
         DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
         if (newAnnoView == nil) {
@@ -205,47 +236,57 @@ enum {
     }
     
     [annoView setEnabled:YES];
-    [annoView setCanShowCallout:YES];
+    [annoView setCanShowCallout:YES]; // NOTE: set to NO to allow showing customized callout, 
+    
+    // an UIView with UIButtonTypeDetailDisclosure
+    [annoView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure] ];
     
     return annoView;
 }
 
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     
-    [self loadAnnotations];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-	return YES;
-}
-
-#pragma mark -
-#pragma mark MKMapViewDelegate
-
--(void)mapView:(MKMapView *)mv regionWillChangeAnimated:(BOOL)animated {
-    //---print out the region span - aka zoom level---
-    MKCoordinateRegion region = mv.region;
-    NSLog(@"region.span.latitudeDelta : %f",region.span.latitudeDelta);
-    NSLog(@"region.span.longitudeDelta : %f",region.span.longitudeDelta); 
+    // deselect
+    [mapView deselectAnnotation:view.annotation animated:YES];
+    
+    
+    // EXP. create an overlay view to show the detail.
+    // * Better if it's a tab view to show different aspects of information. (IDEA: a note tab to take notes from news VC)
+    // * a tab with UIWebView
+    
+    UIView* demoOverlay = [[UIView alloc]initWithFrame:CGRectMake( self.view.frame.size.width / 2, 
+                                                                 0,
+                                                                 self.view.frame.size.width / 2,
+                                                                  self.view.frame.size.height)];
+    demoOverlay.backgroundColor = [UIColor grayColor];
+    demoOverlay.tag = 123;
+    [self.view addSubview:demoOverlay];
+    // ESP. study the animation and create an effect of moving
+    
+    
+    // Adjust the display of map, annotation clicked should move to 1/4 from the left.
     
 }
 
 
+//// customize the layout of callout display.
+//- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+//    if (view.annotation == self.customAnnotation) {
+//        if (self.calloutAnnotation == nil) {
+//            self.calloutAnnotation = [[CalloutMapAnnotation alloc]
+//                                      initWithLatitude:view.annotation.coordinate.latitude
+//                                      andLongitude:view.annotation.coordinate.longitude];
+//        } else {
+//            self.calloutAnnotation.latitude = view.annotation.coordinate.latitude;
+//            self.calloutAnnotation.longitude = view.annotation.coordinate.longitude;
+//        }
+//        [self.mapView addAnnotation:self.calloutAnnotation];
+//        self.selectedAnnotationView = view;
+//    }
+//}
+
 #pragma mark -
-#pragma mark 
+#pragma mark UI helper methods
 
 // REF: Multiple Buttons on a Navigation Bar 
 //      http://osmorphis.blogspot.com/2009/05/multiple-buttons-on-navigation-bar.html

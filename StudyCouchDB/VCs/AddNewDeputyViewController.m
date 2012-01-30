@@ -154,10 +154,10 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     [toolBar sizeThatFits:CGSizeMake(500, 50)]; 
     
     // --- Cancel and Done buttons
-    UIBarButtonItem *flexibleSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction:)] autorelease];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] ;
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction:)] ;
 //    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)];
-    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)] autorelease]; // TODO: highlight!
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleBordered target:self action:@selector(doneAction:)] ; // TODO: highlight!
     
 //    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
 //                                                                                target:self 
@@ -201,9 +201,11 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     [self.view addSubview:toolBar];
     [toolBar release];
     [barButtons release];
-    barButtons = nil;
     
-    
+    [cancelButton release];
+    [flexibleSpace release];
+    [titleItem release];
+    [doneButton release];
  }
 
 
