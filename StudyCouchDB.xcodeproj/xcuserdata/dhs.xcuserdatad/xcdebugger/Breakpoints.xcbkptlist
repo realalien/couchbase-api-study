@@ -37,26 +37,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "StudyCouchDB/VCs/AddNewDeputyViewController.m"
-         timestampString = "349607607.892056"
+         timestampString = "349661262.805441"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "416"
-         endingLineNumber = "416"
+         startingLineNumber = "418"
+         endingLineNumber = "418"
          landmarkName = "-handleReportGPSSwitch:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "StudyCouchDB/VCs/AddNewDeputyViewController.m"
-         timestampString = "349524385.694508"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "141"
-         endingLineNumber = "141"
-         landmarkName = "-loadView"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

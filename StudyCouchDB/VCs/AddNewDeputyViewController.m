@@ -105,7 +105,7 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [b addTarget:self action:@selector(selectAreaButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:b];
-    [b release];
+    // autoreleased! [b release];
     
     // Q: If we use multiple controller, how to pass around the data  A:
     
@@ -130,7 +130,7 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     UILabel *reportGPSprompt = [UIFactory makeDefaultLabelWithText:@"请确认您当前位置是否在代表人的选区" andTag:kTagUILabelreportGPSprompt];
     reportGPSprompt.frame = CGRectMake( (width-widthGPSLabel)/2 - 30, 225, widthGPSLabel, heightGPSLabel);
     [self.view addSubview:reportGPSprompt];
-    [reportGPSprompt release];
+    // autoreleased! [reportGPSprompt release];
     
     UICustomSwitch *isReportGPS = [UICustomSwitch switchWithLeftText:@"是" andRight:@"不是"];
     isReportGPS.frame = CGRectMake((width-widthGPSLabel)/2 + 300, 225, 95,27);
@@ -138,7 +138,7 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     isReportGPS.tag = kTagUISwitchIsReportGPS;
     [isReportGPS addTarget:self action:@selector(handleReportGPSSwitch:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:isReportGPS];
-    [isReportGPS release];
+    // autoreleased! [isReportGPS release];
     
     // IDEA: create a general table view ui for creating key/value attribute, both can be modified.    
     
@@ -215,13 +215,14 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
 {
     [super viewDidLoad];
     
-    
     self.tempData = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [tempData setValue:[NSNumber numberWithBool:YES] forKey:DATA_KEY_USE_GPS]; // set default , TODO: should load from preset if existing data.
-    
+
     // temp: for test
     UICustomSwitch* reportGPS = (UICustomSwitch*)[self.view viewWithTag:kTagUISwitchIsReportGPS];
-    [reportGPS setOn:YES animated:YES];
+    if (reportGPS != nil) {
+        [reportGPS setOn:NO animated:YES];
+    }
+    [tempData setValue:[NSNumber numberWithBool:reportGPS.on] forKey:DATA_KEY_USE_GPS]; // set default , TODO: should load from preset if existing data.
     
 }
 
@@ -414,10 +415,11 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     
     if (reportGPS != nil) {
         if (reportGPS.on) {
-            [reportGPS setOn:NO animated:YES];
+            // NOTE: do NOT change UI here as user fires the UI change!
+            //[reportGPS setOn:NO animated:YES];
             [tempData setValue:[NSNumber numberWithBool:NO] forKey:DATA_KEY_USE_GPS];
         }else {
-            [reportGPS setOn:YES animated:YES];
+            //[reportGPS setOn:YES animated:YES];
             [tempData setValue:[NSNumber numberWithBool:YES] forKey:DATA_KEY_USE_GPS];
         }
     }
