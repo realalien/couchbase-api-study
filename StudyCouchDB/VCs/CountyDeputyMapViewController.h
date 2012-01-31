@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h> 
 
-@interface CountyDeputyMapViewController : UIViewController<MKMapViewDelegate>
+#import "DeputyProfileViewController.h"
 
+@interface CountyDeputyMapViewController : UIViewController<MKMapViewDelegate> {
+    // we keep a single person profile vc for reuse the view.
+    DeputyProfileViewController* singleProfileViewController;
+}
+
+@property(nonatomic, retain) DeputyProfileViewController* singleProfileViewController;
 
 @end

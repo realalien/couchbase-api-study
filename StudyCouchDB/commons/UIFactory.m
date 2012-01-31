@@ -32,6 +32,14 @@
     return [t autorelease];
 }
 
+// TODO: allow change on device rotating, 
+// TODO: allow width adjustable.
++(UIScrollView*) makeHalfScreenRightScrollView{
+    // FIXME: hardcoded width.
+    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake( 1024 / 2, 0, 1024 / 2, 768)];
+    return [scrollView autorelease];
+}
+
 // TODO: make an UI control combined of a label and textfield
 
 // 

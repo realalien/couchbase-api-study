@@ -27,6 +27,8 @@
 		2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */; };
 		AB39FAE114D4EE47005C7F70 /* UIKit-AddsOn.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */; };
 		AB39FAE914D509C9005C7F70 /* CouchbaseServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */; };
+		AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */; };
+		AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6914D7DE1E00D11152 /* personal.png */; };
 		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
 		ABF5600814D533E400872408 /* switchBlueBg.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600314D533E400872408 /* switchBlueBg.png */; };
 		ABF5600914D533E400872408 /* switchOffPlain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600414D533E400872408 /* switchOffPlain.png */; };
@@ -43,6 +45,7 @@
 		ABF5602314D62C5F00872408 /* male_current_nominee.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5601B14D62C5F00872408 /* male_current_nominee.png */; };
 		ABF5602414D62C5F00872408 /* male_previous_elected.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5601C14D62C5F00872408 /* male_previous_elected.png */; };
 		ABF5602514D62C5F00872408 /* male_previous_nominee.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5601D14D62C5F00872408 /* male_previous_nominee.png */; };
+		ABF5603E14D77D3C00872408 /* DeputyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF5603D14D77D3A00872408 /* DeputyProfileViewController.m */; };
 		ABFC501A14CA3DA200BA484B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501614CA3DA200BA484B /* MapViewController.m */; };
 		ABFC501B14CA3DA200BA484B /* MeshableTablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */; };
 		ABFC501E14CA3DB100BA484B /* UIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFC501C14CA3DB100BA484B /* UIFactory.m */; };
@@ -91,6 +94,8 @@
 		AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIKit-AddsOn.m"; path = "commons/UIKit-AddsOn.m"; sourceTree = "<group>"; };
 		AB39FAE714D509C9005C7F70 /* CouchbaseServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CouchbaseServerManager.h; path = commons/CouchbaseServerManager.h; sourceTree = "<group>"; };
 		AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CouchbaseServerManager.m; path = commons/CouchbaseServerManager.m; sourceTree = "<group>"; };
+		AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeputyProfilePrototyping.xib; path = experimentals/DeputyProfilePrototyping.xib; sourceTree = "<group>"; };
+		AB9FCC6914D7DE1E00D11152 /* personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = personal.png; path = Resources/prototyping/personal.png; sourceTree = "<group>"; };
 		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
 		ABF5600314D533E400872408 /* switchBlueBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchBlueBg.png; path = libraries/UICustomSwitch/switchBlueBg.png; sourceTree = "<group>"; };
 		ABF5600414D533E400872408 /* switchOffPlain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchOffPlain.png; path = libraries/UICustomSwitch/switchOffPlain.png; sourceTree = "<group>"; };
@@ -110,6 +115,8 @@
 		ABF5601B14D62C5F00872408 /* male_current_nominee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = male_current_nominee.png; path = Resources/deputies/male_current_nominee.png; sourceTree = "<group>"; };
 		ABF5601C14D62C5F00872408 /* male_previous_elected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = male_previous_elected.png; path = Resources/deputies/male_previous_elected.png; sourceTree = "<group>"; };
 		ABF5601D14D62C5F00872408 /* male_previous_nominee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = male_previous_nominee.png; path = Resources/deputies/male_previous_nominee.png; sourceTree = "<group>"; };
+		ABF5603C14D77D3900872408 /* DeputyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeputyProfileViewController.h; path = VCs/DeputyProfileViewController.h; sourceTree = "<group>"; };
+		ABF5603D14D77D3A00872408 /* DeputyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeputyProfileViewController.m; path = VCs/DeputyProfileViewController.m; sourceTree = "<group>"; };
 		ABFC501614CA3DA200BA484B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = experimentals/MapViewController.m; sourceTree = "<group>"; };
 		ABFC501714CA3DA200BA484B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = experimentals/MapViewController.h; sourceTree = "<group>"; };
 		ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeshableTablesViewController.m; path = experimentals/MeshableTablesViewController.m; sourceTree = "<group>"; };
@@ -250,6 +257,14 @@
 			path = StudyCouchDB;
 			sourceTree = "<group>";
 		};
+		AB9FCC6814D7DDEA00D11152 /* prototypinig */ = {
+			isa = PBXGroup;
+			children = (
+				AB9FCC6914D7DE1E00D11152 /* personal.png */,
+			);
+			name = prototypinig;
+			sourceTree = "<group>";
+		};
 		ABF5600114D533B800872408 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +288,7 @@
 		ABF5601414D6281800872408 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB9FCC6814D7DDEA00D11152 /* prototypinig */,
 				ABF5601514D62C4900872408 /* deputies */,
 			);
 			name = Resources;
@@ -306,6 +322,8 @@
 				ABF5600F14D61D7E00872408 /* DeputyAnnotation.m */,
 				ABF5601114D6202700872408 /* DeputyAnnotationView.h */,
 				ABF5601214D6202800872408 /* DeputyAnnotationView.m */,
+				ABF5603C14D77D3900872408 /* DeputyProfileViewController.h */,
+				ABF5603D14D77D3A00872408 /* DeputyProfileViewController.m */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -332,6 +350,7 @@
 				ABFC501714CA3DA200BA484B /* MapViewController.h */,
 				ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */,
 				ABFC501914CA3DA200BA484B /* MeshableTablesViewController.h */,
+				AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */,
 			);
 			name = experimentals;
 			sourceTree = "<group>";
@@ -421,6 +440,8 @@
 				ABF5602314D62C5F00872408 /* male_current_nominee.png in Resources */,
 				ABF5602414D62C5F00872408 /* male_previous_elected.png in Resources */,
 				ABF5602514D62C5F00872408 /* male_previous_nominee.png in Resources */,
+				AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */,
+				AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +504,7 @@
 				ABF5600B14D533E400872408 /* UICustomSwitch.m in Sources */,
 				ABF5601014D61D7F00872408 /* DeputyAnnotation.m in Sources */,
 				ABF5601314D6202800872408 /* DeputyAnnotationView.m in Sources */,
+				ABF5603E14D77D3C00872408 /* DeputyProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

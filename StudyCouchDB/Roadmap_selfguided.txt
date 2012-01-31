@@ -18,6 +18,11 @@ TO_FIX:
 
 ? Research and Design the interaction first before writing any code. See what info. is important to track and present.
 
+> Create a profile vc for showing basic data
+    > drag/slide animation to allow retreat, similar to dianping HD's biz detail info
+
+
+
 >  Show existing deputy data on the mapview   <<<<<<<<<<<<<<
     > can aggregate data
     > can auto zoom to the correctscale

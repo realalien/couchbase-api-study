@@ -11,6 +11,7 @@
 #import "DeputyAnnotation.h"
 #import "DeputyAnnotationView.h"
 
+
 #define METERS_PER_MILE 1609.344
 
 enum {
@@ -24,6 +25,9 @@ enum {
 
 
 @implementation CountyDeputyMapViewController
+
+@synthesize singleProfileViewController;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -147,6 +151,11 @@ enum {
 	return YES;
 }
 
+
+-(void)dealloc{
+    [singleProfileViewController release];
+}
+
 #pragma mark -
 #pragma mark MKMapViewDelegate
 
@@ -254,13 +263,24 @@ enum {
     // * Better if it's a tab view to show different aspects of information. (IDEA: a note tab to take notes from news VC)
     // * a tab with UIWebView
     
-    UIView* demoOverlay = [[UIView alloc]initWithFrame:CGRectMake( self.view.frame.size.width / 2, 
-                                                                 0,
-                                                                 self.view.frame.size.width / 2,
-                                                                  self.view.frame.size.height)];
-    demoOverlay.backgroundColor = [UIColor grayColor];
-    demoOverlay.tag = 123;
-    [self.view addSubview:demoOverlay];
+    if (singleProfileViewController == nil) {
+        DeputyProfileViewController* profileVC = [[DeputyProfileViewController alloc]init];
+        self.singleProfileViewController = profileVC;
+    }
+    
+    [self.singleProfileViewController loadDeputyProfile:nil];
+    
+    [self.view addSubview:self.singleProfileViewController.view];
+    
+//    UIView* demoOverlay = [[UIView alloc]initWithFrame:CGRectMake( self.view.frame.size.width / 2, 
+//                                                                 0,
+//                                                                 self.view.frame.size.width / 2,
+//                                                                  self.view.frame.size.height)];
+//    demoOverlay.backgroundColor = [UIColor grayColor];
+//    demoOverlay.tag = 123;
+//    [self.view addSubview:demoOverlay];
+    
+    
     // ESP. study the animation and create an effect of moving
     
     
