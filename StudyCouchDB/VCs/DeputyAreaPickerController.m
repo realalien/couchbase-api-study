@@ -11,7 +11,7 @@
 
 static const int AREA_NAME_PICKER_COMPONENT = 0;
 static const int AREA_NUMBER_PICKER_COMPONENT = 1;
-static int MAX_AREA_NUMBER_FOR_PICKER = 30;
+static int MAX_AREA_NUMBER_FOR_PICKER = 150;
 
 enum {
   kTagUIAreaPicker
