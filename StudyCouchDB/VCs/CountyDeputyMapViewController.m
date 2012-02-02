@@ -454,7 +454,14 @@ enum {
 -(void)loadAnnotations {
     // read database.
     
+    CouchDatabase *database = [[CouchbaseServerManager] getDeputyDB]; 
     
+    CouchDesignDocument* design = [database designDocumentWithName: @"mydesign"];
+    [design defineViewNamed: @"emailByName" map: @"function(doc){if (doc.nominee_name) emit(doc.area_name,doc.email);};"];
+    CouchQuery* query = [design queryViewNamed: @"emailByName"];
+    for (CouchQueryRow* row in query.rows) {
+        NSLog(@"%@'s email is <%@>", row.key, row.value);
+    }
     
 }
 
