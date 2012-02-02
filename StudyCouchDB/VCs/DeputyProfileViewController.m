@@ -9,6 +9,11 @@
 #import "DeputyProfileViewController.h"
 #import "UIFactory.h"
 
+
+@interface DeputyProfileViewController ()
+-(void)loadDeputyProfile:(NSDictionary*)profile ;
+@end
+
 @implementation DeputyProfileViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

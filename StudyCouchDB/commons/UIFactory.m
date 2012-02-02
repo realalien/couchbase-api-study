@@ -24,7 +24,7 @@
 
 // TODO: why the textfield is not aligned with uilabel that with the same height and y position?
 +(UITextField*) makeDefaultTextFieldWithPlaceholder:(NSString*)p andTag:(int)tagging{
-    UITextField *t = [[UITextField alloc]initWithFrame:CGRectMake(100, 30, 150, 40)];
+    UITextField *t = [[UITextField alloc]initWithFrame:CGRectMake(100, 30, 150, 50)];
     t.placeholder = p;
     t.font = [UIFont systemFontOfSize:18.0];
     t.textColor = [UIColor blackColor];

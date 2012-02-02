@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "DeputyAreaPickerController.h"
 #import "CouchbaseServerManager.h"
+#import "LocationController.h"
 
-@interface AddNewDeputyViewController : UIViewController <AreaPickerDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate> {
+@interface AddNewDeputyViewController : UIViewController <AreaPickerDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate, LocationControllerDelegate> {
     DeputyAreaPickerController* areaPicker ;
     UIPopoverController *areaPickerPopup;
     

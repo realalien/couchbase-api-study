@@ -7,11 +7,13 @@
 //
 
 #import "AddNewDeputyViewController.h"
-#import "UIFactory.h"
 #import "DeputyAreaPickerController.h"
 
 #import "UIKit-AddsOn.h"
 #import "UICustomSwitch.h"
+#import "UIFactory.h"
+
+#import <MapKit/MapKit.h>
 
 #define kDeputyNominees @"deputy-nominees"
 
@@ -21,6 +23,7 @@ enum {
     
     kTagUILabelreportGPSprompt, //
     kTagUISwitchIsReportGPS,
+    kTagUILabelGPS,
     
     kTagAlertSaveDocumentSuccess
 };
@@ -37,6 +40,7 @@ enum {
 static NSString* DATA_KEY_nominee_area = @"NOMINEE_AREA";
 static NSString* DATA_KEY_nominee_number = @"NOMINEE_NUMBER";
 static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
+static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
 
 @implementation AddNewDeputyViewController
 
@@ -97,7 +101,7 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     
     // nominee's political area + number , use a button and a picker(within a popup)
     CGFloat widthAreaLabel = 350;
-    CGFloat heightAreaLabel = 20;
+    CGFloat heightAreaLabel = 30;
     UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
     b.frame = CGRectMake( (width-widthAreaLabel)/2, 125, widthAreaLabel, heightAreaLabel);
     [b setTitle:@"请选择代表人所在的行政区和选区编号" forState:UIControlStateNormal];
@@ -112,9 +116,10 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     // Deputy name
     // NOTE: only a minority of people will input the name, most people should select from a list or their nominees and 
     CGFloat widthTextField = 250;
-    CGFloat heightTextField = 20;
+    CGFloat heightTextField = 30;
     UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake( (width-widthTextField)/2, 175, widthTextField, heightTextField) ]; 
     tf.placeholder = @"请填写代表人的姓名"; // TODO: l10n
+    tf.font = [UIFont systemFontOfSize:12];
     tf.textAlignment = UITextAlignmentCenter;
     tf.borderStyle = UITextBorderStyleRoundedRect;
     tf.tag = kTagUITextFieldDeputyName;
@@ -125,20 +130,29 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     // REF: a quick solution can be retrieved from: http://stackoverflow.com/questions/5368196/how-create-simple-checkbox
     
     // EXP.
-    CGFloat widthGPSLabel = 350;
-    CGFloat heightGPSLabel = 20;
+    CGFloat widthUseGPSLabel = 350;
+    CGFloat heightUseGPSLabel = 30;
     UILabel *reportGPSprompt = [UIFactory makeDefaultLabelWithText:@"请确认您当前位置是否在代表人的选区" andTag:kTagUILabelreportGPSprompt];
-    reportGPSprompt.frame = CGRectMake( (width-widthGPSLabel)/2 - 30, 225, widthGPSLabel, heightGPSLabel);
+    reportGPSprompt.frame = CGRectMake( (width-widthUseGPSLabel)/2 - 30, 225, widthUseGPSLabel, heightUseGPSLabel);
     [self.view addSubview:reportGPSprompt];
     // autoreleased! [reportGPSprompt release];
     
     UICustomSwitch *isReportGPS = [UICustomSwitch switchWithLeftText:@"是" andRight:@"不是"];
-    isReportGPS.frame = CGRectMake((width-widthGPSLabel)/2 + 300, 225, 95,27);
+    isReportGPS.frame = CGRectMake((width-widthUseGPSLabel)/2 + 300, 225, 95,27);
     isReportGPS.on = NO;  // default is NO
     isReportGPS.tag = kTagUISwitchIsReportGPS;
     [isReportGPS addTarget:self action:@selector(handleReportGPSSwitch:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:isReportGPS];
     // autoreleased! [isReportGPS release];
+    
+    CGFloat widthGPSLabel = 350;
+    CGFloat heightGPSLabel = 30;
+    UILabel *gpsLabel = [UIFactory makeDefaultLabelWithText:@"您现在的地理位置：(等待GPS信息)" andTag:kTagUILabelGPS];
+    gpsLabel.font = [UIFont systemFontOfSize:12];
+    gpsLabel.textAlignment = UITextAlignmentCenter;
+    gpsLabel.frame = CGRectMake( (width-widthGPSLabel)/2, 260, widthGPSLabel, heightGPSLabel);
+    [self.view addSubview:gpsLabel];
+    
     
     // IDEA: create a general table view ui for creating key/value attribute, both can be modified.    
     
@@ -206,8 +220,15 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     [flexibleSpace release];
     [titleItem release];
     [doneButton release];
+    
+    // TODO: probably we need a timer to periodically get updated here! Find best practice!
+    [LocationController sharedInstance].delegate = self;
  }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];    
+}
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -220,10 +241,9 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     // temp: for test
     UICustomSwitch* reportGPS = (UICustomSwitch*)[self.view viewWithTag:kTagUISwitchIsReportGPS];
     if (reportGPS != nil) {
+        [tempData setValue:[NSNumber numberWithBool:reportGPS.on] forKey:DATA_KEY_USE_GPS]; // set default , TODO: should load from preset if existing data.
         [reportGPS setOn:NO animated:YES];
     }
-    [tempData setValue:[NSNumber numberWithBool:reportGPS.on] forKey:DATA_KEY_USE_GPS]; // set default , TODO: should load from preset if existing data.
-    
 }
 
 - (void)viewDidUnload
@@ -261,9 +281,25 @@ static NSString* DATA_KEY_USE_GPS = @"IS_REPORT_GPS";
     [self.tempData setValue:areaNumber forKey:DATA_KEY_nominee_number];
     
     [self refreshAreaUI];
-
 }
 
+#pragma mark -
+#pragma mark LocationControllerDelegate methods
+
+- (void)locationUpdate:(CLLocation*)location{
+    // update GPS lat lng, TODO: avoid race condition as the lat and lng is always on the update!
+//    if ( [[LocationController sharedInstance] locationKnown]) {
+//        CLLocation* current = [[LocationController sharedInstance] currentLocation];
+//        [tempData setValue:current forKey:DATA_KEY_GPS_LAT_LNG];
+        
+        [tempData setValue:location forKey:DATA_KEY_GPS_LAT_LNG];
+        
+        UILabel *l = (UILabel*)[self.view viewWithTag:kTagUILabelGPS];
+        if (l) {
+            l.text = [NSString stringWithFormat:@"您现在的地理位置：(%f, %f)",location.coordinate.latitude, location.coordinate.longitude];
+        }
+//    }
+}
 
 #pragma mark -
 #pragma mark callback methods
