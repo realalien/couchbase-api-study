@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 
 #import "LocationController.h"
-#import "CLLocationManager+TemporaryHack.h"
+//#import "CLLocationManager+TemporaryHack.h"
 
 
 @implementation LocationController
@@ -75,7 +75,7 @@ static LocationController *sharedInstance;
         self.currentLocation = [[CLLocation alloc] init];
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
-        [self start];
+        [self start];  // TODO: Q: periodically update here? A:
     }
     return self;
 }

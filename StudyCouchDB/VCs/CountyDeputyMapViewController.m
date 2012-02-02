@@ -53,6 +53,7 @@ enum {
 -(void)loadAnnotations {
     CLLocationCoordinate2D workingCoordinate;
     MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
+    mapView.showsUserLocation = YES;
     
     workingCoordinate.latitude = 31.264588;
     workingCoordinate.longitude = 121.50512;
@@ -122,7 +123,7 @@ enum {
     zoomLocation.latitude = 31.264588;
     zoomLocation.longitude = 121.50512;
     // 2
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 5.5*METERS_PER_MILE, 5.5*METERS_PER_MILE);
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.18, 0.18); // 5.5*METERS_PER_MILE, 5.5*METERS_PER_MILE
     // 3
     MKCoordinateRegion adjustedRegion = [mapView regionThatFits:viewRegion];                
     // 4
@@ -168,89 +169,97 @@ enum {
 }
 
 
-- (DeputyAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
-    DeputyAnnotationView* annoView = nil;
-    
-    DeputyAnnotation* anno = (DeputyAnnotation*)annotation;
-    //    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
-    
-    // TODO: code smell bad!
-    if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedMale) {
-        NSString* identifier = @"LatestElectedMale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
-        }
-        
-        annoView = newAnnoView;
-    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousElectedMale) {
-        NSString* identifier = @"PreviousElectedMale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
-        }
-        
-        annoView = newAnnoView;
-    }else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestNomineeMale) {
-        NSString* identifier = @"LatestNomineeMale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
-        }
-        
-        annoView = newAnnoView;
-    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousNomineeMale) {
-        NSString* identifier = @"PreviousNomineeMale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
-        }
-        
-        annoView = newAnnoView;
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
+
+    if ([annotation isKindOfClass:[MKUserLocation class]]){
+        return nil;
     }
     
-    // female
-    else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedFemale) {
-        NSString* identifier = @"LatestElectedFemale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+    if ([annotation isKindOfClass:[DeputyAnnotation class]]) {
+        DeputyAnnotationView* annoView = nil;
+        
+        DeputyAnnotation* anno = (DeputyAnnotation*)annotation;
+        //    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
+        
+        // TODO: code smell bad!
+        if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedMale) {
+            NSString* identifier = @"LatestElectedMale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
+        }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousElectedMale) {
+            NSString* identifier = @"PreviousElectedMale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
+        }else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestNomineeMale) {
+            NSString* identifier = @"LatestNomineeMale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
+        }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousNomineeMale) {
+            NSString* identifier = @"PreviousNomineeMale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
         }
         
-        annoView = newAnnoView;
-    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousElectedFemale) {
-        NSString* identifier = @"PreviousElectedFemale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+        // female
+        else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestElectedFemale) {
+            NSString* identifier = @"LatestElectedFemale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
+        }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousElectedFemale) {
+            NSString* identifier = @"PreviousElectedFemale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
+        }else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestNomineeFemale) {
+            NSString* identifier = @"LatestNomineeFemale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
+        }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousNomineeFemale) {
+            NSString* identifier = @"PreviousNomineeFemale";
+            DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+            if (newAnnoView == nil) {
+                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+            }
+            
+            annoView = newAnnoView;
         }
         
-        annoView = newAnnoView;
-    }else if (anno.deputyAnnotationType == DeputyAnnotationTypeLatestNomineeFemale) {
-        NSString* identifier = @"LatestNomineeFemale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
-        }
+        [annoView setEnabled:YES];
+        [annoView setCanShowCallout:YES]; // NOTE: set to NO to allow showing customized callout, 
         
-        annoView = newAnnoView;
-    }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousNomineeFemale) {
-        NSString* identifier = @"PreviousNomineeFemale";
-        DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        if (newAnnoView == nil) {
-            newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
-        }
+        // an UIView with UIButtonTypeDetailDisclosure
+        [annoView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure] ];
         
-        annoView = newAnnoView;
+        return annoView;
     }
     
-    [annoView setEnabled:YES];
-    [annoView setCanShowCallout:YES]; // NOTE: set to NO to allow showing customized callout, 
-    
-    // an UIView with UIButtonTypeDetailDisclosure
-    [annoView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure] ];
-    
-    return annoView;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
@@ -366,6 +375,14 @@ enum {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
     [tools release];
 }
+
+#pragma mark -
+#pragma mark LocationControllerDelegate methods
+
+- (void)locationUpdate:(CLLocation*)location{
+    // reload the annotation of userlocation
+}
+
 
 
 #pragma mark -

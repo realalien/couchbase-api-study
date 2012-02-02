@@ -1,8 +1,10 @@
 
 
 TO_FIX:
-* AddNewDeputyViewController will crash on device, complaining 'modifying layer that is being finalized - 0x473510'
-
+* [RESOLVED]AddNewDeputyViewController will crash on device, complaining 'modifying layer that is being finalized - 0x473510'
+  A: trying to release some autorelease object in that VC.
+  
+* 
 
 
 (from bottom to top)
@@ -20,6 +22,9 @@ TO_FIX:
 
 > Create a profile vc for showing basic data
     > drag/slide animation to allow retreat, similar to dianping HD's biz detail info
+
+> Create a server backend to start programming for remote login
+    >
 
 
 

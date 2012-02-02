@@ -119,7 +119,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     CGFloat heightTextField = 30;
     UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake( (width-widthTextField)/2, 175, widthTextField, heightTextField) ]; 
     tf.placeholder = @"请填写代表人的姓名"; // TODO: l10n
-    tf.font = [UIFont systemFontOfSize:12];
+    tf.font = [UIFont systemFontOfSize:18];
     tf.textAlignment = UITextAlignmentCenter;
     tf.borderStyle = UITextBorderStyleRoundedRect;
     tf.tag = kTagUITextFieldDeputyName;
@@ -153,6 +153,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     gpsLabel.frame = CGRectMake( (width-widthGPSLabel)/2, 260, widthGPSLabel, heightGPSLabel);
     [self.view addSubview:gpsLabel];
     
+
     
     // IDEA: create a general table view ui for creating key/value attribute, both can be modified.    
     
@@ -226,8 +227,12 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
  }
 
 
+
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];    
+    [super viewWillAppear:animated];  
+    
+    // request for a update
+    [[LocationController sharedInstance] start];
 }
 
 
@@ -294,11 +299,21 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
         
         [tempData setValue:location forKey:DATA_KEY_GPS_LAT_LNG];
         
-        UILabel *l = (UILabel*)[self.view viewWithTag:kTagUILabelGPS];
-        if (l) {
-            l.text = [NSString stringWithFormat:@"您现在的地理位置：(%f, %f)",location.coordinate.latitude, location.coordinate.longitude];
-        }
+//        UILabel *l = (UILabel*)[self.view viewWithTag:kTagUILabelGPS];
+//        if (l ) {  // Q: why it is not working? " && [[LocationController sharedInstance]locationKnown ]" A:
+////            l.text = [NSString stringWithFormat:@"您现在的地理位置：(%f, %f)",location.coordinate.latitude, location.coordinate.longitude];
+//            l.text = [NSString stringWithFormat:@"您现在的地理位置：(%f, %f)",
+//                      [[LocationController sharedInstance]currentLocation].coordinate.latitude, 
+//                      [[LocationController sharedInstance]currentLocation].coordinate.longitude];
+//        }
 //    }
+    
+    UILabel* l = (UILabel*)[self.view viewWithTag:kTagUILabelGPS];
+    if (l ) {
+        l.text = [NSString stringWithFormat:@"您现在的地理位置：(%f,%f)", 
+                  location.coordinate.latitude, 
+                  location.coordinate.longitude ];
+    }
 }
 
 #pragma mark -
@@ -332,14 +347,21 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
 //#endif
         database.tracksChanges = YES;
 
+        // IDEA: some reflective methods to avoid burden of maintenance.
         // Insert data
         // Create the new document's properties:
+        
+        // TODO: make conversion into general class
+        NSString *plainGPS = [NSString stringWithFormat:@"(%f,%f)",
+                              ((CLLocation*)[tempData valueForKey:DATA_KEY_GPS_LAT_LNG]).coordinate.latitude,  
+                              ((CLLocation*)[tempData valueForKey:DATA_KEY_GPS_LAT_LNG]).coordinate.longitude];
+        
         NSDictionary *inDocument = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     [tempData valueForKey:DATA_KEY_nominee_area], @"area_name",
                                     [tempData valueForKey:DATA_KEY_nominee_number], @"area_number",
                                     name,@"nominee_name",
                                     [tempData valueForKey:DATA_KEY_USE_GPS], @"is_report_gps",
-                                    @"(123,31)", @"lat_lng", // TODO: get user gps
+                                    plainGPS, @"lat_lng", //  
                                     [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
                                     nil];
         

@@ -27,7 +27,6 @@
 		2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */; };
 		2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */; };
 		2DABB5A614D974F700988957 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DABB5A514D974F700988957 /* CoreLocation.framework */; };
-		2DABB5AA14D9792200988957 /* CLLocationManager+TemporaryHack.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DABB5A914D9792200988957 /* CLLocationManager+TemporaryHack.m */; };
 		AB39FAE114D4EE47005C7F70 /* UIKit-AddsOn.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */; };
 		AB39FAE914D509C9005C7F70 /* CouchbaseServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */; };
 		AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */; };
@@ -96,8 +95,6 @@
 		2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
 		2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2DABB5A514D974F700988957 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		2DABB5A814D9792200988957 /* CLLocationManager+TemporaryHack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocationManager+TemporaryHack.h"; path = "commons/CLLocationManager+TemporaryHack.h"; sourceTree = "<group>"; };
-		2DABB5A914D9792200988957 /* CLLocationManager+TemporaryHack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocationManager+TemporaryHack.m"; path = "commons/CLLocationManager+TemporaryHack.m"; sourceTree = "<group>"; };
 		AB39FADF14D4EE47005C7F70 /* UIKit-AddsOn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIKit-AddsOn.h"; path = "commons/UIKit-AddsOn.h"; sourceTree = "<group>"; };
 		AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIKit-AddsOn.m"; path = "commons/UIKit-AddsOn.m"; sourceTree = "<group>"; };
 		AB39FAE714D509C9005C7F70 /* CouchbaseServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CouchbaseServerManager.h; path = commons/CouchbaseServerManager.h; sourceTree = "<group>"; };
@@ -351,8 +348,6 @@
 				AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */,
 				2D9C2EB014D965E500956FA1 /* LocationController.h */,
 				2D9C2EB114D965E500956FA1 /* LocationController.m */,
-				2DABB5A814D9792200988957 /* CLLocationManager+TemporaryHack.h */,
-				2DABB5A914D9792200988957 /* CLLocationManager+TemporaryHack.m */,
 			);
 			name = commons;
 			sourceTree = "<group>";
@@ -520,7 +515,6 @@
 				ABF5601314D6202800872408 /* DeputyAnnotationView.m in Sources */,
 				ABF5603E14D77D3C00872408 /* DeputyProfileViewController.m in Sources */,
 				2D9C2EB214D965E500956FA1 /* LocationController.m in Sources */,
-				2DABB5AA14D9792200988957 /* CLLocationManager+TemporaryHack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,7 +610,8 @@
 		2D92AF5514AA22E6007819D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 嘉诚 朱 (MP4KW245AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 嘉诚 朱 (MP4KW245AG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -627,7 +622,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "C633D592-1C7B-4C27-9A6D-C5FF9B082E39";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C633D592-1C7B-4C27-9A6D-C5FF9B082E39";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -636,6 +632,7 @@
 		2D92AF5614AA22E6007819D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: 嘉诚 朱 (MP4KW245AG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -645,6 +642,7 @@
 				INFOPLIST_FILE = "StudyCouchDB/StudyCouchDB-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "C633D592-1C7B-4C27-9A6D-C5FF9B082E39";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
