@@ -28,17 +28,18 @@ TO_FIX:
 
 
 
->  Show existing deputy data on the mapview   <<<<<<<<<<<<<<
-    >  CHANGE: the annotation should display only aggregate data, when callout, list the current nominees/elected rows
+>  Show existing deputy data on the mapview   
+    > CHANGE: the annotation should display only aggregate data, when callout, list the current nominees/elected rows
     > NOTE: during the developing, the deputy annotation can be displaced in potential two ways:
             * user current location
             * the geometrical center of the nominee area/organization, which are aggregated info from multiple app users!!!
             
-             
-
-
-    > can aggregate data
-    > can auto zoom to the correctscale
+    > [DONE] record GPS lat and lng for AddNewDeputyVC         
+    > show user current location ( to allow dummy data to be aggregated, collect)  ^^^__^^^!
+    
+    > can auto zoom to the correctscalea
+    > can aggregate data and show correct annotations
+    
     > use modal view to config display of the map. e.g. satellite/road
 
 

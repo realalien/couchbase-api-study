@@ -21,6 +21,8 @@ enum {
 
 @interface CountyDeputyMapViewController (private) 
 -(void)customizeNavigationbar;
+-(void)setMapDisplayRegion:(CLLocationCoordinate2D)center latMeter:(CLLocationDistance)latitudinalMeters lngMeter:(CLLocationDistance)longitudinalMeters;
+-(void)loadAnnotations;
 @end
 
 
@@ -50,10 +52,11 @@ enum {
 
 // temp
 // IDEA: should group together if some people are affliated to one organization.
--(void)loadAnnotations {
+-(void)loadDummyAnnotations {
     CLLocationCoordinate2D workingCoordinate;
     MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
     mapView.showsUserLocation = YES;
+    mapView.userTrackingMode = MKUserTrackingModeFollow;
     
     workingCoordinate.latitude = 31.264588;
     workingCoordinate.longitude = 121.50512;
@@ -109,26 +112,14 @@ enum {
     
     //  add buttons on the navigation bar
     [self customizeNavigationbar];
-    
-    
 }
 
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
-    // 1
-    CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude = 31.264588;
-    zoomLocation.longitude = 121.50512;
-    // 2
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.18, 0.18); // 5.5*METERS_PER_MILE, 5.5*METERS_PER_MILE
-    // 3
-    MKCoordinateRegion adjustedRegion = [mapView regionThatFits:viewRegion];                
-    // 4
-    [mapView setRegion:adjustedRegion animated:YES];  
-
+    [LocationController sharedInstance].delegate = self;
+    [[LocationController sharedInstance]start];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -136,7 +127,7 @@ enum {
 {
     [super viewDidLoad];
     
-    [self loadAnnotations];
+    //[self loadDummyAnnotations];
 }
 
 - (void)viewDidUnload
@@ -260,6 +251,8 @@ enum {
         return annoView;
     }
     
+    return nil;
+    
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
@@ -277,7 +270,7 @@ enum {
         self.singleProfileViewController = profileVC;
     }
     
-    [self.singleProfileViewController loadDeputyProfile:nil];
+//    [self.singleProfileViewController loadDeputyProfile:nil];
     
     [self.view addSubview:self.singleProfileViewController.view];
     
@@ -380,7 +373,15 @@ enum {
 #pragma mark LocationControllerDelegate methods
 
 - (void)locationUpdate:(CLLocation*)location{
-    // reload the annotation of userlocation
+    // reload the annotation of userlocation  
+    NSLog(@"location is ( %f , %f )", location.coordinate.latitude, location.coordinate.longitude);
+    [self setMapDisplayRegion:location.coordinate 
+                     latMeter:METERS_PER_MILE  
+                     lngMeter:METERS_PER_MILE ];
+    
+    // TODO: delay to allow showing blue circle
+
+    //[[LocationController sharedInstance] stop];
 }
 
 
@@ -408,7 +409,10 @@ enum {
 // TODO: suppose to reload data from server, make sure the button is disabled when querying.
 // TODO: add a activity indicator when loading
 -(void)refresh:(id)sender {
+    [[LocationController sharedInstance] start];
     
+    // TODO: find a better place to update annotions
+    [self loadAnnotations];
 }
 
 -(void)addNewDeputy:(id)sender {
@@ -423,5 +427,36 @@ enum {
     // Q: Code below may be useful to make navigationViewController to present the modal view. A:
     // addDeputyVc.title = @"Add a new deputy information";
 }
+
+
+-(void)setMapDisplayRegion:(CLLocationCoordinate2D)center latMeter:(CLLocationDistance)latitudinalMeters lngMeter:(CLLocationDistance)longitudinalMeters{
+    MKMapView* mapView = (MKMapView*)[self.view viewWithTag:kTagUIMapView];
+    // 1
+//    CLLocationCoordinate2D zoomLocation;
+//    zoomLocation.latitude = 31.264588;
+//    zoomLocation.longitude = 121.50512;
+    // 2
+//    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 100*METERS_PER_MILE, 100*METERS_PER_MILE);
+    // 3
+//    MKCoordinateRegion adjustedRegion = [mapView regionThatFits:viewRegion];                
+//    // 4
+//    [mapView setRegion:adjustedRegion animated:YES];  
+    
+    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(center, longitudinalMeters,longitudinalMeters);
+    MKCoordinateRegion adjustedRegion = [mapView regionThatFits:viewRegion];                
+    // 4
+    [mapView setRegion:adjustedRegion animated:YES]; 
+}
+
+
+
+-(void)loadAnnotations {
+    // read database.
+    
+    
+    
+}
+
 
 @end

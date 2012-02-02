@@ -139,7 +139,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     
     UICustomSwitch *isReportGPS = [UICustomSwitch switchWithLeftText:@"是" andRight:@"不是"];
     isReportGPS.frame = CGRectMake((width-widthUseGPSLabel)/2 + 300, 225, 95,27);
-    isReportGPS.on = NO;  // default is NO
+    [isReportGPS setOn:NO animated:NO]; // NOTE: use setOn rather than isReportGPS.on = NO;  // default is NO
     isReportGPS.tag = kTagUISwitchIsReportGPS;
     [isReportGPS addTarget:self action:@selector(handleReportGPSSwitch:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:isReportGPS];
@@ -473,12 +473,11 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     
     if (reportGPS != nil) {
         if (reportGPS.on) {
-            // NOTE: do NOT change UI here as user fires the UI change!
-            //[reportGPS setOn:NO animated:YES];
-            [tempData setValue:[NSNumber numberWithBool:NO] forKey:DATA_KEY_USE_GPS];
-        }else {
-            //[reportGPS setOn:YES animated:YES];
+            // NOTE: * do NOT change UI here as user fires the UI change! 
+            //       * also, when switch changed, on is also set.
             [tempData setValue:[NSNumber numberWithBool:YES] forKey:DATA_KEY_USE_GPS];
+        }else {
+            [tempData setValue:[NSNumber numberWithBool:NO] forKey:DATA_KEY_USE_GPS];
         }
     }
 }
