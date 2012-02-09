@@ -16,6 +16,7 @@
 
 +(CouchbaseServerManager*) sharedInstance ;
 +(CouchEmbeddedServer *)getServer;
++(CouchDatabase *)getDeputyDB ;
 
 @property (nonatomic, retain) CouchEmbeddedServer *server; // TODO: make it private!
 

@@ -9,6 +9,9 @@
 #import "CouchbaseServerManager.h"
 #import "UIKit-AddsOn.h"
 
+
+#define kDeputyNominees @"deputy-nominees"
+
 #define USE_COUCHBASE 1
 
 // The name of the database the app will use.
@@ -114,6 +117,10 @@ static CouchbaseServerManager *sharedInstance = nil;
 		return(sharedInstance);
 	} 
 }	
+
++(CouchDatabase *)getDeputyDB {
+    return [[CouchbaseServerManager getServer] databaseNamed:kDeputyNominees ];
+}
 
 - (NSUInteger) retainCount{
 	return(NSUIntegerMax);
