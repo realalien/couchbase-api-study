@@ -154,8 +154,8 @@ enum {
 -(void)mapView:(MKMapView *)mv regionWillChangeAnimated:(BOOL)animated {
     //---print out the region span - aka zoom level---
     MKCoordinateRegion region = mv.region;
-    NSLog(@"region.span.latitudeDelta : %f",region.span.latitudeDelta);
-    NSLog(@"region.span.longitudeDelta : %f",region.span.longitudeDelta); 
+//    NSLog(@"region.span.latitudeDelta : %f",region.span.latitudeDelta);
+//    NSLog(@"region.span.longitudeDelta : %f",region.span.longitudeDelta); 
     
 }
 
@@ -314,21 +314,55 @@ enum {
 //      http://osmorphis.blogspot.com/2009/05/multiple-buttons-on-navigation-bar.html
 // Q: Why there is some space at the right most position? A:
 -(void)customizeNavigationbar {
-    // create a toolbar to have two buttons in the right
-    UIToolbar* toolsLeft = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 133, 44.01)];
-    // create the array to hold the buttons, which then gets added to the toolbar
-    NSMutableArray* buttonsLeft = [[NSMutableArray alloc] initWithCapacity:1];
+    
+//    // create a toolbar to have two buttons in the right
+//    UIToolbar* toolsLeft = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 133, 44.01)];
+//    // create the array to hold the buttons, which then gets added to the toolbar
+//    NSMutableArray* buttonsLeft = [[NSMutableArray alloc] initWithCapacity:1];
     
     
     // ----------  left hand side -----------
-    UIBarButtonItem* bi = [[UIBarButtonItem alloc]initWithTitle:@"Filter by Area" style:UIBarButtonItemStyleBordered target:self action:@selector(showPopupAreaSelect:)];
-    bi.style = UIBarButtonItemStyleBordered;
-    [buttonsLeft addObject:bi];
-    [bi release];
+    UIButton *selectArea = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    selectArea.frame = CGRectMake(0, 0, 150,30);
+//    selectArea.backgroundColor = [UIColor blueColor];
+//    selectArea.titleLabel.text = @"Filter by Area";
+//    selectArea.titleLabel.textColor = [UIColor blackColor];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:toolsLeft];
-    [toolsLeft release];
+    [selectArea setTitle:@"Filter by Area" forState:UIControlStateNormal];
+    [selectArea setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
+    selectArea.titleLabel.textAlignment = UITextAlignmentCenter;
+    [selectArea  addTarget:self 
+                    action:@selector(showPopupAreaSelect:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UIButton *selectArea2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    selectArea2.frame = CGRectMake(160, 0, 140,30);
+//    selectArea2.backgroundColor = [UIColor blueColor];
+//    selectArea2.titleLabel.text = @"Filter by Area2";
+    [selectArea2 setTitle:@"Filter by Area2" forState:UIControlStateNormal];
+    
+    [selectArea2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+//    selectArea2.titleLabel.textColor = [UIColor blackColor];
+    selectArea2.titleLabel.textAlignment = UITextAlignmentCenter;
+    [selectArea2  addTarget:self 
+                    action:@selector(showPopupAreaSelect:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+//    UIBarButtonItem* bi = [[UIBarButtonItem alloc]initWithTitle:@"Filter by Area" style:UIBarButtonItemStyleBordered target:self action:@selector(showPopupAreaSelect:)];
+//    bi.style = UIBarButtonItemStyleBordered;
+//    [buttonsLeft addObject:bi];
+//    [bi release];
+    
+    self.navigationItem.leftBarButtonItems = [ NSArray arrayWithObjects:
+                                              [[UIBarButtonItem alloc] initWithCustomView:selectArea], 
+                                              [[UIBarButtonItem alloc] initWithCustomView:selectArea2], 
+                                              nil]; 
+//    [toolsLeft release];
+    
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit:)];
     
     // ----------  right hand side -----------
     
@@ -340,7 +374,7 @@ enum {
     
     
     // create a standard "add" button
-    bi = [[UIBarButtonItem alloc]
+    UIBarButtonItem *bi = [[UIBarButtonItem alloc]
                            initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewDeputy:)];
     bi.style = UIBarButtonItemStyleBordered;
     [buttons addObject:bi];
@@ -381,7 +415,7 @@ enum {
     
     // TODO: delay to allow showing blue circle
 
-    //[[LocationController sharedInstance] stop];
+    [[LocationController sharedInstance] stop];
 }
 
 
@@ -389,8 +423,14 @@ enum {
 #pragma mark -
 #pragma mark Callback methods
 
+// IDEA: create a drill-down tableview
 -(void)showPopupAreaSelect:(id)sender {
+    UITableViewController *firstLevelVC = [[UITableViewController alloc] init];
+    firstLevelVC.tableView.delegate = self;
+    firstLevelVC.tableView.dataSource = self;
     
+    UIPopoverController *areaSelectPopup = [[UIPopoverController alloc]initWithContentViewController:firstLevelVC];
+    areaSelectPopup.delegate = self;
 }
 
 
@@ -451,21 +491,42 @@ enum {
 
 
 
--(void)loadAnnotations {
+-(void)loadAnnotations:(NSInteger)levelOfGrouping {
     // read database.
+    NSLog(@"loadAnnotations");
     
     CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
     
-    CouchDesignDocument* design = [database designDocumentWithName: @"mydesign"];
+    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
  
-    [design defineViewNamed: @"emailByName" map: @"function(doc){if (doc.nominee_name) emit(doc.area_name,doc.email);};"];
+    [design defineViewNamed: @"count_nominees_by_area_name" 
+                        map: @"function(doc){\
+     if (doc.area_name && doc.area_number && doc.nominee_name)\
+        emit([doc.area_name, doc.area_number], 1 ); \
+     } "
+                     reduce:@"function(key, values, rereduce) {\
+     return sum(values);\
+     }"
+     ];
 
-    CouchQuery* query = [design queryViewNamed: @"emailByName"];
+    CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name"];
+    query.groupLevel = levelOfGrouping;
 
-    for (CouchQueryRow* row in query.rows) {
-        NSLog(@"%@'s email is <%@>", row.key, row.value);
+    [query start];
+    NSLog(@"total count: %d", query.rows.count);
+        
+    for (int i=0; i< query.rows.count; i++) {
+        CouchQueryRow *row = [query.rows rowAtIndex:i];
+        NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
     }
     
+}
+
+
+#pragma mark -
+#pragma mark UIPopoverControllerDelegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
+        
 }
 
 

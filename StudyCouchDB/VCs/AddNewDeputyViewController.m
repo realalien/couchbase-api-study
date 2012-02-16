@@ -393,9 +393,11 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     if (areaPicker == nil) {
         areaPicker = [[DeputyAreaPickerController alloc] init]; 
         areaPicker.delegate = self;
-        self.areaPickerPopup = [[[UIPopoverController alloc] 
-                                    initWithContentViewController:areaPicker] autorelease]; 
-        self.areaPickerPopup.delegate = self;
+        if ( !self.areaPickerPopup) {
+            self.areaPickerPopup = [[[UIPopoverController alloc] 
+                                     initWithContentViewController:areaPicker] autorelease]; 
+            self.areaPickerPopup.delegate = self;
+        }
     }
     
     // selection data for the picker.
