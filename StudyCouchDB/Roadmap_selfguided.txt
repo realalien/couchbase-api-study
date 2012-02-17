@@ -27,6 +27,7 @@ TO_FIX:
     >
 
 
+> Create basic user login and feedback input page (ESP. to be user-friendly at the very start!)
 
 >  Show existing deputy data on the mapview   
     > CHANGE: the annotation should display only aggregate data, when callout, list the current nominees/elected rows
