@@ -17,8 +17,9 @@
 
 enum {
     kTagUIMapView=100,
-    kTagUITableViewOfFirstTableViewInNavigationView,
-    kTagUITableViewOfNomineesList
+    kTagUITableViewOfAreaNames,
+    kTagUITableViewOfAreaNumbers,
+    kTagUITableViewOfNominees
     
 };
 
@@ -28,7 +29,7 @@ enum {
 -(void)setMapDisplayRegion:(CLLocationCoordinate2D)center latMeter:(CLLocationDistance)latitudinalMeters lngMeter:(CLLocationDistance)longitudinalMeters;
 
 //-(void)loadAnnotations;
--(NSMutableArray *)loadAnnotations:(NSInteger)levelOfGrouping;
+-(NSMutableArray *)countByAreaNameAreaNumberWithGroupingLevel:(NSInteger)levelOfGrouping;
 -(void) reloadAggregateNomineesData ;
 
 @end
@@ -43,6 +44,10 @@ static int HEIGHT_CELL = 44 ;
 @synthesize areaSelectPopup;
 @synthesize nomineesGroupingLevel;
 
+// data
+@synthesize currentSelectAreaName;
+@synthesize currentSelectAreaNumber;
+@synthesize currentSelectNominee;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -168,6 +173,10 @@ static int HEIGHT_CELL = 44 ;
     [singleProfileViewController release];
     [popoverDataHolder release];
     [areaSelectPopup release];
+    
+    [currentSelectAreaName release];
+    [currentSelectAreaNumber release];
+    [currentSelectNominee release];
 }
 
 #pragma mark -
@@ -350,7 +359,7 @@ static int HEIGHT_CELL = 44 ;
 //    selectArea.titleLabel.text = @"Filter by Area";
 //    selectArea.titleLabel.textColor = [UIColor blackColor];
     
-    [selectArea setTitle:@"登记人数" forState:UIControlStateNormal];
+    [selectArea setTitle:@"选择代表人" forState:UIControlStateNormal];
     [selectArea setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     selectArea.titleLabel.textAlignment = UITextAlignmentCenter;
@@ -452,42 +461,53 @@ static int HEIGHT_CELL = 44 ;
 -(void)showPopupAreaSelect:(id)sender {
 
     // refresh the data
-    [self reloadAggregateNomineesData];  
+    //[self reloadAggregateNomineesData];  
+    if (self.areaSelectPopup) {
+        [self.areaSelectPopup dismissPopoverAnimated:YES]; //later will present anyway.
+    }
     
     // create a popover
     if (! self.areaSelectPopup) {
         // if not created, for the first
         UITableViewController *firstLevelVC = [[UITableViewController alloc] init];
-        firstLevelVC.tableView.tag = kTagUITableViewOfFirstTableViewInNavigationView;
+        firstLevelVC.tableView.tag = kTagUITableViewOfAreaNames;
         firstLevelVC.tableView.delegate = self;
         firstLevelVC.tableView.dataSource = self;
         
         UINavigationController *aggregateNavVc = [[UINavigationController alloc]initWithRootViewController:firstLevelVC];
+        aggregateNavVc.delegate = self;
+
+        // Customize the navigationbar items
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                                       style:UIBarButtonItemStylePlain 
+                                                                      target:self 
+                                                                      action:@selector(popoverBackButtonClicked:)];
+        
+        firstLevelVC.navigationItem.backBarButtonItem = backButton;
+        [backButton release];
+        
+        UILabel *l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+        l.backgroundColor = [UIColor clearColor];
+        l.textAlignment = UITextAlignmentCenter;
+        l.textColor = [UIColor whiteColor];
+        l.text = @"选择行政区域";
+        firstLevelVC.navigationItem.titleView = l;
+        [l release];
+        
         
         UIPopoverController *theAreaSelectPopup = [[UIPopoverController alloc]initWithContentViewController:[aggregateNavVc autorelease]];
         self.areaSelectPopup = theAreaSelectPopup;
 //        [theAreaSelectPopup release];
         self.areaSelectPopup.delegate = self;
- 
     }
-    UIBarButtonItem *item = (UIBarButtonItem*)[self.navigationItem.leftBarButtonItems objectAtIndex:0];
     
-    NSLog(@"%@", [self.areaSelectPopup.contentViewController class] ) ;
+    // NOTE: the processes of 'loading data' and 'resize popoverview' is moved to the delegate methods of popoverview
     
     // locate the UITableViewController in order to reloadData
-    if ([self.areaSelectPopup.contentViewController isKindOfClass:[UINavigationController class]] ) {
-        UINavigationController *aggreNav = (UINavigationController*) self.areaSelectPopup.contentViewController;
-        if (aggreNav && [aggreNav.topViewController isKindOfClass:[UITableViewController class]]) {
-            UITableViewController *tableVC =  (UITableViewController *)aggreNav.topViewController ;
-            [tableVC.tableView reloadData];
-        }
-    }
-   
-    
-    self.areaSelectPopup.popoverContentSize = CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 );
+    UIBarButtonItem *item = (UIBarButtonItem*)[self.navigationItem.leftBarButtonItems objectAtIndex:0];
     [self.areaSelectPopup presentPopoverFromBarButtonItem:item
                                  permittedArrowDirections:UIPopoverArrowDirectionAny
-                                                 animated:YES];
+                                                 animated:NO];
     
 }
 
@@ -512,6 +532,15 @@ static int HEIGHT_CELL = 44 ;
     // TODO: find a better place to update annotions
 //    [self loadAnnotations];
 }
+
+
+
+-(void)popoverBackButtonClicked:(id)sender {
+    nomineesGroupingLevel -= 1;
+    NSLog(@"popoverBackButtonClicked  ！！！！  %d", nomineesGroupingLevel);
+}
+
+
 
 -(void)addNewDeputy:(id)sender {
     AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
@@ -548,8 +577,9 @@ static int HEIGHT_CELL = 44 ;
 }
 
 
-
--(NSMutableArray *)loadAnnotations:(NSInteger)levelOfGrouping {
+-(NSMutableArray *)countByAreaNameAreaNumberWithGroupingLevel:(NSInteger)levelOfGrouping
+                                                     startKey:(id)aStartKey
+                                                       endKey:(id)aEndKey {
     // read database.
     NSLog(@"loadAnnotations");
     
@@ -570,8 +600,10 @@ static int HEIGHT_CELL = 44 ;
 
     CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name"];
     query.groupLevel = levelOfGrouping;
-
-    [query start];
+    query.startKey = aStartKey;
+    query.endKey = aEndKey;
+    
+//    [query start];
     NSLog(@"total count: %d", query.rows.count);
     
     NSMutableArray *ret = [[NSMutableArray alloc]init];
@@ -580,62 +612,7 @@ static int HEIGHT_CELL = 44 ;
     // A: 
     for (int i=0; i< query.rows.count; i++) {
         CouchQueryRow *row = [query.rows rowAtIndex:i];
-        NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
-        //[ret setValue:[row.value description]forKey:[row.key description]];
-        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
-    }
-    
-    return ret;
-}
-
-// IDEA: It would be better to create sth. like data provider/ adapter to load different level of data
-// TODO: refactor,   loadAnnotationsDeeper has extra startKey and endKey added, comparing with loadAnnotations
--(NSMutableArray *)loadAnnotationsDeeper:(NSString*)area_name {
-    // read database.
-    NSLog(@"loadAnnotations");
-    
-    CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
-    
-    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
-    
-    // a simple map/reduce function
-//    [design defineViewNamed: @"filter_nominees_by_area_name_area_number" 
-//                        map: @"function(doc){\
-//                                 if (doc.area_name && doc.area_number && doc.nominee_name)\
-//                                 emit([doc.area_name, doc.area_number], doc ); \
-//                             } "
-//    ];
-    
-    // TODO: is it ok to add the nominees data into the key? Test in tempview!
-    [design defineViewNamed: @"count_nominees_by_area_name_area_number" 
-                        map: @"function(doc){\
-                                 if (doc.area_name && doc.area_number && doc.nominee_name)\
-                                 emit([doc.area_name, doc.area_number], 1 ); \
-                               } "
-                     reduce:@"function(key, values, rereduce) {\
-                                return sum(values)\
-                              }"
-     ];
-    
-//    CouchQuery* query = [design queryViewNamed: @"filter_nominees_by_area_name_area_number"];
-    CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name_area_number"];
-    // NOTE:
-    //  to filter using just key=, all parts of the complex key must be specified or you will get a null result, as key= is looking for an exact match.
-    // REF: http://ryankirkman.github.com/2011/03/30/advanced-filtering-with-couchdb-views.html
-//    query.keys = [NSArray arrayWithObjects: area_name, [NSArray array], nil ];
-    query.startKey = area_name;
-    query.endKey = [NSArray arrayWithObjects: area_name, [NSDictionary dictionary],nil ];
-    query.groupLevel = 2;
-    
-    NSLog(@"total count: %d", query.rows.count);
-    
-    NSMutableArray *ret = [[NSMutableArray alloc]init];
-    
-    // Q: TODO: shall I cache the data or request everytime?
-    // A: 
-    for (int i=0; i< query.rows.count; i++) {
-        CouchQueryRow *row = [query.rows rowAtIndex:i];
-        NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
+        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
         //[ret setValue:[row.value description]forKey:[row.key description]];
         [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
     }
@@ -644,7 +621,7 @@ static int HEIGHT_CELL = 44 ;
 }
 
 
--(NSMutableArray *)loadAnnotationsDeeperer:(NSString*)area_name {
+-(NSMutableArray *)loadNomineesByAreaName:(NSString*)area_name areaNumber:(NSString*)area_number{
     // read database.
     NSLog(@"loadAnnotations");
     
@@ -652,34 +629,23 @@ static int HEIGHT_CELL = 44 ;
     
     CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
     
-    // a simple map/reduce function
-    //    [design defineViewNamed: @"filter_nominees_by_area_name_area_number" 
-    //                        map: @"function(doc){\
-    //                                 if (doc.area_name && doc.area_number && doc.nominee_name)\
-    //                                 emit([doc.area_name, doc.area_number], doc ); \
-    //                             } "
-    //    ];
-    
     // TODO: is it ok to add the nominees data into the key? Test in tempview!
-    [design defineViewNamed: @"count_nominees_by_area_name_area_number_nominee_name" 
+    [design defineViewNamed: @"list_nominees_by_area_name_area_number_nominee_name" 
                         map: @"function(doc){\
-     if (doc.area_name && doc.area_number && doc.nominee_name)\
-     emit([doc.area_name, doc.area_number, doc.nominee_name], 1 ); \
-     } "
-                     reduce:@"function(key, values, rereduce) {\
-     return sum(values)\
-     }"
-     ];
+                                if (doc.area_name && doc.area_number && doc.nominee_name){ \
+                                    emit([doc.area_name, doc.area_number, doc.nominee_name], doc ); \
+                                } \
+                                }"
+    ];
     
-    //    CouchQuery* query = [design queryViewNamed: @"filter_nominees_by_area_name_area_number"];
-    CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name_area_number"];
+    CouchQuery* query = [design queryViewNamed: @"list_nominees_by_area_name_area_number_nominee_name"];
     // NOTE:
     //  to filter using just key=, all parts of the complex key must be specified or you will get a null result, as key= is looking for an exact match.
     // REF: http://ryankirkman.github.com/2011/03/30/advanced-filtering-with-couchdb-views.html
     //    query.keys = [NSArray arrayWithObjects: area_name, [NSArray array], nil ];
-    query.startKey = area_name;
-    query.endKey = [NSArray arrayWithObjects: area_name, [NSDictionary dictionary],nil ];
-    query.groupLevel = 3;
+    query.startKey = [NSArray arrayWithObjects:area_name, area_number, nil] ;
+    query.endKey = [NSArray arrayWithObjects: area_name, area_number, [NSDictionary dictionary], nil ];
+//    query.groupLevel = 3;
     
     NSLog(@"total count: %d", query.rows.count);
     
@@ -689,7 +655,7 @@ static int HEIGHT_CELL = 44 ;
     // A: 
     for (int i=0; i< query.rows.count; i++) {
         CouchQueryRow *row = [query.rows rowAtIndex:i];
-        NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
+        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
         //[ret setValue:[row.value description]forKey:[row.key description]];
         [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
     }
@@ -712,43 +678,80 @@ static int HEIGHT_CELL = 44 ;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // NOTE: nation or city shall not appear in the popover selection(better be set in location service or other city selection area), so that there is no need to filter data multiple times!
-    
+    NSLog(@"nomineesGroupingLevel ＝＝＝＝＝＝  %d", nomineesGroupingLevel);
 
-    if (nomineesGroupingLevel == 1) {  // did select a 'area name'// TODO: temp solution
-        nomineesGroupingLevel += 1;
+    if (tableView.tag == kTagUITableViewOfAreaNames) {  // did select a 'area name' 
         NSLog(@"nomineesGroupingLevel >>>>>   %d", nomineesGroupingLevel);
         
-        // TODO: code smell: not general enought
         CouchQueryRow *row = (CouchQueryRow*)[popoverDataHolder objectAtIndex:indexPath.row];
-        NSString *areaName = row.key0;
-        popoverDataHolder = [self loadAnnotationsDeeper:areaName];
+        self.currentSelectAreaName = row.key0;
+        // NOTE: data loading is in popover delegate methods
         
         UINavigationController *aggreNav = (UINavigationController*) self.areaSelectPopup.contentViewController;
         // push a new UITableViewController , Q: When pop it out, will the vc be release? A:
-        UITableViewController *deeper = [[UITableViewController alloc]init];
-        deeper.tableView.dataSource = self;
-        deeper.tableView.delegate = self;
+        UITableViewController *areaNumberTableVc = [[UITableViewController alloc]init];
+        areaNumberTableVc.tableView.tag = kTagUITableViewOfAreaNumbers ; 
+        areaNumberTableVc.tableView.dataSource = self;
+        areaNumberTableVc.tableView.delegate = self;
         
-        [aggreNav pushViewController:deeper animated:NO]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
-        [self.areaSelectPopup setPopoverContentSize:CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 )];
         
-        // TODO: nav back operations
+        [aggreNav pushViewController:areaNumberTableVc animated:YES]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
         
-    }else if (nomineesGroupingLevel == 2){   // did select a 'area number'
+        // Customize the navigationbar
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                                       style:UIBarButtonItemStylePlain 
+                                                                      target:self 
+                                                                      action:@selector(popoverBackButtonClicked:)];
+        
+        areaNumberTableVc.navigationItem.backBarButtonItem = backButton;
+        [backButton release];
+        
+        UILabel *l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+        l.backgroundColor = [UIColor clearColor];
+        l.textAlignment = UITextAlignmentCenter;
+        l.textColor = [UIColor whiteColor];
+        l.text = [NSString stringWithFormat:@"%@", currentSelectAreaName];
+        areaNumberTableVc.navigationItem.titleView = l;
+        [l release];
+        
+//        [self.areaSelectPopup setPopoverContentSize:CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 )];
+    
+    }else if (tableView.tag == kTagUITableViewOfAreaNumbers){   // did select a 'area number'
+        
+        CouchQueryRow *row = (CouchQueryRow*)[popoverDataHolder objectAtIndex:indexPath.row];        
+        self.currentSelectAreaNumber = row.key1 ;
+        
         // load the nominees objects
         UINavigationController *aggreNav = (UINavigationController*) self.areaSelectPopup.contentViewController;
+
         // push a new UITableViewController , Q: When pop it out, will the vc be release? A:
-        UITableViewController *nominees = [[UITableViewController alloc]init];
-        nominees.tableView.tag = kTagUITableViewOfNomineesList;
-        nominees.tableView.dataSource = self;
-        nominees.tableView.delegate = self;
+        UITableViewController *nomineesTableVc = [[UITableViewController alloc]init];
+        nomineesTableVc.tableView.tag = kTagUITableViewOfNominees;
+        nomineesTableVc.tableView.dataSource = self;
+        nomineesTableVc.tableView.delegate = self;
         
-        [aggreNav pushViewController:nominees animated:NO]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
-        [self.areaSelectPopup setPopoverContentSize:CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 )];
+        [aggreNav pushViewController:nomineesTableVc animated:YES]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
+        
+        // customize the navigationbar
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                                       style:UIBarButtonItemStylePlain 
+                                                                      target:self 
+                                                                      action:@selector(popoverBackButtonClicked:)];
+        
+        nomineesTableVc.navigationItem.backBarButtonItem = backButton;
+        [backButton release];
+        
+        UILabel *l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+        l.backgroundColor = [UIColor clearColor];
+        l.textAlignment = UITextAlignmentCenter;
+        l.textColor = [UIColor whiteColor];
+        l.text = [NSString stringWithFormat:@"%@  第%@选区", currentSelectAreaName, currentSelectAreaNumber];
+        nomineesTableVc.navigationItem.titleView = l;
+        [l release];
+    }else if (tableView.tag == kTagUITableViewOfNominees){
+        // show other view controll (probably the details of the nominees
+        [self.areaSelectPopup dismissPopoverAnimated:YES];
     }
-    
-    
-//    
 }
 
 
@@ -766,8 +769,8 @@ static int HEIGHT_CELL = 44 ;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
     CouchQueryRow *row =[popoverDataHolder objectAtIndex:indexPath.row];
     
@@ -780,12 +783,15 @@ static int HEIGHT_CELL = 44 ;
     if (nomineesGroupingLevel == 1) {
         keyIndexForUI = 0;
         cellValue = [NSString stringWithFormat:@"%@ (共%@个选区)",  [row keyAtIndex:keyIndexForUI] ,[row.value description] ] ;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else if (nomineesGroupingLevel == 2) {
         keyIndexForUI = 1;
         cellValue = [NSString stringWithFormat:@"第%@选区 (共%@位代表)",  [row keyAtIndex:keyIndexForUI] ,[row.value description] ] ;
-    }else if (nomineesGroupingLevel == 2) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else if (nomineesGroupingLevel == 3) {
         keyIndexForUI = 2;
         cellValue = [NSString stringWithFormat:@"%@",  [row keyAtIndex:keyIndexForUI] ]; // the nominee's name
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     
@@ -797,18 +803,68 @@ static int HEIGHT_CELL = 44 ;
     return cell;
 }
 
+
 #pragma mark -
-#pragma mark helper methods
+#pragma mark UINavigationControllerDelegate methods
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    NSLog(@" showing tag of viewController  %d", viewController.view.tag);
+    
+    if (viewController.view.tag == kTagUITableViewOfAreaNames) {
+        nomineesGroupingLevel = 1;
+        
+        // refresh data in case new data has been added.
+        [popoverDataHolder removeAllObjects];
+        NSMutableArray *data  = [self countByAreaNameAreaNumberWithGroupingLevel:1 
+                                                                        startKey:nil 
+                                                                          endKey:nil];
+        popoverDataHolder = data;// TODO: this looks wired, what's then? A:
+        
+        if ([self.areaSelectPopup.contentViewController isKindOfClass:[UINavigationController class]] ) {
+            UINavigationController *aggreNav = (UINavigationController*) self.areaSelectPopup.contentViewController;
+            if (aggreNav && [aggreNav.topViewController isKindOfClass:[UITableViewController class]]) {
+                UITableViewController *tableVC =  (UITableViewController *)aggreNav.topViewController ;
+                [tableVC.tableView reloadData];
+            }
+        }
+        
+    }else if (viewController.view.tag == kTagUITableViewOfAreaNumbers){
+        nomineesGroupingLevel = 2;
+        
+        
+        [popoverDataHolder removeAllObjects];
+        NSMutableArray *data  = [self countByAreaNameAreaNumberWithGroupingLevel:2 
+                                                                        startKey:[NSArray arrayWithObjects: self.currentSelectAreaName, nil,nil ] 
+                                                                          endKey:[NSArray arrayWithObjects: self.currentSelectAreaName, [NSDictionary dictionary],nil ]];
+        popoverDataHolder = data;
+        
+        
+    }else if (viewController.view.tag == kTagUITableViewOfNominees){
+        nomineesGroupingLevel = 3;
+        
+        [popoverDataHolder removeAllObjects];
+        NSMutableArray *data  = [self loadNomineesByAreaName:self.currentSelectAreaName
+                                                  areaNumber:self.currentSelectAreaNumber];
+        popoverDataHolder = data;
 
+    }
+    
+    CGSize currentSetSizeForPopover =  CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL ) ;//viewController.contentSizeForViewInPopover;
+//    CGSize fakeMomentarySize = CGSizeMake(currentSetSizeForPopover.width - 1.0f, currentSetSizeForPopover.height - 1.0f);
+//    viewController.contentSizeForViewInPopover = fakeMomentarySize;
+    viewController.contentSizeForViewInPopover = currentSetSizeForPopover;
+    
+//    [self.areaSelectPopup setPopoverContentSize : CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 )];
+    
+    
 
-
--(void) reloadAggregateNomineesData {
-    [popoverDataHolder removeAllObjects];
-    NSMutableArray *data  = [self loadAnnotations:nomineesGroupingLevel];
-    popoverDataHolder = data;// TODO: this looks wired, what's then? A:
-    //    [data release];
-
+ 
 }
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    [self.areaSelectPopup setPopoverContentSize: CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 ) 
+                                       animated:YES];
+}
+
 
 
 @end

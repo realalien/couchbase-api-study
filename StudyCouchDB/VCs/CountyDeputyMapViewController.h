@@ -24,6 +24,12 @@
     NSInteger nomineesGroupingLevel;
     
     UIPopoverController *areaSelectPopup;
+        
+        
+    // data
+    NSString *currentSelectAreaName;
+    NSString *currentSelectAreaNumber;
+    NSString *currentSelectNominee;
 }
 
 @property(nonatomic, retain) DeputyProfileViewController* singleProfileViewController;
@@ -33,5 +39,11 @@
 @property(nonatomic, retain) UIPopoverController *areaSelectPopup;
 
 @property(nonatomic) NSInteger nomineesGroupingLevel;
+
+
+// data
+@property(nonatomic, retain) NSString *currentSelectAreaName;
+@property(nonatomic, retain) NSString *currentSelectAreaNumber;
+@property(nonatomic, retain) NSString *currentSelectNominee;
 
 @end
