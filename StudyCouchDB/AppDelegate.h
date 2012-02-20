@@ -10,11 +10,15 @@
 #import <Couchbase/CouchbaseMobile.h>
 
 @class ViewController;
+@class TraderAlikeViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>  // CouchbaseDelegate
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) UINavigationController *navController;
+
+@property (strong, nonatomic) TraderAlikeViewController *viewController;
+
 
 @end

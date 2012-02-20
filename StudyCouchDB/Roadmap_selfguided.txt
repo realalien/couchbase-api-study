@@ -7,6 +7,20 @@ TO_FIX:
 * 
 
 
+================================================================================================
+
+=== Principles ===
+
+* Instead of making the app a hacking tool, developers should bear in mind that it is actually 
+  used for auditing, observing and supporting, grassroot based activism should do with anything
+  available, in a public-friendly way to serve the local communities!
+
+
+
+================================================================================================
+
+=== Implementation Log ===
+
 (from bottom to top)
 
 
@@ -29,6 +43,9 @@ TO_FIX:
 
 > Create basic user login and feedback input page (ESP. to be user-friendly at the very start!)
 
+> [TODO][ESP] Create a page work flow and evolve, e.g. http://www.flickr.com/photos/riddle/2978744644/
+
+
 >  Show existing deputy data on the mapview   
     > CHANGE: the annotation should display only aggregate data, when callout, list the current nominees/elected rows
     > NOTE: during the developing, the deputy annotation can be displaced in potential two ways:
@@ -45,8 +62,8 @@ TO_FIX:
 
 
 
->  create a data entry vc for input
-    > use popoverview and area picker, and interactions/data
-    > use CouchCocoa lib
+> [DONE] create a data entry vc for input
+    > [DONE] use popoverview and area picker, and interactions/data
+    > [DONE] use CouchCocoa lib
 
->  create a mapview for background, later for mkannotation
+> [DONE] create a mapview for background, later for mkannotation

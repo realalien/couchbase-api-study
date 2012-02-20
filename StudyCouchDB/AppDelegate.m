@@ -11,10 +11,14 @@
 #import "MapViewController.h"
 #import "CountyDeputyMapViewController.h"
 
+#import "TraderAlikeViewController.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize navController = _navController;
+
+@synthesize viewController = _viewController;
 
 - (void)dealloc
 {
@@ -33,22 +37,30 @@
 //    NSAssert([cb start], @"Couchbase didn't start: Error = %@", cb.error);
     
     // Override point for customization after application launch.
-//    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
-//    self.window.rootViewController = self.viewController;
-     
-    self.navController = [[UINavigationController alloc] initWithNibName:nil bundle:nil];
-    self.navController.view.backgroundColor = [UIColor whiteColor];
-    // [self.window addSubview:self.navController.view];
-    self.window.rootViewController = self.navController;
+    
+    // -----------------  single view based ------------
+    
+    // --- TraderAlikeView  test 
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.viewController = [[[TraderAlikeViewController alloc] initWithNibName:@"TraderAlikeView" bundle:nil]autorelease] ; 
+    self.window.rootViewController = self.viewController;
     
     
-    // TEMP
-//    MapViewController *mapVC = [[MapViewController alloc]init ];
-    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
-    //    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
-
-//    self.navController.view = mapVC.view;
-    [self.navController pushViewController:cdMapVc animated:YES];
+    // -----------------  nav view based ------------- 
+//    self.navController = [[UINavigationController alloc] initWithNibName:nil bundle:nil];
+//    self.navController.view.backgroundColor = [UIColor whiteColor];
+//    self.window.rootViewController = self.navController;
+//    
+//    
+//    // TEMP
+////    MapViewController *mapVC = [[MapViewController alloc]init ];
+//    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
+//    //    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
+//
+////    self.navController.view = mapVC.view;
+//    [self.navController pushViewController:cdMapVc animated:YES];
+    
+    // ----------------------------------------------
     
     [self.window makeKeyAndVisible];
     return YES;

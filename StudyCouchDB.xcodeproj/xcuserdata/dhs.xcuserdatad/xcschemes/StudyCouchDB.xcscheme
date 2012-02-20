@@ -67,6 +67,11 @@
       </BuildableProductRunnable>
       <AdditionalOptions>
          <AdditionalOption
+            key = "MallocGuardEdges"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
             key = "NSZombieEnabled"
             value = "YES"
             isEnabled = "YES">
