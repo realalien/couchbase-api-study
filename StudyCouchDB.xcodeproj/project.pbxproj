@@ -31,6 +31,8 @@
 		AB39FAE914D509C9005C7F70 /* CouchbaseServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */; };
 		AB49D8B814F229AF008B3B15 /* TraderAlikeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB49D8B714F229AE008B3B15 /* TraderAlikeView.xib */; };
 		AB49D8BC14F23A31008B3B15 /* TraderAlikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49D8BB14F23A30008B3B15 /* TraderAlikeViewController.m */; };
+		AB49D92114F397F4008B3B15 /* SurveyCreationDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49D91F14F397F4008B3B15 /* SurveyCreationDashboardViewController.m */; };
+		AB49D92214F397F4008B3B15 /* SurveyCreationDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB49D92014F397F4008B3B15 /* SurveyCreationDashboardViewController.xib */; };
 		AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */; };
 		AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6914D7DE1E00D11152 /* personal.png */; };
 		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
@@ -104,6 +106,9 @@
 		AB49D8B714F229AE008B3B15 /* TraderAlikeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TraderAlikeView.xib; sourceTree = "<group>"; };
 		AB49D8BA14F23A2E008B3B15 /* TraderAlikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TraderAlikeViewController.h; path = experimentals/TraderAlikeViewController.h; sourceTree = "<group>"; };
 		AB49D8BB14F23A30008B3B15 /* TraderAlikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TraderAlikeViewController.m; path = experimentals/TraderAlikeViewController.m; sourceTree = "<group>"; };
+		AB49D91E14F397F4008B3B15 /* SurveyCreationDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SurveyCreationDashboardViewController.h; path = experimentals/SurveyCreator/SurveyCreationDashboardViewController.h; sourceTree = "<group>"; };
+		AB49D91F14F397F4008B3B15 /* SurveyCreationDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SurveyCreationDashboardViewController.m; path = experimentals/SurveyCreator/SurveyCreationDashboardViewController.m; sourceTree = "<group>"; };
+		AB49D92014F397F4008B3B15 /* SurveyCreationDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SurveyCreationDashboardViewController.xib; path = experimentals/SurveyCreator/SurveyCreationDashboardViewController.xib; sourceTree = "<group>"; };
 		AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeputyProfilePrototyping.xib; path = experimentals/DeputyProfilePrototyping.xib; sourceTree = "<group>"; };
 		AB9FCC6914D7DE1E00D11152 /* personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = personal.png; path = Resources/prototyping/personal.png; sourceTree = "<group>"; };
 		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
@@ -269,6 +274,16 @@
 			path = StudyCouchDB;
 			sourceTree = "<group>";
 		};
+		AB49D91D14F39754008B3B15 /* SurveyCreator */ = {
+			isa = PBXGroup;
+			children = (
+				AB49D91E14F397F4008B3B15 /* SurveyCreationDashboardViewController.h */,
+				AB49D91F14F397F4008B3B15 /* SurveyCreationDashboardViewController.m */,
+				AB49D92014F397F4008B3B15 /* SurveyCreationDashboardViewController.xib */,
+			);
+			name = SurveyCreator;
+			sourceTree = "<group>";
+		};
 		AB9FCC6814D7DDEA00D11152 /* prototypinig */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +375,7 @@
 		ABFC501514CA3D7300BA484B /* experimentals */ = {
 			isa = PBXGroup;
 			children = (
+				AB49D91D14F39754008B3B15 /* SurveyCreator */,
 				ABFC501614CA3DA200BA484B /* MapViewController.m */,
 				ABFC501714CA3DA200BA484B /* MapViewController.h */,
 				ABFC501814CA3DA200BA484B /* MeshableTablesViewController.m */,
@@ -460,6 +476,7 @@
 				AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */,
 				AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */,
 				AB49D8B814F229AF008B3B15 /* TraderAlikeView.xib in Resources */,
+				AB49D92214F397F4008B3B15 /* SurveyCreationDashboardViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +542,7 @@
 				ABF5603E14D77D3C00872408 /* DeputyProfileViewController.m in Sources */,
 				2D9C2EB214D965E500956FA1 /* LocationController.m in Sources */,
 				AB49D8BC14F23A31008B3B15 /* TraderAlikeViewController.m in Sources */,
+				AB49D92114F397F4008B3B15 /* SurveyCreationDashboardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

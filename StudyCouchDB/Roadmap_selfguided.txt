@@ -37,6 +37,9 @@ TO_FIX:
 > Create a profile vc for showing basic data
     > drag/slide animation to allow retreat, similar to dianping HD's biz detail info
 
+
+[IDEA] make the infrastructure interchangeable across the applications, later for other projects, if possible, SSO enabled.
+
 > Create a server backend to start programming for remote login
     >
 
