@@ -7,7 +7,7 @@
 //
 
 #import "CouchbaseServerManager.h"
-#import "UIKit-AddsOn.h"
+#import "Foundation-AddsOn.h"
 
 
 #define kDeputyNominees @"deputy-nominees"

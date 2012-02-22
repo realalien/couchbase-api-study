@@ -12,6 +12,7 @@
 #import "CountyDeputyMapViewController.h"
 
 #import "TraderAlikeViewController.h"
+#import "SurveyCreationDashboardViewController.h"
 
 @implementation AppDelegate
 
@@ -40,9 +41,10 @@
     
     // -----------------  single view based ------------
     
+    // --- SurveyCreationDashboardViewController, 
     // --- TraderAlikeView  test 
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    self.viewController = [[[TraderAlikeViewController alloc] initWithNibName:@"TraderAlikeView" bundle:nil]autorelease] ; 
+    self.viewController = [[[SurveyCreationDashboardViewController alloc] initWithNibName:@"SurveyCreationDashboardViewController" bundle:nil]autorelease] ; 
     self.window.rootViewController = self.viewController;
     
     

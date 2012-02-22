@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SurveyCreationDashboardViewController : UIViewController
+@interface SurveyCreationDashboardViewController : UIViewController <UITableViewDelegate,UITableViewDataSource, UIAlertViewDelegate> {
+    NSMutableArray *answerOptions;
+}
+
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *resetBarBtn;
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *editOrDoneBarBtn;
+@property (retain, nonatomic) IBOutlet UITextField *questionTitleTextField;
+@property (retain, nonatomic) IBOutlet UITableView *answersTableView;
+
+- (IBAction)resetClicked:(id)sender;
+- (IBAction)editOrDoneClicked:(id)sender;
+
 
 @end

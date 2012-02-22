@@ -6,7 +6,7 @@
 //  Copyright (c) 2012年 d. All rights reserved.
 //
 
-#import "UIKit-AddsOn.h"
+#import "Foundation-AddsOn.h"
 
 
 #pragma mark -

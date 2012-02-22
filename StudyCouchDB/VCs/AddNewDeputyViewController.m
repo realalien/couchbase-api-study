@@ -9,7 +9,7 @@
 #import "AddNewDeputyViewController.h"
 #import "DeputyAreaPickerController.h"
 
-#import "UIKit-AddsOn.h"
+#import "Foundation-AddsOn.h"
 #import "UICustomSwitch.h"
 #import "UIFactory.h"
 

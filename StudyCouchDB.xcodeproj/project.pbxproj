@@ -27,7 +27,7 @@
 		2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */; };
 		2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */; };
 		2DABB5A614D974F700988957 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DABB5A514D974F700988957 /* CoreLocation.framework */; };
-		AB39FAE114D4EE47005C7F70 /* UIKit-AddsOn.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */; };
+		AB39FAE114D4EE47005C7F70 /* Foundation-AddsOn.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE014D4EE47005C7F70 /* Foundation-AddsOn.m */; };
 		AB39FAE914D509C9005C7F70 /* CouchbaseServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */; };
 		AB49D8B814F229AF008B3B15 /* TraderAlikeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB49D8B714F229AE008B3B15 /* TraderAlikeView.xib */; };
 		AB49D8BC14F23A31008B3B15 /* TraderAlikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49D8BB14F23A30008B3B15 /* TraderAlikeViewController.m */; };
@@ -99,8 +99,8 @@
 		2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
 		2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2DABB5A514D974F700988957 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		AB39FADF14D4EE47005C7F70 /* UIKit-AddsOn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIKit-AddsOn.h"; path = "commons/UIKit-AddsOn.h"; sourceTree = "<group>"; };
-		AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIKit-AddsOn.m"; path = "commons/UIKit-AddsOn.m"; sourceTree = "<group>"; };
+		AB39FADF14D4EE47005C7F70 /* Foundation-AddsOn.h */ = {isa = PBXFileReference; fileEncoding = 4; name = "Foundation-AddsOn.h"; path = "commons/Foundation-AddsOn.h"; sourceTree = "<group>"; };
+		AB39FAE014D4EE47005C7F70 /* Foundation-AddsOn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Foundation-AddsOn.m"; path = "commons/Foundation-AddsOn.m"; sourceTree = "<group>"; };
 		AB39FAE714D509C9005C7F70 /* CouchbaseServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CouchbaseServerManager.h; path = commons/CouchbaseServerManager.h; sourceTree = "<group>"; };
 		AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CouchbaseServerManager.m; path = commons/CouchbaseServerManager.m; sourceTree = "<group>"; };
 		AB49D8B714F229AE008B3B15 /* TraderAlikeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TraderAlikeView.xib; sourceTree = "<group>"; };
@@ -362,8 +362,8 @@
 				ABFC501D14CA3DB100BA484B /* UIFactory.h */,
 				ABFC503A14CAB0DB00BA484B /* CommonDataUtil.h */,
 				ABFC503B14CAB0DC00BA484B /* CommonDataUtil.m */,
-				AB39FADF14D4EE47005C7F70 /* UIKit-AddsOn.h */,
-				AB39FAE014D4EE47005C7F70 /* UIKit-AddsOn.m */,
+				AB39FADF14D4EE47005C7F70 /* Foundation-AddsOn.h */,
+				AB39FAE014D4EE47005C7F70 /* Foundation-AddsOn.m */,
 				AB39FAE714D509C9005C7F70 /* CouchbaseServerManager.h */,
 				AB39FAE814D509C9005C7F70 /* CouchbaseServerManager.m */,
 				2D9C2EB014D965E500956FA1 /* LocationController.h */,
@@ -534,7 +534,7 @@
 				ABFC503814CA92DB00BA484B /* CountyDeputyMapViewController.m in Sources */,
 				ABFC503914CA92DB00BA484B /* DeputyAreaPickerController.m in Sources */,
 				ABFC503C14CAB0DC00BA484B /* CommonDataUtil.m in Sources */,
-				AB39FAE114D4EE47005C7F70 /* UIKit-AddsOn.m in Sources */,
+				AB39FAE114D4EE47005C7F70 /* Foundation-AddsOn.m in Sources */,
 				AB39FAE914D509C9005C7F70 /* CouchbaseServerManager.m in Sources */,
 				ABF5600B14D533E400872408 /* UICustomSwitch.m in Sources */,
 				ABF5601014D61D7F00872408 /* DeputyAnnotation.m in Sources */,

@@ -11,6 +11,7 @@
 
 @class ViewController;
 @class TraderAlikeViewController;
+@class SurveyCreationDashboardViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>  // CouchbaseDelegate
 
@@ -18,7 +19,7 @@
 
 @property (strong, nonatomic) UINavigationController *navController;
 
-@property (strong, nonatomic) TraderAlikeViewController *viewController;
+@property (strong, nonatomic) SurveyCreationDashboardViewController *viewController;
 
 
 @end
