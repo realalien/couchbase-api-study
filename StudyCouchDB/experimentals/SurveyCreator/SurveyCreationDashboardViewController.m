@@ -30,6 +30,7 @@ enum {
 @implementation SurveyCreationDashboardViewController
 @synthesize resetBarBtn;
 @synthesize editOrDoneBarBtn;
+@synthesize saveBarBtn;
 @synthesize questionTextView;
 @synthesize answersTableView;
 
@@ -78,6 +79,7 @@ enum {
     [self setQuestionTextView:nil];
     [self setCurrentEditingCellIndexPath:nil];
     
+    [self setSaveBarBtn:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -97,9 +99,16 @@ enum {
 
     [answersTableView release];
     [questionTextView release];
+    [saveBarBtn release];
     [super dealloc];
 }
+
+
 - (IBAction)resetClicked:(id)sender {
+    // TODO: either clean the answerOptions if newly created 
+    //       or reload latest revision!
+    
+    
 }
 
 - (IBAction)editOrDoneClicked:(id)sender {
@@ -113,6 +122,10 @@ enum {
         [self.answersTableView reloadData];
         [self.editOrDoneBarBtn setTitle:@"Done"];
     }
+}
+
+- (IBAction)saveClicked:(id)sender {
+    
 }
 
 
