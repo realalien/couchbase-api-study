@@ -14,7 +14,7 @@
 
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *resetBarBtn;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *editOrDoneBarBtn;
-@property (retain, nonatomic) IBOutlet UITextField *questionTitleTextField;
+@property (retain, nonatomic) IBOutlet UITextView *questionTextView;
 @property (retain, nonatomic) IBOutlet UITableView *answersTableView;
 
 - (IBAction)resetClicked:(id)sender;

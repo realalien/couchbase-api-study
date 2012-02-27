@@ -12,16 +12,28 @@
 #define SECONDS_IN_HOUR() (60 * 60)
 
 
+@interface SurveyCreationDashboardViewController() {
+@private
+    NSIndexPath *currentEditingCellIndexPath;
+}
+
+@property (nonatomic,retain) NSIndexPath *currentEditingCellIndexPath;
+
+@end 
+
 enum {
-    kTagUIInputTextAlert = 100
+    kTagUIAddAnswerTextAlert = 100,
+    kTagUIEditAnswerTextAlert
 };
 
 
 @implementation SurveyCreationDashboardViewController
 @synthesize resetBarBtn;
 @synthesize editOrDoneBarBtn;
-@synthesize questionTitleTextField;
+@synthesize questionTextView;
 @synthesize answersTableView;
+
+@synthesize currentEditingCellIndexPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,15 +64,20 @@ enum {
     self.answersTableView.dataSource = self;
     self.answersTableView.delegate = self;
     
+    self.answersTableView.allowsSelectionDuringEditing = YES;
+    
     [self.editOrDoneBarBtn setTitle:@"Edit"];
+    
 }
 
 - (void)viewDidUnload
 {
     [self setResetBarBtn:nil];
     [self setEditOrDoneBarBtn:nil];
-    [self setQuestionTitleTextField:nil];
     [self setAnswersTableView:nil];
+    [self setQuestionTextView:nil];
+    [self setCurrentEditingCellIndexPath:nil];
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -77,8 +94,9 @@ enum {
     
     [resetBarBtn release];
     [editOrDoneBarBtn release];
-    [questionTitleTextField release];
+
     [answersTableView release];
+    [questionTextView release];
     [super dealloc];
 }
 - (IBAction)resetClicked:(id)sender {
@@ -129,8 +147,11 @@ enum {
     if (self.answersTableView.editing) {
         if ( indexPath.row == [answerOptions count] || [answerOptions count] == 0) {
             cell.textLabel.text = @"添加新的选项";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }else{
             cell.textLabel.text = [answerOptions objectAtIndex:indexPath.row];
+            cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         }
         return cell;
     }else{  // tableview not in editing mode
@@ -161,8 +182,24 @@ enum {
 //	[self.navigationController pushViewController:nextController animated:YES];
 //	[nextController changeProductText:[arryData objectAtIndex:indexPath.row]];
     
+
     NSLog(@"didSelect row  %d ", indexPath.row);
-        
+    
+    NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    self.currentEditingCellIndexPath = selectIndexPath;
+    
+    if (tableView.editing  && indexPath.row < [answerOptions count]) {
+        // TODO: add an alert or embeded editing?
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                         message:@"请修改选项内容"
+                                                        delegate:self 
+                                               cancelButtonTitle:@"取消" 
+                                               otherButtonTitles:@"确定",nil] autorelease];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alert.tag = kTagUIEditAnswerTextAlert;
+        [alert show];
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -177,10 +214,57 @@ enum {
                                                cancelButtonTitle:@"取消" 
                                                otherButtonTitles:@"确定",nil] autorelease];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        alert.tag = kTagUIInputTextAlert;
+        alert.tag = kTagUIAddAnswerTextAlert;
         [alert show];
     }
 }
+
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == [answerOptions count]) { // Watch out for +ADD row
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    if (sourceIndexPath.row == destinationIndexPath.row) return;
+    if (sourceIndexPath.row >= [answerOptions count]) return;
+    if (destinationIndexPath.row > [answerOptions count]) return;
+    
+    
+    
+    NSObject *o = [answerOptions objectAtIndex:sourceIndexPath.row];
+    
+    NSLog(@"sourceIndexPath        %d", sourceIndexPath.row);
+    NSLog(@"destinationIndexPath   %d", destinationIndexPath.row);
+
+ 
+    if(destinationIndexPath.row > sourceIndexPath.row) {//moving a row down
+        int x = 0;
+        if (destinationIndexPath.row == [answerOptions count]) { // watch out for last 'Add a row' element.
+            x = destinationIndexPath.row - 1 ;
+        }else{
+            x = destinationIndexPath.row;
+        }
+        for(int j = sourceIndexPath.row; j < x; j++){
+            [answerOptions replaceObjectAtIndex:j withObject:(NSString*)[answerOptions objectAtIndex:j+1]];
+        }
+    }else{ //moving a row up
+        for(int k = sourceIndexPath.row; k >destinationIndexPath.row; k--)
+            [answerOptions replaceObjectAtIndex:k withObject:[answerOptions objectAtIndex:k-1]];
+    }
+    if (destinationIndexPath.row == [answerOptions count]) {  // watch out for last 'Add a row' element.
+        [answerOptions replaceObjectAtIndex:destinationIndexPath.row - 1 withObject:o];
+    }else{
+        [answerOptions replaceObjectAtIndex:destinationIndexPath.row withObject:o];
+    }
+    
+    [self.answersTableView reloadData];
+}
+
 
 
 #pragma mark -
@@ -188,7 +272,7 @@ enum {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-    if (alertView.tag == kTagUIInputTextAlert ) {
+    if (alertView.tag == kTagUIAddAnswerTextAlert ) {
         if (buttonIndex == 0) {  // cancel, 
             // do nothing
         }else if (buttonIndex == 1) {
@@ -197,6 +281,25 @@ enum {
             if ( t && [t.text isNotEmpty]) {
                 [answerOptions insertObject:t.text atIndex:[answerOptions count]];
                 [self.answersTableView reloadData];
+            }
+        }
+    }else if (alertView.tag == kTagUIEditAnswerTextAlert ) {
+        if (buttonIndex == 0) {  // cancel, 
+            // do nothing
+        }else if (buttonIndex == 1) {
+            // add one entry to the list
+            UITextField *t = [alertView textFieldAtIndex:0];
+            if ( t && [t.text isNotEmpty]) {
+                [answerOptions replaceObjectAtIndex:self.currentEditingCellIndexPath.row withObject:t.text];
+                //[answerOptions insertObject:t.text atIndex:[answerOptions count]];
+                //[self.answersTableView reloadData];
+                
+                [self.answersTableView reloadData];
+                
+                // find the cell and refresh
+                UITableViewCell *cell = [self.answersTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentEditingCellIndexPath.row inSection:0]];
+                //[cell setNeedsLayout];
+                [cell setHighlighted:YES animated:YES];
             }
         }
     }
