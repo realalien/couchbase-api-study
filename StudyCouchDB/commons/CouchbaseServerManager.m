@@ -126,10 +126,10 @@ static CouchbaseServerManager *sharedInstance = nil;
 	return(NSUIntegerMax);
 }
 
-- (void)release{ 
-	/* Don't call super here. The shared instance should
-     not be deallocated */
-}	
+//- (void)release{ 
+//	/* Don't call super here. The shared instance should
+//     not be deallocated */
+//}	
 
 - (id) autorelease{
 	return(self);

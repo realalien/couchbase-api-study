@@ -241,7 +241,9 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
 {
     [super viewDidLoad];
     
-    self.tempData = [[NSMutableDictionary alloc] initWithCapacity:0];
+    NSMutableDictionary *d= [[NSMutableDictionary alloc] init];
+    self.tempData = d;
+    [d release];
 
     // temp: for test
     UICustomSwitch* reportGPS = (UICustomSwitch*)[self.view viewWithTag:kTagUISwitchIsReportGPS];
@@ -249,6 +251,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
         [tempData setValue:[NSNumber numberWithBool:reportGPS.on] forKey:DATA_KEY_USE_GPS]; // set default , TODO: should load from preset if existing data.
         [reportGPS setOn:NO animated:YES];
     }
+
 }
 
 - (void)viewDidUnload

@@ -81,6 +81,7 @@ enum {
     MKMapView *map = [[MKMapView alloc] init]; 
     map.frame = CGRectMake(screen.size.width / 2 , 0, screen.size.width / 2 , 300); 
     [self.view addSubview:map];
+    [map release];
 }
 
 

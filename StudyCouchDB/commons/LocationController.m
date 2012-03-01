@@ -72,17 +72,21 @@ static LocationController *sharedInstance;
 
 -(id) init {
     if (self = [super init]) {
-        self.currentLocation = [[CLLocation alloc] init];
-        locationManager = [[CLLocationManager alloc] init];
+        CLLocation *l = [[CLLocation alloc] init];
+        self.currentLocation = l;
+        [l release];
+        
+        CLLocationManager *m = [[CLLocationManager alloc] init];
+        locationManager = m;
         locationManager.delegate = self;
         [self start];  // TODO: Q: periodically update here? A:
     }
     return self;
 }
 
-- (void)release {
-    //do nothing
-}
+//- (void)release {
+//    //do nothing
+//}
 
 - (id)autorelease {
     return self;

@@ -43,24 +43,27 @@
     
     // --- SurveyCreationDashboardViewController, 
     // --- TraderAlikeView  test 
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    self.viewController = [[[SurveyCreationDashboardViewController alloc] initWithNibName:@"SurveyCreationDashboardViewController" bundle:nil]autorelease] ; 
-    self.window.rootViewController = self.viewController;
+//    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+//    self.viewController = [[[SurveyCreationDashboardViewController alloc] initWithNibName:@"SurveyCreationDashboardViewController" bundle:nil]autorelease] ; 
+//    self.window.rootViewController = self.viewController;
     
     
     // -----------------  nav view based ------------- 
-//    self.navController = [[UINavigationController alloc] initWithNibName:nil bundle:nil];
-//    self.navController.view.backgroundColor = [UIColor whiteColor];
-//    self.window.rootViewController = self.navController;
+    UINavigationController *unav = [[UINavigationController alloc] initWithNibName:nil bundle:nil];
+    self.navController = unav ;
+    [unav release];
+    
+    self.navController.view.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = self.navController;
 //    
 //    
 //    // TEMP
-////    MapViewController *mapVC = [[MapViewController alloc]init ];
-//    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
-//    //    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
-//
-////    self.navController.view = mapVC.view;
-//    [self.navController pushViewController:cdMapVc animated:YES];
+//    MapViewController *mapVC = [[MapViewController alloc]init ];
+    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
+    //    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
+
+//    self.navController.view = mapVC.view;
+    [self.navController pushViewController:[cdMapVc autorelease] animated:YES];
     
     // ----------------------------------------------
     

@@ -84,6 +84,7 @@ static int HEIGHT_CELL = 44 ;
     [d1 setSubtitle:@"虹口区2011年度区县人大选举－候选代表"];
     [d1 setDeputyAnnotationType:DeputyAnnotationTypeLatestNomineeMale];
     [mapView addAnnotation:d1];
+    [d1 release];
     
     workingCoordinate.latitude = 31.274588;
     workingCoordinate.longitude = 121.50612;
@@ -93,6 +94,8 @@ static int HEIGHT_CELL = 44 ;
     [d2 setSubtitle:@"虹口区2011年度区县人大选举－当选代表"];
     [d2 setDeputyAnnotationType:DeputyAnnotationTypeLatestElectedMale];
     [mapView addAnnotation:d2];
+    [d2 release];
+    
 }
 
 
@@ -208,15 +211,14 @@ static int HEIGHT_CELL = 44 ;
             NSString* identifier = @"LatestElectedMale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier]autorelease];
             }
-            
             annoView = newAnnoView;
         }else if (anno.deputyAnnotationType == DeputyAnnotationTypePreviousElectedMale) {
             NSString* identifier = @"PreviousElectedMale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier]autorelease];
             }
             
             annoView = newAnnoView;
@@ -224,7 +226,7 @@ static int HEIGHT_CELL = 44 ;
             NSString* identifier = @"LatestNomineeMale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier] autorelease];
             }
             
             annoView = newAnnoView;
@@ -232,7 +234,7 @@ static int HEIGHT_CELL = 44 ;
             NSString* identifier = @"PreviousNomineeMale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier]autorelease];
             }
             
             annoView = newAnnoView;
@@ -243,7 +245,7 @@ static int HEIGHT_CELL = 44 ;
             NSString* identifier = @"LatestElectedFemale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier] autorelease];
             }
             
             annoView = newAnnoView;
@@ -251,7 +253,7 @@ static int HEIGHT_CELL = 44 ;
             NSString* identifier = @"PreviousElectedFemale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier]autorelease];
             }
             
             annoView = newAnnoView;
@@ -259,7 +261,7 @@ static int HEIGHT_CELL = 44 ;
             NSString* identifier = @"LatestNomineeFemale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier]autorelease];
             }
             
             annoView = newAnnoView;
@@ -267,7 +269,7 @@ static int HEIGHT_CELL = 44 ;
             NSString* identifier = @"PreviousNomineeFemale";
             DeputyAnnotationView* newAnnoView = (DeputyAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
             if (newAnnoView == nil) {
-                newAnnoView = [[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier];
+                newAnnoView = [[[DeputyAnnotationView alloc] initWithAnnotation:anno reuseIdentifier:identifier]autorelease];
             }
             
             annoView = newAnnoView;
@@ -299,6 +301,7 @@ static int HEIGHT_CELL = 44 ;
     if (singleProfileViewController == nil) {
         DeputyProfileViewController* profileVC = [[DeputyProfileViewController alloc]init];
         self.singleProfileViewController = profileVC;
+        [profileVC release];
     }
     
 //    [self.singleProfileViewController loadDeputyProfile:nil];
@@ -392,7 +395,7 @@ static int HEIGHT_CELL = 44 ;
     
     self.navigationItem.leftBarButtonItems = [ NSArray arrayWithObjects:
                                               [item1 autorelease], 
-                                              [[UIBarButtonItem alloc] initWithCustomView:selectArea2], 
+                                              [[[UIBarButtonItem alloc] initWithCustomView:selectArea2] autorelease], 
                                               nil]; 
 //    [toolsLeft release];
     
@@ -474,7 +477,7 @@ static int HEIGHT_CELL = 44 ;
         firstLevelVC.tableView.delegate = self;
         firstLevelVC.tableView.dataSource = self;
         
-        UINavigationController *aggregateNavVc = [[UINavigationController alloc]initWithRootViewController:firstLevelVC];
+        UINavigationController *aggregateNavVc = [[UINavigationController alloc]initWithRootViewController:[firstLevelVC autorelease]];
         aggregateNavVc.delegate = self;
 
         // Customize the navigationbar items
@@ -497,6 +500,7 @@ static int HEIGHT_CELL = 44 ;
         
         UIPopoverController *theAreaSelectPopup = [[UIPopoverController alloc]initWithContentViewController:[aggregateNavVc autorelease]];
         self.areaSelectPopup = theAreaSelectPopup;
+        [theAreaSelectPopup release];
 //        [theAreaSelectPopup release];
         self.areaSelectPopup.delegate = self;
     }
@@ -546,7 +550,7 @@ static int HEIGHT_CELL = 44 ;
     AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
     addDeputyVc.modalPresentationStyle = UIModalPresentationFormSheet;
     addDeputyVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:addDeputyVc animated:YES];
+    [self presentModalViewController:[addDeputyVc autorelease] animated:YES];
     // TODO: why the superview? Q: A:
     addDeputyVc.view.superview.frame =CGRectMake(0,0,500,400);//it's important to do this after presentModalViewController
     addDeputyVc.view.superview.center=self.view.center;//self.view assumes the base view is doing the launching, if not you might need self.view.superview.center etc.
@@ -695,7 +699,7 @@ static int HEIGHT_CELL = 44 ;
         areaNumberTableVc.tableView.delegate = self;
         
         
-        [aggreNav pushViewController:areaNumberTableVc animated:YES]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
+        [aggreNav pushViewController:[areaNumberTableVc autorelease] animated:YES]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
         
         // Customize the navigationbar
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回"
@@ -730,7 +734,7 @@ static int HEIGHT_CELL = 44 ;
         nomineesTableVc.tableView.dataSource = self;
         nomineesTableVc.tableView.delegate = self;
         
-        [aggreNav pushViewController:nomineesTableVc animated:YES]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
+        [aggreNav pushViewController:[nomineesTableVc autorelease] animated:YES]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
         
         // customize the navigationbar
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回"
@@ -748,6 +752,7 @@ static int HEIGHT_CELL = 44 ;
         l.text = [NSString stringWithFormat:@"%@  第%@选区", currentSelectAreaName, currentSelectAreaNumber];
         nomineesTableVc.navigationItem.titleView = l;
         [l release];
+
     }else if (tableView.tag == kTagUITableViewOfNominees){
         // show other view controll (probably the details of the nominees
         [self.areaSelectPopup dismissPopoverAnimated:YES];
@@ -768,12 +773,14 @@ static int HEIGHT_CELL = 44 ;
     static NSString *CellIdentifier = @"cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
     CouchQueryRow *row =[popoverDataHolder objectAtIndex:indexPath.row];
-    
     
     NSString *cellValue = nil;
     // TEMP,EXPERIMENTAL
@@ -835,7 +842,7 @@ static int HEIGHT_CELL = 44 ;
         NSMutableArray *data  = [self countByAreaNameAreaNumberWithGroupingLevel:2 
                                                                         startKey:[NSArray arrayWithObjects: self.currentSelectAreaName, nil,nil ] 
                                                                           endKey:[NSArray arrayWithObjects: self.currentSelectAreaName, [NSDictionary dictionary],nil ]];
-        popoverDataHolder = data;
+        self.popoverDataHolder = data;
         
         
     }else if (viewController.view.tag == kTagUITableViewOfNominees){
@@ -844,7 +851,7 @@ static int HEIGHT_CELL = 44 ;
         [popoverDataHolder removeAllObjects];
         NSMutableArray *data  = [self loadNomineesByAreaName:self.currentSelectAreaName
                                                   areaNumber:self.currentSelectAreaNumber];
-        popoverDataHolder = data;
+        self.popoverDataHolder = data;
 
     }
     
@@ -861,7 +868,7 @@ static int HEIGHT_CELL = 44 ;
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-    [self.areaSelectPopup setPopoverContentSize: CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 ) 
+    [self.areaSelectPopup setPopoverContentSize: CGSizeMake(260, [self.popoverDataHolder count] * HEIGHT_CELL + 44 ) 
                                        animated:YES];
 }
 
