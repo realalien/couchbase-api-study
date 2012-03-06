@@ -48,13 +48,27 @@
 @implementation ListingAttributesTool
 
 
+-(id)initWithName:(NSString*)aName {
+    if ( self = [super init]) {
+        self.name = aName;
+    }
+    
+    return self;
+}
+
+-(void)dealloc{
+    [name release];
+    [uuid release];
+    [super dealloc];
+}
+
 
 -(NSMutableArray*) resultDocuments{ 
     return nil;
 }
 
 
--(NSMutableArray*)processDocument:(CouchDocument*)doc{
+-(NSMutableArray*)processDocumentForTableView:(CouchDocument*)doc{
     
     return nil;
 }
@@ -184,7 +198,7 @@
     
     // TODO: use doc_type, which can also do a second validate if the tool is supposed to process those 'types' of documents.
     // Q: it's quite often that we process the document two times, one in numberOfRowInSection, one in cellForRowAtIndexPath,  then what's best time for processing the data?  Though it's safe not to create another ivar to hold the 
-    return [[tool processDocument:((CouchDocument*)[self.data objectForKey:@"nominee"])] count];
+    return [[tool processDocumentForTableView:((CouchDocument*)[self.data objectForKey:@"nominee"])] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -213,7 +227,7 @@
     }
     
     ListingAttributesTool *tool = (ListingAttributesTool*)[self.tools objectAtIndex:section];
-    NSMutableArray *kvPair = [tool processDocument:[self.data objectForKey:@"nominee"] ];
+    NSMutableArray *kvPair = [tool processDocumentForTableView:[self.data objectForKey:@"nominee"] ];
     
     UILabel *l = (UILabel*)[cell.contentView viewWithTag:201];
     l.text = [[kvPair objectAtIndex:row] valueForKey:@"attributeName"];
