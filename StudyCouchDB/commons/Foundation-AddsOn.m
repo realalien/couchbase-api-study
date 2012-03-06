@@ -65,6 +65,16 @@
 }
 
 
+- (void)showAlert: (NSString*)aMessage{
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"消息"
+                                                    message:aMessage 
+                                                   delegate:self 
+                                          cancelButtonTitle:@"确定" 
+                                          otherButtonTitles:nil, nil]; 
+    [alert show];
+    [alert release];
+}
+
 @end
 
 

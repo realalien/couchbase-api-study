@@ -6,6 +6,8 @@
 //  Copyright (c) 2012年 d. All rights reserved.
 //
 
+// TODO: to handle the db connection problem gracefully!
+
 #import "CouchbaseServerManager.h"
 #import "Foundation-AddsOn.h"
 

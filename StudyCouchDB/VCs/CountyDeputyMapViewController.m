@@ -10,7 +10,8 @@
 #import "AddNewDeputyViewController.h"
 #import "DeputyAnnotation.h"
 #import "DeputyAnnotationView.h"
-
+#import "AppDelegate.h"
+#import "Foundation-AddsOn.h"
 
 #define METERS_PER_MILE 1609.344
 
@@ -756,6 +757,20 @@ static int HEIGHT_CELL = 44 ;
     }else if (tableView.tag == kTagUITableViewOfNominees){
         // show other view controll (probably the details of the nominees
         [self.areaSelectPopup dismissPopoverAnimated:YES];
+        
+        // temp: add a profile view controller
+        DeputyProfileViewController *pv = [[DeputyProfileViewController alloc]init];
+        
+        CouchQueryRow *row = (CouchQueryRow*)[popoverDataHolder objectAtIndex:indexPath.row]; 
+        CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
+        CouchDocument *doc = [database documentWithID: row.documentID];
+        if (doc) {
+            [pv.data setValue:doc forKey:@"nominee"];  // TODO: should use doc_type to indicate.
+            [[(AppDelegate *)[[UIApplication sharedApplication] delegate] navController] pushViewController:[pv autorelease] animated:YES];
+            
+        }else{
+            [self showAlert:@"Failed to load nominee data"];
+        }
     }
 }
 
@@ -800,9 +815,6 @@ static int HEIGHT_CELL = 44 ;
         cellValue = [NSString stringWithFormat:@"%@",  [row keyAtIndex:keyIndexForUI] ]; // the nominee's name
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    
-    
-    
     
     cell.textLabel.text = cellValue;
 //    cell.textLabel.textColor = [UIColor colorWithRed:65.0f/255.0f green:65.0f/255.0f blue:65.0f/255.0f alpha:1.0];

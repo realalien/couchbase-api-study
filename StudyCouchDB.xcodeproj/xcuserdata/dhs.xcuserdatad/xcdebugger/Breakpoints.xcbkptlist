@@ -37,11 +37,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "StudyCouchDB/experimentals/SurveyCreator/SurveyCreationDashboardViewController.m"
-         timestampString = "352260954.475376"
+         timestampString = "352607285.207451"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "155"
-         endingLineNumber = "155"
+         startingLineNumber = "157"
+         endingLineNumber = "157"
          landmarkName = "-saveClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -51,26 +51,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "StudyCouchDB/experimentals/SurveyCreator/SurveyCreationDashboardViewController.m"
-         timestampString = "352264409.448941"
+         timestampString = "352607285.207451"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "399"
-         endingLineNumber = "399"
+         startingLineNumber = "402"
+         endingLineNumber = "402"
          landmarkName = "-alertView:clickedButtonAtIndex:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "StudyCouchDB/VCs/CountyDeputyMapViewController.m"
-         timestampString = "352264983.879211"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "760"
-         endingLineNumber = "760"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

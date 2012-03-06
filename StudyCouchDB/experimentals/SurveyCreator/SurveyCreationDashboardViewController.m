@@ -6,6 +6,8 @@
 //  Copyright (c) 2012年 d. All rights reserved.
 //
 
+// TODO: unfin, app crashes when try to save the modification of answerOptions array.
+
 #import "SurveyCreationDashboardViewController.h"
 #import "Foundation-AddsOn.h"
 #import "CouchbaseServerManager.h"
@@ -310,6 +312,7 @@ enum {
                                                    cancelButtonTitle:@"取消" 
                                                    otherButtonTitles:@"确定",nil] autorelease];
             alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [alert textFieldAtIndex:0].text = [answerOptions objectAtIndex:indexPath.row];
             alert.tag = kTagUIEditAnswerTextAlert;
             [alert show];
         }
@@ -463,7 +466,7 @@ enum {
         [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
     }
     
-    return [ret autorelease];
+    return ret;
 }
 
 

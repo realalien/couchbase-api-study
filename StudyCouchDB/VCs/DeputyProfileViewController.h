@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DeputyProfileViewController : UIViewController
+@interface DeputyProfileViewController : UIViewController<UITableViewDelegate, UITableViewDataSource> {
+    
+    // NOTE: 
+    NSMutableDictionary *data;
+    NSMutableArray *tools;
+    NSMutableArray *targets;
+}
+
+
+@property(nonatomic,retain) NSMutableDictionary *data;
+@property(nonatomic,retain) NSMutableArray *tools;
+@property(nonatomic,retain) NSMutableArray *targets;
 
 @end

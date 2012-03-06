@@ -23,6 +23,7 @@
 - (void)showAlert: (NSString*)message error: (NSError*)error fatal: (BOOL)fatal;
 
 - (void)showAlert: (NSString*)aMessage tag:(NSInteger)tag;
+- (void)showAlert: (NSString*)aMessage;
 @end
 
 

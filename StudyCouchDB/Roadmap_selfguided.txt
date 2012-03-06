@@ -49,6 +49,13 @@ TO_FIX:
 > [TODO][ESP] Create a page work flow and evolve, e.g. http://www.flickr.com/photos/riddle/2978744644/
 
 
+----------------------------
+2011.3.5 Notice
+* It looks like web-based backend will be necessary for mass users, but it requires much efforts, so IT IS DECIDED that I will now try to make the standalone iOS client app(for single user)
+* I have been wondering how to present organization chart UI for knowledge exploring in an interactive way, from web searches there aren't many. So I will postpone this funct..
+
+----------------------------
+
 >  Show existing deputy data on the mapview   
     > CHANGE: the annotation should display only aggregate data, when callout, list the current nominees/elected rows
     > NOTE: during the developing, the deputy annotation can be displaced in potential two ways:
