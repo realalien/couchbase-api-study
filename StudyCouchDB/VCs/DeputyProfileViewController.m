@@ -42,11 +42,20 @@
 // -------------
 
 // TODO: save it as a CouchDocument
-@interface ListingAttributesTool : Tool
+@interface ListingAttributesTool : Tool {
+    NSMutableArray *attributesToLookFor;
+}
+
+@property (nonatomic,retain) NSMutableArray *attributesToLookFor;
+
+-(void)addAttributesToLookFor:(NSArray*)attrNames;
+
 @end
+
 
 @implementation ListingAttributesTool
 
+@synthesize attributesToLookFor;
 
 -(id)initWithName:(NSString*)aName {
     if ( self = [super init]) {
@@ -62,6 +71,19 @@
     [super dealloc];
 }
 
+// TODO: decide if make it public
+-(void)addAttributesToLookFor:(NSArray*)attrNames{
+    for (NSString* aName in attrNames) {
+        // TODO: tuning
+        for (NSString *exist in self.attributesToLookFor) {
+            if ([exist isEqualToString:aName]) {
+                break;
+            }
+        }
+        // last and not found, add to existings.
+        [self.attributesToLookFor addObject:aName];
+    }
+}
 
 -(NSMutableArray*) resultDocuments{ 
     return nil;
@@ -72,6 +94,8 @@
     
     return nil;
 }
+
+
 
 @end
 
