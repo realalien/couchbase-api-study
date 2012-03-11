@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D8A0F76150CFAF3002348D9 /* Steps in Resources */ = {isa = PBXBuildFile; fileRef = 2D8A0F75150CFAF3002348D9 /* Steps */; };
+		2D8A0F79150CFF40002348D9 /* NewsRetriever.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A0F78150CFF40002348D9 /* NewsRetriever.m */; };
+		2D8A0F7E150D040E002348D9 /* ProfileSlideCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A0F7D150D040E002348D9 /* ProfileSlideCardView.m */; };
 		2D92AF2614AA22E6007819D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2514AA22E6007819D7 /* UIKit.framework */; };
 		2D92AF2814AA22E6007819D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2714AA22E6007819D7 /* Foundation.framework */; };
 		2D92AF2A14AA22E6007819D7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF2914AA22E6007819D7 /* CoreGraphics.framework */; };
@@ -73,6 +76,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D8A0F75150CFAF3002348D9 /* Steps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Steps; path = experimentals/NewsHacking/Steps; sourceTree = "<group>"; };
+		2D8A0F77150CFF40002348D9 /* NewsRetriever.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsRetriever.h; path = experimentals/NewsHacking/NewsRetriever.h; sourceTree = "<group>"; };
+		2D8A0F78150CFF40002348D9 /* NewsRetriever.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsRetriever.m; path = experimentals/NewsHacking/NewsRetriever.m; sourceTree = "<group>"; };
+		2D8A0F7C150D040E002348D9 /* ProfileSlideCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileSlideCardView.h; path = experimentals/NewsHacking/ProfileSlideCardView.h; sourceTree = "<group>"; };
+		2D8A0F7D150D040E002348D9 /* ProfileSlideCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileSlideCardView.m; path = experimentals/NewsHacking/ProfileSlideCardView.m; sourceTree = "<group>"; };
 		2D92AF2114AA22E6007819D7 /* StudyCouchDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyCouchDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D92AF2514AA22E6007819D7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2D92AF2714AA22E6007819D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -182,6 +190,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D8A0F73150CFAAC002348D9 /* NewsHacking */ = {
+			isa = PBXGroup;
+			children = (
+				2D8A0F75150CFAF3002348D9 /* Steps */,
+				2D8A0F77150CFF40002348D9 /* NewsRetriever.h */,
+				2D8A0F78150CFF40002348D9 /* NewsRetriever.m */,
+				2D8A0F7C150D040E002348D9 /* ProfileSlideCardView.h */,
+				2D8A0F7D150D040E002348D9 /* ProfileSlideCardView.m */,
+			);
+			name = NewsHacking;
+			sourceTree = "<group>";
+		};
 		2D92AF1614AA22E6007819D7 = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +400,7 @@
 		ABFC501514CA3D7300BA484B /* experimentals */ = {
 			isa = PBXGroup;
 			children = (
+				2D8A0F73150CFAAC002348D9 /* NewsHacking */,
 				AB49D91D14F39754008B3B15 /* SurveyCreator */,
 				ABFC501614CA3DA200BA484B /* MapViewController.m */,
 				ABFC501714CA3DA200BA484B /* MapViewController.h */,
@@ -482,6 +503,7 @@
 				AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */,
 				AB49D8B814F229AF008B3B15 /* TraderAlikeView.xib in Resources */,
 				AB49D92214F397F4008B3B15 /* SurveyCreationDashboardViewController.xib in Resources */,
+				2D8A0F76150CFAF3002348D9 /* Steps in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +571,8 @@
 				AB49D8BC14F23A31008B3B15 /* TraderAlikeViewController.m in Sources */,
 				AB49D92114F397F4008B3B15 /* SurveyCreationDashboardViewController.m in Sources */,
 				AB50B33914FDCD3100957F73 /* SurveyTemplate.m in Sources */,
+				2D8A0F79150CFF40002348D9 /* NewsRetriever.m in Sources */,
+				2D8A0F7E150D040E002348D9 /* ProfileSlideCardView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
