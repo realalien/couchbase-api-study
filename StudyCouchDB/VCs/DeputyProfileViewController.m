@@ -60,6 +60,9 @@
 -(id)initWithName:(NSString*)aName {
     if ( self = [super init]) {
         self.name = aName;
+        NSMutableArray * a= [[NSMutableArray alloc]init];
+        self.attributesToLookFor = a;
+        [a release];
     }
     
     return self;
@@ -68,6 +71,7 @@
 -(void)dealloc{
     [name release];
     [uuid release];
+    [attributesToLookFor release];
     [super dealloc];
 }
 
@@ -75,11 +79,14 @@
 -(void)addAttributesToLookFor:(NSArray*)attrNames{
     for (NSString* aName in attrNames) {
         // TODO: tuning
-        for (NSString *exist in self.attributesToLookFor) {
-            if ([exist isEqualToString:aName]) {
+        for (NSString *exists in self.attributesToLookFor) {
+            if ([exists isEqualToString:aName]) {
                 break;
+            }else{
+                continue;
             }
         }
+        
         // last and not found, add to existings.
         [self.attributesToLookFor addObject:aName];
     }
@@ -90,9 +97,27 @@
 }
 
 
+// NOTE: because it is needed to return an ordered array(for human reading) rather than arbitrary attributes listing.
+// TODO: best practice for return collections
 -(NSMutableArray*)processDocumentForTableView:(CouchDocument*)doc{
     
-    return nil;
+    NSMutableArray *ret = [[NSMutableArray alloc]init];
+    
+    // add attributes of the interested
+    for (NSString* attrToLook in self.attributesToLookFor) {
+        if ( [[doc userProperties] valueForKey:attrToLook] != [NSNull null] 
+            &&  [[doc userProperties] valueForKey:attrToLook] != nil ) { // Q: why nil works?!
+            // still keep it as a dict,            
+            [ret addObject: [NSDictionary dictionaryWithObject:[[doc userProperties] valueForKey:attrToLook]
+                                                        forKey: attrToLook]];
+        }else { 
+            // couchdoc has no such that attribute
+            [ret addObject:[NSDictionary dictionaryWithObject:[NSNull null]
+                                                       forKey: attrToLook] ];
+        }
+    }
+ 
+    return [ret autorelease];
 }
 
 
@@ -116,6 +141,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        NSMutableArray * a= [[NSMutableArray alloc]init];
+        self.tools = a;
+        [a release];
+        
+        NSMutableDictionary *p = [[NSMutableDictionary alloc] init];
+        self.data = p;
+        [p release];
     }
     return self;
 }
@@ -146,17 +178,17 @@
     
     // how to make orientation agnostic? 
     UITableView *tv = [[UITableView alloc]initWithFrame:CGRectMake(40, 0, 320, 768) style:UITableViewStyleGrouped];
+    tv.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     tv.dataSource = self;
     tv.delegate = self;
+    tv.tag = 100;
     [self.view addSubview:tv];
     [tv release];
     
-    
     UIButton *b = [UIButton buttonWithType:UIButtonTypeContactAdd];
-    b.frame = CGRectMake(350, 40, 40, 18);
+    b.frame = CGRectMake(350, 40, 40, 40);
     [b addTarget:self action:@selector(testButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:b];
-    
 }
 
 
@@ -197,10 +229,23 @@
 
 #pragma mark -
 #pragma mark UITableView delegate methods
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 44;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    NSString *name = [((ListingAttributesTool*)[self.tools objectAtIndex:section]) name];
+    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 18)];
+    l.backgroundColor = [UIColor clearColor];
+    l.font = [UIFont boldSystemFontOfSize:15];
+    l.textAlignment = UITextAlignmentCenter;
+    l.text = name;
+    return [l autorelease];
+}
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSLog(@"didSelectRow at  sect: %d  row: %d", indexPath.section, indexPath.row);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -225,6 +270,9 @@
     return [[tool processDocumentForTableView:((CouchDocument*)[self.data objectForKey:@"nominee"])] count];
 }
 
+
+// NOTE:TODO:Q for different tools, the cell representation will be different, what's the best way to customize? 
+// A:
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     int section = indexPath.section;
     int row = indexPath.row;
@@ -237,27 +285,57 @@
         cell.textLabel.font = [UIFont systemFontOfSize: 14.0];
         cell.accessoryType = UITableViewCellAccessoryNone; // UITableViewCellAccessoryDisclosureIndicator;
         
-        UILabel *lkey = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 100, 18)];
+        UILabel *lkey = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, 120, 18)];
         lkey.tag = 201;
         [cell.contentView addSubview:lkey];
         [lkey release];
 
-        UILabel *lval = [[UILabel alloc]initWithFrame:CGRectMake(105, 0, 200, 18)];
+        UILabel *lval = [[UILabel alloc]initWithFrame:CGRectMake(125, 5, 100, 18)];
         lval.tag = 202;
         [cell.contentView addSubview:lval];
         [lval release];
         
+        UIButton *edit = [UIButton buttonWithType:UIButtonTypeCustom];
+        edit.frame = CGRectMake(125, 5, 100, 22);
+        edit.hidden = YES;
+        [edit setTitle:@"添加资料" forState:UIControlStateNormal];
+        [edit setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [edit addTarget:self action:@selector(attrEditClicked:) forControlEvents:UIControlEventTouchUpInside];
+        edit.tag = 203;
+        [cell.contentView addSubview:edit];
+
         // IDEA: for specific data, it may have detailIndicator to show more data for specific data, e.g. organzation info of a person.
     }
     
+    // TODO: tuning the process below, it looks like for every cell, we will process again!
     ListingAttributesTool *tool = (ListingAttributesTool*)[self.tools objectAtIndex:section];
-    NSMutableArray *kvPair = [tool processDocumentForTableView:[self.data objectForKey:@"nominee"] ];
+    
+    NSMutableArray *kvPairs = [tool processDocumentForTableView:[self.data objectForKey:@"nominee"] ];
+    [kvPairs retain];
+    
+    NSDictionary *d = [kvPairs objectAtIndex:row];
+    // this dict contains only one pair of key/value
+    NSArray *keys = [d allKeys]; // 
     
     UILabel *l = (UILabel*)[cell.contentView viewWithTag:201];
-    l.text = [[kvPair objectAtIndex:row] valueForKey:@"attributeName"];
+    l.text = [keys objectAtIndex:0];
     
     l = (UILabel*)[cell.contentView viewWithTag:202];
-    l.text = [[kvPair objectAtIndex:row] valueForKey:@"attributeValue"];
+    UIButton *b = (UIButton*)[cell.contentView viewWithTag:203];
+    
+    if ([d valueForKey:[keys objectAtIndex:0]] != [NSNull null]) {
+        l.text = [d valueForKey:[keys objectAtIndex:0]];
+        l.hidden = NO;
+        b.hidden = YES;
+        [cell.contentView bringSubviewToFront:l];
+    }else{
+        l.text = @"N/A";
+        l.hidden = YES;
+        b.hidden = NO;
+        [cell.contentView bringSubviewToFront:b];
+    }
+    
+    [kvPairs release];
     
     return cell;
     
@@ -266,9 +344,10 @@
 
 #pragma mark -
 #pragma mark callback
+
 -(void)testButtonClicked:(id)sender{
     
-    // TEMP
+    // TEMP: entrance of using
     [self.tools removeAllObjects];
     
     // add a virtual tool/target to the tableview's datasource for display
@@ -278,12 +357,33 @@
     // HINT: for a simple data listing,  __local knowledge__ will be sth. like 'the names of attributes to inspect', 
     //       __actions__ will be 'check those attributes', 'giving statics'(which depends other tool/target), 
     
-    ListingAttributesTool *tool = [[ListingAttributesTool alloc]init];
-    [self.tools addObject:tool];  
     
+    
+    // NOTE: some attributes are just for viewing.
+    ListingAttributesTool *tool = [[ListingAttributesTool alloc]initWithName:@"Personal Info"];
+    [tool addAttributesToLookFor:[NSArray arrayWithObjects:@"area_name",@"area_number", @"nominee_name", nil]];
+    [self.tools addObject:tool];  
+    [tool release];  // TODO:
+                        
+    
+    // NOTE: some attributes are the interfaces to outside data, like personal page of the SNS, the data crawling tools key words.
+    ListingAttributesTool *tool2 = [[ListingAttributesTool alloc]initWithName:@"Sociality"];
+    [tool2 addAttributesToLookFor:[NSArray arrayWithObjects:@"weibo acct.",@"twitter acct.", nil]];
+    [self.tools addObject:tool2];  
+    [tool2 release];
+    
+    UITableView *tv = (UITableView*)[self.view viewWithTag:100];
+    if (tv) {
+        [tv reloadData];
+    }
     // NOTE: IDEA: * the tools should be materialized as documents * the tools should follow some protocols, like produce some documents or not, 
     // NOTE: if tool doens't comply with the some kind of protocol, then it's not very obvious to bind the tools to a tableview(or any other UI)
     
+    
+}
+
+// to edit the data of the deputy.
+-(void)attrEditClicked:(id)sender{
     
 }
 

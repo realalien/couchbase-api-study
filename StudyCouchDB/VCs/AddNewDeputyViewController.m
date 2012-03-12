@@ -366,6 +366,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
                                     [tempData valueForKey:DATA_KEY_USE_GPS], @"is_report_gps",
                                     plainGPS, @"lat_lng", //  
                                     [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
+                                    @"person", @"doc_type", // TODO: doc_type would be better to managed in one place.
                                     nil];
         
         // Save the document, asynchronously:

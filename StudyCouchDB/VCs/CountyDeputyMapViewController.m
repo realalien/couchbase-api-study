@@ -682,6 +682,10 @@ static int HEIGHT_CELL = 44 ;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if ([popoverDataHolder count] == 0) {
+        return; // no data to process
+    }
+    
     // NOTE: nation or city shall not appear in the popover selection(better be set in location service or other city selection area), so that there is no need to filter data multiple times!
     NSLog(@"nomineesGroupingLevel ＝＝＝＝＝＝  %d", nomineesGroupingLevel);
 
@@ -780,7 +784,11 @@ static int HEIGHT_CELL = 44 ;
 #pragma mark UITableDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [popoverDataHolder count];
+    if ([popoverDataHolder count] == 0) {
+        return  1;  // make a 'no data' cell.
+    }else {
+        return [popoverDataHolder count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -794,6 +802,13 @@ static int HEIGHT_CELL = 44 ;
     }
 
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    
+    if ([popoverDataHolder count] == 0) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.text = @"没有数据";
+        return cell;
+    }
     
     CouchQueryRow *row =[popoverDataHolder objectAtIndex:indexPath.row];
     
@@ -867,20 +882,15 @@ static int HEIGHT_CELL = 44 ;
 
     }
     
-    CGSize currentSetSizeForPopover =  CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL ) ;//viewController.contentSizeForViewInPopover;
-//    CGSize fakeMomentarySize = CGSizeMake(currentSetSizeForPopover.width - 1.0f, currentSetSizeForPopover.height - 1.0f);
-//    viewController.contentSizeForViewInPopover = fakeMomentarySize;
+    // TODO:Q: please find out how to resize the popover windows, it looks like a coincidence.
+    CGSize currentSetSizeForPopover =  CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL );
     viewController.contentSizeForViewInPopover = currentSetSizeForPopover;
-    
-//    [self.areaSelectPopup setPopoverContentSize : CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 )];
-    
-    
-
  
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-    [self.areaSelectPopup setPopoverContentSize: CGSizeMake(260, [self.popoverDataHolder count] * HEIGHT_CELL + 44 ) 
+    [self.areaSelectPopup setPopoverContentSize:CGSizeMake(260, 
+                                                           ([popoverDataHolder count]==0? 1 : [popoverDataHolder count]) * HEIGHT_CELL + 44  )  
                                        animated:YES];
 }
 
