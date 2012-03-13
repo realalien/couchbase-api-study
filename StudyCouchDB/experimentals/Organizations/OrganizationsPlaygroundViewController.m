@@ -63,7 +63,7 @@
     longPressRecognizer.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:longPressRecognizer];
     
-    // Tap for selection.
+    // Tap for selection. NOTE: double tapping is not very natural for beginners, try to avoid use that interaction.
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)];
     [self.view addGestureRecognizer:tapGestureRecognizer];
     
@@ -93,6 +93,18 @@
 #pragma mark -
 #pragma mark callback methods
 
+-(void)createUITextFieldForEditing:(UIView*)aView{
+    if (!aView) {
+        return; // do nothing
+    }else{
+        // create a text field at center.
+        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(aView.center.x, aView.center.y, 120, 20)];
+        tf.placeholder = @"请输入机构名称";
+        [aView addSubview:tf];
+    }
+}
+
+// NOTE: press in empty space to create new UIView, press on existing UIView goes to edit mode.
 -(void)longPressWithGestureRecognizer:(UILongPressGestureRecognizer *)gestureRecognizer{
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan ) {
         NSLog(@"longPressWithGestureRecognizer ... began");
@@ -101,15 +113,26 @@
         // create a organization slide view at the touch point if in empty space.
         CGPoint pos = [gestureRecognizer locationInView:self.view];
         NSLog(@"position is (%f, %f)", pos.x, pos.y );
-        OrganizationSlideView *v = [[OrganizationSlideView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-        v.center = pos;
-        v.backgroundColor = [UIColor greenColor];
-        // TODO: also assign tag for persistence and create back from save data.
-        [self.view addSubview:v];
+        
+        UIView *potentialPressedOn = [self.view hitTest:pos withEvent:nil];
+        if (potentialPressedOn 
+            && [[self.view subviews] containsObject:potentialPressedOn]
+            && potentialPressedOn != self.view) { // check if pressed on subviews, then go to edit mode
+            potentialPressedOn.backgroundColor = [UIColor blueColor];
+            [self createUITextFieldForEditing:potentialPressedOn];
+        }else{
+            // TODO: try to avoid overlaying
+            OrganizationSlideView *v = [[OrganizationSlideView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+            v.center = pos;
+            v.backgroundColor = [UIColor greenColor];
+            // TODO: also assign tag for persistence and create back from save data.
+            [self.view addSubview:v]; 
+        }
+ 
     }
 }
 
-
+// NOTE: single tap to select and deselect.
 -(void)tapGestureRecognizer:(UITapGestureRecognizer*)gestureRecognizer{
     NSLog(@"tapGestureRecognizer ... began");
     if ( [gestureRecognizer state] == UIGestureRecognizerStateEnded) {
@@ -136,6 +159,7 @@
     }
 }
 
+// NOTE: move the selected if any one.
 -(void)panGestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer {
     NSLog(@"panGestureRecognizer ... began");
     if ( [gestureRecognizer state] == UIGestureRecognizerStateChanged) {

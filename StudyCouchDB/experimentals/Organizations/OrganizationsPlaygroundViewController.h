@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OrganizationsPlaygroundViewController : UIViewController
+@interface OrganizationsPlaygroundViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic,retain) UIView* currentSelectOrganizationView;
 
