@@ -37,6 +37,8 @@
 		AB49D92114F397F4008B3B15 /* SurveyCreationDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49D91F14F397F4008B3B15 /* SurveyCreationDashboardViewController.m */; };
 		AB49D92214F397F4008B3B15 /* SurveyCreationDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB49D92014F397F4008B3B15 /* SurveyCreationDashboardViewController.xib */; };
 		AB50B33914FDCD3100957F73 /* SurveyTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50B33814FDCD3100957F73 /* SurveyTemplate.m */; };
+		AB683F46150F1A4E0050CD71 /* OrganizationSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB683F45150F1A4E0050CD71 /* OrganizationSlideView.m */; };
+		AB683F49150F1D760050CD71 /* OrganizationsPlaygroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB683F48150F1D760050CD71 /* OrganizationsPlaygroundViewController.m */; };
 		AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */; };
 		AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6914D7DE1E00D11152 /* personal.png */; };
 		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
@@ -120,6 +122,10 @@
 		AB49D92014F397F4008B3B15 /* SurveyCreationDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SurveyCreationDashboardViewController.xib; path = experimentals/SurveyCreator/SurveyCreationDashboardViewController.xib; sourceTree = "<group>"; };
 		AB50B33714FDCD3100957F73 /* SurveyTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SurveyTemplate.h; path = experimentals/SurveyCreator/SurveyTemplate.h; sourceTree = "<group>"; };
 		AB50B33814FDCD3100957F73 /* SurveyTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SurveyTemplate.m; path = experimentals/SurveyCreator/SurveyTemplate.m; sourceTree = "<group>"; };
+		AB683F44150F1A4E0050CD71 /* OrganizationSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrganizationSlideView.h; path = experimentals/Organizations/OrganizationSlideView.h; sourceTree = "<group>"; };
+		AB683F45150F1A4E0050CD71 /* OrganizationSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrganizationSlideView.m; path = experimentals/Organizations/OrganizationSlideView.m; sourceTree = "<group>"; };
+		AB683F47150F1D760050CD71 /* OrganizationsPlaygroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrganizationsPlaygroundViewController.h; path = experimentals/Organizations/OrganizationsPlaygroundViewController.h; sourceTree = "<group>"; };
+		AB683F48150F1D760050CD71 /* OrganizationsPlaygroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrganizationsPlaygroundViewController.m; path = experimentals/Organizations/OrganizationsPlaygroundViewController.m; sourceTree = "<group>"; };
 		AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeputyProfilePrototyping.xib; path = experimentals/DeputyProfilePrototyping.xib; sourceTree = "<group>"; };
 		AB9FCC6914D7DE1E00D11152 /* personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = personal.png; path = Resources/prototyping/personal.png; sourceTree = "<group>"; };
 		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
@@ -309,6 +315,17 @@
 			name = SurveyCreator;
 			sourceTree = "<group>";
 		};
+		AB683F42150F19EE0050CD71 /* Organizations */ = {
+			isa = PBXGroup;
+			children = (
+				AB683F44150F1A4E0050CD71 /* OrganizationSlideView.h */,
+				AB683F45150F1A4E0050CD71 /* OrganizationSlideView.m */,
+				AB683F47150F1D760050CD71 /* OrganizationsPlaygroundViewController.h */,
+				AB683F48150F1D760050CD71 /* OrganizationsPlaygroundViewController.m */,
+			);
+			name = Organizations;
+			sourceTree = "<group>";
+		};
 		AB9FCC6814D7DDEA00D11152 /* prototypinig */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,6 +417,7 @@
 		ABFC501514CA3D7300BA484B /* experimentals */ = {
 			isa = PBXGroup;
 			children = (
+				AB683F42150F19EE0050CD71 /* Organizations */,
 				2D8A0F73150CFAAC002348D9 /* NewsHacking */,
 				AB49D91D14F39754008B3B15 /* SurveyCreator */,
 				ABFC501614CA3DA200BA484B /* MapViewController.m */,
@@ -573,6 +591,8 @@
 				AB50B33914FDCD3100957F73 /* SurveyTemplate.m in Sources */,
 				2D8A0F79150CFF40002348D9 /* NewsRetriever.m in Sources */,
 				2D8A0F7E150D040E002348D9 /* ProfileSlideCardView.m in Sources */,
+				AB683F46150F1A4E0050CD71 /* OrganizationSlideView.m in Sources */,
+				AB683F49150F1D760050CD71 /* OrganizationsPlaygroundViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

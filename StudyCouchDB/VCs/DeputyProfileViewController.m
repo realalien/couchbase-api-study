@@ -358,7 +358,7 @@
     //       __actions__ will be 'check those attributes', 'giving statics'(which depends other tool/target), 
     
     
-    
+     
     // NOTE: some attributes are just for viewing.
     ListingAttributesTool *tool = [[ListingAttributesTool alloc]initWithName:@"Personal Info"];
     [tool addAttributesToLookFor:[NSArray arrayWithObjects:@"area_name",@"area_number", @"nominee_name", nil]];

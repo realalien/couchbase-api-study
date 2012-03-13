@@ -11,8 +11,10 @@
 #import "MapViewController.h"
 #import "CountyDeputyMapViewController.h"
 
+#import "AddNewDeputyViewController.h"
 #import "TraderAlikeViewController.h"
 #import "SurveyCreationDashboardViewController.h"
+#import "OrganizationsPlaygroundViewController.h"
 
 @implementation AppDelegate
 
@@ -59,11 +61,16 @@
 //    
 //    // TEMP
 //    MapViewController *mapVC = [[MapViewController alloc]init ];
-    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
-    //    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
-
-//    self.navController.view = mapVC.view;
-    [self.navController pushViewController:[cdMapVc autorelease] animated:YES];
+    
+    
+//    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
+//    [self.navController pushViewController:[addDeputyVc autorelease] animated:YES];    
+    
+//    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
+//    [self.navController pushViewController:[cdMapVc autorelease] animated:YES];
+    
+    OrganizationsPlaygroundViewController *organ = [[OrganizationsPlaygroundViewController alloc] init];
+    [self.navController pushViewController:[organ autorelease] animated:YES];
     
     // ----------------------------------------------
     
