@@ -10,4 +10,6 @@
 
 @interface OrganizationsPlaygroundViewController : UIViewController
 
+@property (nonatomic,retain) UIView* currentSelectOrganizationView;
+
 @end

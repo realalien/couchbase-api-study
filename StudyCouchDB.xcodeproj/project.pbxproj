@@ -688,7 +688,7 @@
 		2D92AF5514AA22E6007819D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: 嘉诚 朱 (MP4KW245AG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 嘉诚 朱 (MP4KW245AG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -700,7 +700,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C633D592-1C7B-4C27-9A6D-C5FF9B082E39";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C633D592-1C7B-4C27-9A6D-C5FF9B082E39";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -710,7 +710,7 @@
 		2D92AF5614AA22E6007819D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: 嘉诚 朱 (MP4KW245AG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -720,7 +720,7 @@
 				INFOPLIST_FILE = "StudyCouchDB/StudyCouchDB-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C633D592-1C7B-4C27-9A6D-C5FF9B082E39";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
