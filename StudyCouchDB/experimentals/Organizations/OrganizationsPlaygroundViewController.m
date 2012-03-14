@@ -6,9 +6,15 @@
 //  Copyright (c) 2012年 d. All rights reserved.
 //
 
-
+#import "Foundation-AddsOn.h"
 #import "OrganizationSlideView.h"
 #import "OrganizationsPlaygroundViewController.h"
+
+
+@interface OrganizationsPlaygroundViewController()
+-(void)selectOrganizationUIView:(UIView*)v;
+@end
+
 
 @implementation OrganizationsPlaygroundViewController
 
@@ -38,7 +44,13 @@
 - (void)loadView
 {
     // TODO: should be right even after auto rotation.
-    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    UIScrollView *v = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    v.pagingEnabled = NO;
+
+    v.scrollEnabled = YES;
+    v.userInteractionEnabled = YES;
+    v.showsVerticalScrollIndicator = YES;
+    v.showsHorizontalScrollIndicator = YES;
     self.view = v;
     [v release];
     
@@ -72,7 +84,7 @@
     panRecognizer.minimumNumberOfTouches = 1;    
     [self.view addGestureRecognizer:panRecognizer];
     
-    
+    ((UIScrollView*)self.view).contentSize = CGSizeMake(2048, 2048);
 }
 
 
@@ -98,9 +110,22 @@
         return; // do nothing
     }else{
         // create a text field at center.
-        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(aView.center.x, aView.center.y, 120, 20)];
+        
+        CGSize tfStandard = CGSizeMake(120, 20);
+         
+        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake((aView.frame.size.width - tfStandard.width )/2 , (aView.frame.size.height - tfStandard.height)/2, tfStandard.width, tfStandard.height)];
+//        UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(aView.center.x - tfStandard.width/2 , aView.center.y - tfStandard.height/2, tfStandard.width, tfStandard.height)];
+        
+        
+        tf.backgroundColor = [UIColor whiteColor];
+        tf.textAlignment = UITextAlignmentCenter;
         tf.placeholder = @"请输入机构名称";
-        [aView addSubview:tf];
+        tf.delegate = self;
+        [self.currentSelectOrganizationView addSubview:tf];
+//        [self.view addSubview:tf];
+        [tf release];
+        
+        
     }
 }
 
@@ -118,6 +143,10 @@
         if (potentialPressedOn 
             && [[self.view subviews] containsObject:potentialPressedOn]
             && potentialPressedOn != self.view) { // check if pressed on subviews, then go to edit mode
+            
+            // also select new one 
+            [self selectOrganizationUIView:potentialPressedOn];
+            
             potentialPressedOn.backgroundColor = [UIColor blueColor];
             [self createUITextFieldForEditing:potentialPressedOn];
         }else{
@@ -133,6 +162,7 @@
 }
 
 // NOTE: single tap to select and deselect.
+// IDEA:TODO: even the long press(to create a uiview) is not natural, considering using drag-n-drop from existing widget!
 -(void)tapGestureRecognizer:(UITapGestureRecognizer*)gestureRecognizer{
     NSLog(@"tapGestureRecognizer ... began");
     if ( [gestureRecognizer state] == UIGestureRecognizerStateEnded) {
@@ -142,19 +172,7 @@
         // check the if touch insides a UIView created by longPressGesture
         UIView* viewYouWishToObtain = [self.view hitTest:pos withEvent:nil];
         if (viewYouWishToObtain && viewYouWishToObtain!=self.view) {
-            if ( !self.currentSelectOrganizationView){
-                self.currentSelectOrganizationView = viewYouWishToObtain;
-                self.currentSelectOrganizationView.backgroundColor = [UIColor redColor];
-            }else {// already there is a selection
-                if (viewYouWishToObtain == self.currentSelectOrganizationView) { // deselect
-                    self.currentSelectOrganizationView.backgroundColor = [UIColor greenColor];
-                    self.currentSelectOrganizationView = nil;
-                }else{ // assign new selection
-                    self.currentSelectOrganizationView.backgroundColor = [UIColor greenColor]; // set original selection back to normal
-                    self.currentSelectOrganizationView = viewYouWishToObtain;
-                    self.currentSelectOrganizationView.backgroundColor = [UIColor redColor];
-                }
-            }
+            [self selectOrganizationUIView:viewYouWishToObtain];
         }
     }
 }
@@ -175,5 +193,99 @@
         // do nothing.
     }
 }
+
+
+#pragma mark -
+#pragma mark UITextFieldDelegate methods
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    // NOT WORKING: [(UIScrollView*)self.view scrollRectToVisible:[textField frame] animated:YES];
+    UIScrollView* v = (UIScrollView*) self.view ;
+    CGRect rc = [textField bounds];
+    rc = [textField convertRect:rc toView:v  ];
+//    rc.origin.x = 0 ;
+//    rc.origin.y -= 160 ;
+//    
+//    rc.size.height = 400;
+    
+    
+    // adjust the y to allow display the whole UIView, no change of x.
+    // TODO: one ivar to keep the offset
+    if (rc.origin.y + rc.size.height > (768 - 384) ) { // under keyboard
+//        rc.origin.y -= (rc.origin.y + rc.size.height - (768 - 352) );
+        float offSetY = (rc.origin.y + rc.size.height - (768 - 384) ); // 352
+        [(UIScrollView*)self.view setContentOffset:CGPointMake(0, offSetY) animated:YES];
+    }
+    
+//    [(UIScrollView*)self.view scrollRectToVisible:rc animated:YES];
+    
+}
+
+// NOTE: return to set the text for the UIView and resize the UIView.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    if ([textField.text isNotEmpty]) {
+        // add UILabel with the text and resize the UIView in editing
+        NSString *t = textField.text;
+        CGSize s = [t sizeWithFont:[UIFont systemFontOfSize:16]
+                 constrainedToSize:CGSizeMake(120, 18)
+                     lineBreakMode:UILineBreakModeTailTruncation];
+        
+        UILabel *l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, s.width, s.height)];
+        l.textColor = [UIColor blackColor];
+        l.backgroundColor = [UIColor clearColor];
+        l.font = [UIFont systemFontOfSize:16];
+        l.text = t;
+        
+        if (self.currentSelectOrganizationView) {  // TODO: make long press on existing uiview as selection action.
+            // add label component
+            [self.currentSelectOrganizationView addSubview:l];
+            // resize the UIView
+            self.currentSelectOrganizationView.frame = CGRectMake(self.currentSelectOrganizationView.frame.origin.x, 
+                                                                  self.currentSelectOrganizationView.frame.origin.y,
+                                                                  l.frame.size.width, 
+                                                                  l.frame.size.height);
+            self.currentSelectOrganizationView.backgroundColor = [UIColor yellowColor];
+        }
+     
+        [l release];
+    }
+    
+    // remove the textField anyway.
+    [textField resignFirstResponder];
+    [textField removeFromSuperview]; //TODO: did it do the clean?
+    
+    // unset current highlight
+    self.currentSelectOrganizationView = nil;
+    
+    
+    return YES;
+}
+
+
+
+#pragma mark -
+#pragma mark Private methods
+
+-(void)selectOrganizationUIView:(UIView*)v{
+    if ( v && v!= self.view) { // excluding the container
+        if ( !self.currentSelectOrganizationView){
+            self.currentSelectOrganizationView = v;
+            self.currentSelectOrganizationView.backgroundColor = [UIColor redColor];
+        }else {// already there is a selection
+            if (v == self.currentSelectOrganizationView) { // deselect
+                self.currentSelectOrganizationView.backgroundColor = [UIColor greenColor];
+                self.currentSelectOrganizationView = nil;
+            }else{ // assign new selection
+                self.currentSelectOrganizationView.backgroundColor = [UIColor greenColor]; // set original selection back to normal
+                self.currentSelectOrganizationView = v;
+                self.currentSelectOrganizationView.backgroundColor = [UIColor redColor];
+            }
+        }
+    }else {
+        // possible interaction with self.view
+    }
+}
+
 
 @end
