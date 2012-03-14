@@ -10,9 +10,15 @@
 #import "OrganizationSlideView.h"
 #import "OrganizationsPlaygroundViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
+enum {
+    kTagStyleContainer = 100
+};
 
 @interface OrganizationsPlaygroundViewController()
 -(void)selectOrganizationUIView:(UIView*)v;
+- (void)registerForKeyboardNotifications;
 @end
 
 
@@ -54,9 +60,57 @@
     self.view = v;
     [v release];
     
-    
+    UIView *stylesContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 500, 500)];
+    stylesContainer.backgroundColor = [UIColor colorWithRed:223.0/255 green:243.0/255 blue:177.0/255 alpha:0.6] ;
+    stylesContainer.tag = kTagStyleContainer;
+    [self.view addSubview:stylesContainer];
 
-    //[longPressRecognizer release];
+    
+    // style #1 - 
+    // * transparent black box(round corner)
+    // * one label near the bottom indicating the name of the organization
+    // * Q: should the boxes keep one size or resizable with their names?
+    
+    UIView *blkbox = [[UIView alloc]initWithFrame:CGRectMake(10, 10, 120, 160)];
+    blkbox.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6] ;
+    [stylesContainer addSubview:blkbox];
+    blkbox.layer.cornerRadius = 10;
+    NSString *s = @"江湾镇街道党工委";
+    CGSize size =  [s sizeWithFont:[UIFont systemFontOfSize:16]
+                 constrainedToSize:CGSizeMake(110, 18)
+                     lineBreakMode:UILineBreakModeTailTruncation];
+    UILabel *l = [[UILabel alloc]initWithFrame:CGRectMake( (120 - size.width)/2, (160 - size.height)/2, size.width, size.height)];
+    l.backgroundColor = [UIColor clearColor];
+    l.font = [UIFont systemFontOfSize:16];
+    l.text = s;
+    l.textColor = [UIColor whiteColor];
+    l.textAlignment = UITextAlignmentCenter;
+    [blkbox addSubview:l];
+    [l release];
+    [blkbox release];
+    
+    // -------
+    UIView *blkbox2 = [[UIView alloc]initWithFrame:CGRectMake(10*2 + 120, 10+160-120, 160,120)];
+    blkbox2.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6] ;
+    [stylesContainer addSubview:blkbox2];
+    blkbox2.layer.cornerRadius = 10;
+    [blkbox2 release];
+    
+    size =  [s sizeWithFont:[UIFont systemFontOfSize:16]
+                 constrainedToSize:CGSizeMake(150, 18)
+                     lineBreakMode:UILineBreakModeTailTruncation];
+
+    l = [[UILabel alloc]initWithFrame:CGRectMake( (160 - size.width)/2, (120 - size.height)/2, size.width, size.height)];
+    l.backgroundColor = [UIColor clearColor];
+    l.font = [UIFont systemFontOfSize:16];
+    l.text = s;
+    l.textColor = [UIColor whiteColor];
+    l.textAlignment = UITextAlignmentCenter;
+    [blkbox2 addSubview:l];
+    [l release];
+    
+    [stylesContainer release];
+    
 }
 
 
@@ -85,6 +139,9 @@
     [self.view addGestureRecognizer:panRecognizer];
     
     ((UIScrollView*)self.view).contentSize = CGSizeMake(2048, 2048);
+    
+    // listen to keyboard event
+    [self registerForKeyboardNotifications];
 }
 
 
@@ -154,7 +211,7 @@
             OrganizationSlideView *v = [[OrganizationSlideView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
             v.center = pos;
             v.backgroundColor = [UIColor greenColor];
-            // TODO: also assign tag for persistence and create back from save data.
+            // TODO: also assign tag for persistence and create back from saved data.
             [self.view addSubview:v]; 
         }
  
@@ -199,26 +256,7 @@
 #pragma mark UITextFieldDelegate methods
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    // NOT WORKING: [(UIScrollView*)self.view scrollRectToVisible:[textField frame] animated:YES];
-    UIScrollView* v = (UIScrollView*) self.view ;
-    CGRect rc = [textField bounds];
-    rc = [textField convertRect:rc toView:v  ];
-//    rc.origin.x = 0 ;
-//    rc.origin.y -= 160 ;
-//    
-//    rc.size.height = 400;
-    
-    
-    // adjust the y to allow display the whole UIView, no change of x.
-    // TODO: one ivar to keep the offset
-    if (rc.origin.y + rc.size.height > (768 - 384) ) { // under keyboard
-//        rc.origin.y -= (rc.origin.y + rc.size.height - (768 - 352) );
-        float offSetY = (rc.origin.y + rc.size.height - (768 - 384) ); // 352
-        [(UIScrollView*)self.view setContentOffset:CGPointMake(0, offSetY) animated:YES];
-    }
-    
-//    [(UIScrollView*)self.view scrollRectToVisible:rc animated:YES];
-    
+    activeField = textField;
 }
 
 // NOTE: return to set the text for the UIView and resize the UIView.
@@ -268,7 +306,7 @@
 #pragma mark Private methods
 
 -(void)selectOrganizationUIView:(UIView*)v{
-    if ( v && v!= self.view) { // excluding the container
+    if ( v && v!= self.view && v!= [self.view viewWithTag:kTagStyleContainer]) { // excluding the containers
         if ( !self.currentSelectOrganizationView){
             self.currentSelectOrganizationView = v;
             self.currentSelectOrganizationView.backgroundColor = [UIColor redColor];
@@ -285,6 +323,63 @@
     }else {
         // possible interaction with self.view
     }
+}
+
+
+#pragma mark -
+#pragma mark keyboard related
+
+- (void)registerForKeyboardNotifications{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+
+// Called when the UIKeyboardDidShowNotification is sent.
+// REF:http://jason.agostoni.net/2011/02/12/ipad-resize-view-to-account-for-keyboard/  and its comments
+// REF: https://developer.apple.com/library/ios/#documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html#//apple_ref/doc/uid/TP40009542-CH5-SW7
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    
+    kbRect = [self.view convertRect:kbRect toView:nil];
+
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
+    ((UIScrollView*)self.view).contentInset = contentInsets;
+    ((UIScrollView*)self.view).scrollIndicatorInsets = contentInsets;
+
+    // get valid area
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbRect.size.height;
+    aRect.size.height -=  self.navigationController.toolbar.frame.size.height;
+
+    
+    CGPoint fieldOrigin = [activeField superview].frame.origin;
+    fieldOrigin.y -= ((UIScrollView*)self.view).contentOffset.y;
+    fieldOrigin = [self.view convertPoint:fieldOrigin toView:self.view.superview];
+    originalOffset = ((UIScrollView*)self.view).contentOffset;
+    
+    CGRect controlRect = CGRectMake(fieldOrigin.x, fieldOrigin.y, [activeField superview].frame.size.width, [activeField superview].frame.size.height);
+    if (!CGRectContainsRect(aRect, controlRect) ) {
+        [((UIScrollView*)self.view) scrollRectToVisible:[activeField superview].frame animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+
+    ((UIScrollView*)self.view).contentInset = contentInsets;
+    ((UIScrollView*)self.view).scrollIndicatorInsets = contentInsets;
+    [((UIScrollView*)self.view) setContentOffset:originalOffset animated:YES];
 }
 
 

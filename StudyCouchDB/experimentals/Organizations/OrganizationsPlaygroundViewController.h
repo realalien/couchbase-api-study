@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OrganizationsPlaygroundViewController : UIViewController <UITextFieldDelegate>
+@interface OrganizationsPlaygroundViewController : UIViewController <UITextFieldDelegate> {
+    CGPoint originalOffset;
+    UIView *activeField;
+}
 
 @property (nonatomic,retain) UIView* currentSelectOrganizationView;
 
