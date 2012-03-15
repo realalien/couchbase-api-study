@@ -13,8 +13,82 @@
 #import <QuartzCore/QuartzCore.h>
 
 enum {
-    kTagStyleContainer = 100
+    kTagStyleContainer = 100,
+    kTagBoxSample_1,
+    kTagBoxSample_2
 };
+
+
+
+// -------------------------
+
+@interface OrganizationConnection :UIView 
+
+// Two UIViews on which to create a connection.
+@property (nonatomic,retain) UIView *v1;
+@property (nonatomic,retain) UIView *v2;
+
+@end
+
+@implementation OrganizationConnection
+
+@synthesize v1;
+@synthesize v2;
+
+
+-(id)initWithTwoViewsV1:(UIView*)vi andV2:(UIView*)vii{ //  inParentView:(UIView*)twoViewsParent
+    if (vi && vii) {
+        self.v1 = vi;
+        self.v2 = vii;
+        // Experiment, use v1,v2 to decide the the view location and bounds!
+        
+        // connections on both origin
+        [self initWithFrame:CGRectMake(v1.frame.origin.x, 
+                                       v1.frame.origin.y, 
+                                       v2.frame.origin.x - v1.frame.origin.x, 
+                                       v2.frame.origin.y - v1.frame.origin.y)];
+    }
+    return self;
+}
+
+
+- (id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        // Initialization code
+    }
+    return self;
+}
+
+- (void)drawRect:(CGRect)rect {
+    
+    UIBezierPath *p = [UIBezierPath bezierPath];
+    CGPoint src = CGPointMake(0, 0); // NOTE: when drawing, think it as in its own space,no knowledge of outside value!!   v1.frame.origin;
+    
+    //src = CGPointMake(0, 0); // [[self.view viewWithTag:kTagStyleContainer] convertPoint:src toView:self.view];
+    //    src = [self.view convertPoint:src fromView:[self.view viewWithTag:kTagStyleContainer]];
+    [p moveToPoint:src];
+    
+    CGPoint dest = CGPointMake(self.frame.size.width, self.frame.size.height);
+    //dest =  CGPointMake(600, 600); //[[self.view viewWithTag:kTagStyleContainer] convertPoint:dest toView:self.view];
+    //    dest = [self.view convertPoint:dest fromView:[self.view viewWithTag:kTagStyleContainer]];
+    
+    [p addLineToPoint:dest];
+    [[UIColor blackColor] setStroke];
+    [[UIColor blackColor] setFill];
+    [p stroke];
+    [p fill];
+    
+}
+
+
+-(void)dealloc{
+    self.v1 = nil;
+    self.v2 = nil;
+}
+
+@end
+
+// -------------------------
 
 @interface OrganizationsPlaygroundViewController()
 -(void)selectOrganizationUIView:(UIView*)v;
@@ -60,6 +134,7 @@ enum {
     self.view = v;
     [v release];
     
+    // ---------- experiment with the boxes and connections
     UIView *stylesContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 500, 500)];
     stylesContainer.backgroundColor = [UIColor colorWithRed:223.0/255 green:243.0/255 blue:177.0/255 alpha:0.6] ;
     stylesContainer.tag = kTagStyleContainer;
@@ -72,9 +147,10 @@ enum {
     // * Q: should the boxes keep one size or resizable with their names?
     
     UIView *blkbox = [[UIView alloc]initWithFrame:CGRectMake(10, 10, 120, 160)];
+    blkbox.tag = kTagBoxSample_1;
     blkbox.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6] ;
     [stylesContainer addSubview:blkbox];
-    blkbox.layer.cornerRadius = 10;
+    //blkbox.layer.cornerRadius = 10;
     NSString *s = @"江湾镇街道党工委";
     CGSize size =  [s sizeWithFont:[UIFont systemFontOfSize:16]
                  constrainedToSize:CGSizeMake(110, 18)
@@ -90,10 +166,11 @@ enum {
     [blkbox release];
     
     // -------
-    UIView *blkbox2 = [[UIView alloc]initWithFrame:CGRectMake(10*2 + 120, 10+160-120, 160,120)];
+    UIView *blkbox2 = [[UIView alloc]initWithFrame:CGRectMake(10*2 + 120 + 50, 10+160-120, 160,120)];
+    blkbox2.tag = kTagBoxSample_2;
     blkbox2.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6] ;
     [stylesContainer addSubview:blkbox2];
-    blkbox2.layer.cornerRadius = 10;
+    //blkbox2.layer.cornerRadius = 10;
     [blkbox2 release];
     
     size =  [s sizeWithFont:[UIFont systemFontOfSize:16]
@@ -109,8 +186,17 @@ enum {
     [blkbox2 addSubview:l];
     [l release];
     
-    [stylesContainer release];
     
+    // connection test
+
+    // EXPERIMENT:  customize drawRect ...NOT working, it's inside a rectangular
+    OrganizationConnection *oc = [[OrganizationConnection alloc]initWithTwoViewsV1:[stylesContainer viewWithTag:kTagBoxSample_1]
+                                                                            andV2:[stylesContainer viewWithTag:kTagBoxSample_2]];
+    [stylesContainer addSubview:oc];
+    oc.backgroundColor = [UIColor clearColor];
+    [oc release];
+    
+
 }
 
 
@@ -142,6 +228,27 @@ enum {
     
     // listen to keyboard event
     [self registerForKeyboardNotifications];
+    
+    
+    // connections
+    // EXPERIMENT: UIBezierPath
+//    UIBezierPath *p = [UIBezierPath bezierPath];
+//    CGPoint src = [[self.view viewWithTag:kTagStyleContainer] viewWithTag:kTagBoxSample_1].frame.origin;
+//    
+//    src = CGPointMake(0, 0); // [[self.view viewWithTag:kTagStyleContainer] convertPoint:src toView:self.view];
+////    src = [self.view convertPoint:src fromView:[self.view viewWithTag:kTagStyleContainer]];
+//    [p moveToPoint:src];
+//    
+//    CGPoint dest = [[self.view viewWithTag:kTagStyleContainer] viewWithTag:kTagBoxSample_2].frame.origin;
+//    dest =  CGPointMake(600, 600); //[[self.view viewWithTag:kTagStyleContainer] convertPoint:dest toView:self.view];
+////    dest = [self.view convertPoint:dest fromView:[self.view viewWithTag:kTagStyleContainer]];
+//    
+//    [p addLineToPoint:dest];
+//    [[UIColor blackColor] setStroke];
+//    [[UIColor blackColor] setFill];
+//    [p stroke];
+//    [p fill];
+    
 }
 
 
