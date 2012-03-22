@@ -39,6 +39,8 @@
 		AB50B33914FDCD3100957F73 /* SurveyTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50B33814FDCD3100957F73 /* SurveyTemplate.m */; };
 		AB683F46150F1A4E0050CD71 /* OrganizationSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB683F45150F1A4E0050CD71 /* OrganizationSlideView.m */; };
 		AB683F49150F1D760050CD71 /* OrganizationsPlaygroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB683F48150F1D760050CD71 /* OrganizationsPlaygroundViewController.m */; };
+		AB921248151AED110056043F /* SimpleNews.m in Sources */ = {isa = PBXBuildFile; fileRef = AB921247151AED110056043F /* SimpleNews.m */; };
+		AB92124F151B0F9C0056043F /* DeputyNewsLinksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB92124E151B0F9A0056043F /* DeputyNewsLinksViewController.m */; };
 		AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */; };
 		AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6914D7DE1E00D11152 /* personal.png */; };
 		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
@@ -126,6 +128,10 @@
 		AB683F45150F1A4E0050CD71 /* OrganizationSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrganizationSlideView.m; path = experimentals/Organizations/OrganizationSlideView.m; sourceTree = "<group>"; };
 		AB683F47150F1D760050CD71 /* OrganizationsPlaygroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrganizationsPlaygroundViewController.h; path = experimentals/Organizations/OrganizationsPlaygroundViewController.h; sourceTree = "<group>"; };
 		AB683F48150F1D760050CD71 /* OrganizationsPlaygroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrganizationsPlaygroundViewController.m; path = experimentals/Organizations/OrganizationsPlaygroundViewController.m; sourceTree = "<group>"; };
+		AB921246151AED110056043F /* SimpleNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleNews.h; path = Models/SimpleNews.h; sourceTree = "<group>"; };
+		AB921247151AED110056043F /* SimpleNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleNews.m; path = Models/SimpleNews.m; sourceTree = "<group>"; };
+		AB92124D151B0F990056043F /* DeputyNewsLinksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeputyNewsLinksViewController.h; path = VCs/DeputyNewsLinksViewController.h; sourceTree = "<group>"; };
+		AB92124E151B0F9A0056043F /* DeputyNewsLinksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeputyNewsLinksViewController.m; path = VCs/DeputyNewsLinksViewController.m; sourceTree = "<group>"; };
 		AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeputyProfilePrototyping.xib; path = experimentals/DeputyProfilePrototyping.xib; sourceTree = "<group>"; };
 		AB9FCC6914D7DE1E00D11152 /* personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = personal.png; path = Resources/prototyping/personal.png; sourceTree = "<group>"; };
 		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
@@ -250,6 +256,7 @@
 				ABFC501514CA3D7300BA484B /* experimentals */,
 				ABFC501414CA3D6600BA484B /* commons */,
 				ABFC501314CA3D5200BA484B /* VCs */,
+				AB921244151AE3130056043F /* Models */,
 				ABF5600114D533B800872408 /* Libraries */,
 				2D92AF3414AA22E6007819D7 /* AppDelegate.h */,
 				2D92AF3514AA22E6007819D7 /* AppDelegate.m */,
@@ -326,6 +333,15 @@
 			name = Organizations;
 			sourceTree = "<group>";
 		};
+		AB921244151AE3130056043F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AB921246151AED110056043F /* SimpleNews.h */,
+				AB921247151AED110056043F /* SimpleNews.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		AB9FCC6814D7DDEA00D11152 /* prototypinig */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,6 +409,8 @@
 				ABF5601214D6202800872408 /* DeputyAnnotationView.m */,
 				ABF5603C14D77D3900872408 /* DeputyProfileViewController.h */,
 				ABF5603D14D77D3A00872408 /* DeputyProfileViewController.m */,
+				AB92124D151B0F990056043F /* DeputyNewsLinksViewController.h */,
+				AB92124E151B0F9A0056043F /* DeputyNewsLinksViewController.m */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -593,6 +611,8 @@
 				2D8A0F7E150D040E002348D9 /* ProfileSlideCardView.m in Sources */,
 				AB683F46150F1A4E0050CD71 /* OrganizationSlideView.m in Sources */,
 				AB683F49150F1D760050CD71 /* OrganizationsPlaygroundViewController.m in Sources */,
+				AB921248151AED110056043F /* SimpleNews.m in Sources */,
+				AB92124F151B0F9C0056043F /* DeputyNewsLinksViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

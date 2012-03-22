@@ -28,7 +28,7 @@
 // Define this to use a server at a specific URL, instead of the embedded Couchbase Mobile.
 // This can be useful for debugging, since you can use the admin console (futon) to inspect
 // or modify the database contents.
-#define USE_REMOTE_SERVER @"http://localhost:5984/"
+#define USE_REMOTE_SERVER @"http://192.168.3.128:5984/"
 
 
 @implementation CouchbaseServerManager

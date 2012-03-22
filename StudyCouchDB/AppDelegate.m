@@ -61,16 +61,19 @@
 //    
 //    // TEMP
 //    MapViewController *mapVC = [[MapViewController alloc]init ];
-    
-    
+
+
 //    AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
 //    [self.navController pushViewController:[addDeputyVc autorelease] animated:YES];    
+
     
-//    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
-//    [self.navController pushViewController:[cdMapVc autorelease] animated:YES];
+    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
+    [self.navController pushViewController:[cdMapVc autorelease] animated:YES];
     
-    OrganizationsPlaygroundViewController *organ = [[OrganizationsPlaygroundViewController alloc] init];
-    [self.navController pushViewController:[organ autorelease] animated:YES];
+    
+    // TEST: 
+//    OrganizationsPlaygroundViewController *organ = [[OrganizationsPlaygroundViewController alloc] init];
+//    [self.navController pushViewController:[organ autorelease] animated:YES];
     
     // ----------------------------------------------
     

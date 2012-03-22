@@ -235,6 +235,12 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     [[LocationController sharedInstance] start];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];  
+    
+    // request for a update
+    [[LocationController sharedInstance] stop];
+}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -259,6 +265,8 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
+     [[LocationController sharedInstance] stop];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -299,8 +307,10 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
 //    if ( [[LocationController sharedInstance] locationKnown]) {
 //        CLLocation* current = [[LocationController sharedInstance] currentLocation];
 //        [tempData setValue:current forKey:DATA_KEY_GPS_LAT_LNG];
-        
-        [tempData setValue:location forKey:DATA_KEY_GPS_LAT_LNG];
+    if (self.tempData) {
+        [self.tempData setValue:location forKey:DATA_KEY_GPS_LAT_LNG];
+        // NOTE: do not stop location manager here, considering that user is on the move!
+    }
         
 //        UILabel *l = (UILabel*)[self.view viewWithTag:kTagUILabelGPS];
 //        if (l ) {  // Q: why it is not working? " && [[LocationController sharedInstance]locationKnown ]" A:
