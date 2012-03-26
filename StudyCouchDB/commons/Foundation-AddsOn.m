@@ -24,10 +24,15 @@
     }
 }
 
+-(BOOL)isALink{
+    return YES;
+}
 
 -(BOOL)isValidHumanName{
     return NO;
 }
+
+
 
 
 @end 

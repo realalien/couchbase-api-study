@@ -11,6 +11,10 @@
 
 @interface NSString (private)
 -(BOOL)isValidHumanName;
+
+// See if the sting stands for a URI, so that we can retrieve more information from that link.
+-(BOOL)isALink;
+
 // Test if a string is empty or not after removing the blankspaces.
 -(BOOL)isNotEmpty;
 @end

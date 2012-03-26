@@ -12,13 +12,13 @@
 
 
 // EXPERIMENTAL
-@protocol ProductOfTools <NSObject>
+@protocol WillGenerateDocuments <NSObject>
 -(NSMutableArray*) resultDocuments;
 @end
 
 // -------------
 
-@interface Tool : NSObject<ProductOfTools> {
+@interface Tool : NSObject<WillGenerateDocuments> {
     NSString *name;
     NSString *uuid;
     NSMutableDictionary *knowledge;
@@ -328,6 +328,13 @@
         l.hidden = NO;
         b.hidden = YES;
         [cell.contentView bringSubviewToFront:l];
+        
+        // make a detail indicator
+        if ([l.text isALink]) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        }
+        
     }else{
         l.text = @"N/A";
         l.hidden = YES;
@@ -372,12 +379,15 @@
     [self.tools addObject:tool2];  
     [tool2 release];
     
+    
     UITableView *tv = (UITableView*)[self.view viewWithTag:100];
     if (tv) {
         [tv reloadData];
     }
     // NOTE: IDEA: * the tools should be materialized as documents * the tools should follow some protocols, like produce some documents or not, 
     // NOTE: if tool doens't comply with the some kind of protocol, then it's not very obvious to bind the tools to a tableview(or any other UI)
+    
+    
     
     
 }
