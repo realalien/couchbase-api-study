@@ -9,6 +9,7 @@
 #import "DeputyProfileViewController.h"
 #import "UIFactory.h"
 #import <CouchCocoa/CouchCocoa.h>
+#import "Foundation-AddsOn.h"
 
 
 // EXPERIMENTAL
@@ -285,18 +286,18 @@
         cell.textLabel.font = [UIFont systemFontOfSize: 14.0];
         cell.accessoryType = UITableViewCellAccessoryNone; // UITableViewCellAccessoryDisclosureIndicator;
         
-        UILabel *lkey = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, 120, 18)];
+        UILabel *lkey = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, 100, 18)];
         lkey.tag = 201;
         [cell.contentView addSubview:lkey];
         [lkey release];
 
-        UILabel *lval = [[UILabel alloc]initWithFrame:CGRectMake(125, 5, 100, 18)];
+        UILabel *lval = [[UILabel alloc]initWithFrame:CGRectMake(105, 5, 100, 18)];
         lval.tag = 202;
         [cell.contentView addSubview:lval];
         [lval release];
         
         UIButton *edit = [UIButton buttonWithType:UIButtonTypeCustom];
-        edit.frame = CGRectMake(125, 5, 100, 22);
+        edit.frame = CGRectMake(145, 5, 100, 22);
         edit.hidden = YES;
         [edit setTitle:@"添加资料" forState:UIControlStateNormal];
         [edit setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -320,24 +321,30 @@
     UILabel *l = (UILabel*)[cell.contentView viewWithTag:201];
     l.text = [keys objectAtIndex:0];
     
-    l = (UILabel*)[cell.contentView viewWithTag:202];
+    UILabel *lval = (UILabel*)[cell.contentView viewWithTag:202];
     UIButton *b = (UIButton*)[cell.contentView viewWithTag:203];
     
+    NSLog(@"d's keys: %@", [[d allKeys] componentsJoinedByString:@","] );
+    NSLog(@"d's values: %@", [[d allValues] componentsJoinedByString:@","] );
+    
+    NSLog(@"[keys objectAtIndex:0]  is %@", [keys objectAtIndex:0]);
+    NSLog(@"d valueForKey:[keys objectAtIndex:0]]   is  %@", [d valueForKey:[keys objectAtIndex:0]]);
+    
     if ([d valueForKey:[keys objectAtIndex:0]] != [NSNull null]) {
-        l.text = [d valueForKey:[keys objectAtIndex:0]];
-        l.hidden = NO;
-        b.hidden = YES;
-        [cell.contentView bringSubviewToFront:l];
-        
+        lval.text = [d valueForKey:[keys objectAtIndex:0]];
+        [cell.contentView bringSubviewToFront:lval];
+
         // make a detail indicator
-        if ([l.text isALink]) {
+        if ([lval.text isALink]) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+            lval.hidden = NO;
+            b.hidden = YES;
         }
         
     }else{
-        l.text = @"N/A";
-        l.hidden = YES;
+        lval.text = @"N/A";
+        lval.hidden = YES;
         b.hidden = NO;
         [cell.contentView bringSubviewToFront:b];
     }
@@ -371,14 +378,12 @@
     [tool addAttributesToLookFor:[NSArray arrayWithObjects:@"area_name",@"area_number", @"nominee_name", nil]];
     [self.tools addObject:tool];  
     [tool release];  // TODO:
-                        
     
     // NOTE: some attributes are the interfaces to outside data, like personal page of the SNS, the data crawling tools key words.
     ListingAttributesTool *tool2 = [[ListingAttributesTool alloc]initWithName:@"Sociality"];
-    [tool2 addAttributesToLookFor:[NSArray arrayWithObjects:@"weibo acct.",@"twitter acct.", nil]];
+    [tool2 addAttributesToLookFor:[NSArray arrayWithObjects:@"weibo_account",@"twitter_account",@"blog",nil]];
     [self.tools addObject:tool2];  
     [tool2 release];
-    
     
     UITableView *tv = (UITableView*)[self.view viewWithTag:100];
     if (tv) {

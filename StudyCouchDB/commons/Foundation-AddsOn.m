@@ -14,6 +14,8 @@
 
 @implementation NSString(private)
 
+
+
 -(BOOL)isNotEmpty{
     NSString *trimmedString = [self stringByTrimmingCharactersInSet:
                                [NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -24,8 +26,17 @@
     }
 }
 
+// REF: http://stackoverflow.com/questions/1471201/how-to-validate-an-url-on-the-iphone
 -(BOOL)isALink{
-    return YES;
+    NSURL *candidateURL = [NSURL URLWithString:self];
+    // WARNING > "test" is an URL according to RFCs, being just a path
+    // so you still should check scheme and all other NSURL attributes you need
+    if (candidateURL && candidateURL.scheme && candidateURL.host) {
+        // candidate is a well-formed url with: - a scheme (like http://)  - a host (like stackoverflow.com)
+        return YES;
+    }else {
+        return NO;
+    }
 }
 
 -(BOOL)isValidHumanName{

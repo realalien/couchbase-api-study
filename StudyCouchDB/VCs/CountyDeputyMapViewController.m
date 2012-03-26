@@ -181,6 +181,7 @@ static int HEIGHT_CELL = 44 ;
     [currentSelectAreaName release];
     [currentSelectAreaNumber release];
     [currentSelectNominee release];
+    [super dealloc];
 }
 
 #pragma mark -
