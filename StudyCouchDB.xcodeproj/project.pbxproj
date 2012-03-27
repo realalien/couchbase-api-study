@@ -43,6 +43,11 @@
 		AB92124F151B0F9C0056043F /* DeputyNewsLinksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB92124E151B0F9A0056043F /* DeputyNewsLinksViewController.m */; };
 		AB9FCC6614D7DBC100D11152 /* DeputyProfilePrototyping.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */; };
 		AB9FCC6A14D7DE1E00D11152 /* personal.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9FCC6914D7DE1E00D11152 /* personal.png */; };
+		ABE8784415214B16003652FD /* GenericPinAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8783B15214B16003652FD /* GenericPinAnnotationView.m */; };
+		ABE8784515214B16003652FD /* LICENSE.html in Resources */ = {isa = PBXBuildFile; fileRef = ABE8783C15214B16003652FD /* LICENSE.html */; };
+		ABE8784615214B16003652FD /* MultiRowAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8783E15214B16003652FD /* MultiRowAnnotation.m */; };
+		ABE8784715214B16003652FD /* MultiRowCalloutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784115214B16003652FD /* MultiRowCalloutAnnotationView.m */; };
+		ABE8784815214B16003652FD /* MultiRowCalloutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784315214B16003652FD /* MultiRowCalloutCell.m */; };
 		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
 		ABF5600814D533E400872408 /* switchBlueBg.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600314D533E400872408 /* switchBlueBg.png */; };
 		ABF5600914D533E400872408 /* switchOffPlain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600414D533E400872408 /* switchOffPlain.png */; };
@@ -134,6 +139,16 @@
 		AB92124E151B0F9A0056043F /* DeputyNewsLinksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeputyNewsLinksViewController.m; path = VCs/DeputyNewsLinksViewController.m; sourceTree = "<group>"; };
 		AB9FCC6514D7DBC100D11152 /* DeputyProfilePrototyping.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeputyProfilePrototyping.xib; path = experimentals/DeputyProfilePrototyping.xib; sourceTree = "<group>"; };
 		AB9FCC6914D7DE1E00D11152 /* personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = personal.png; path = Resources/prototyping/personal.png; sourceTree = "<group>"; };
+		ABE8783A15214B16003652FD /* GenericPinAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericPinAnnotationView.h; sourceTree = "<group>"; };
+		ABE8783B15214B16003652FD /* GenericPinAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericPinAnnotationView.m; sourceTree = "<group>"; };
+		ABE8783C15214B16003652FD /* LICENSE.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LICENSE.html; sourceTree = "<group>"; };
+		ABE8783D15214B16003652FD /* MultiRowAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiRowAnnotation.h; sourceTree = "<group>"; };
+		ABE8783E15214B16003652FD /* MultiRowAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiRowAnnotation.m; sourceTree = "<group>"; };
+		ABE8783F15214B16003652FD /* MultiRowAnnotationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiRowAnnotationProtocol.h; sourceTree = "<group>"; };
+		ABE8784015214B16003652FD /* MultiRowCalloutAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiRowCalloutAnnotationView.h; sourceTree = "<group>"; };
+		ABE8784115214B16003652FD /* MultiRowCalloutAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiRowCalloutAnnotationView.m; sourceTree = "<group>"; };
+		ABE8784215214B16003652FD /* MultiRowCalloutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiRowCalloutCell.h; sourceTree = "<group>"; };
+		ABE8784315214B16003652FD /* MultiRowCalloutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiRowCalloutCell.m; sourceTree = "<group>"; };
 		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
 		ABF5600314D533E400872408 /* switchBlueBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchBlueBg.png; path = libraries/UICustomSwitch/switchBlueBg.png; sourceTree = "<group>"; };
 		ABF5600414D533E400872408 /* switchOffPlain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchOffPlain.png; path = libraries/UICustomSwitch/switchOffPlain.png; sourceTree = "<group>"; };
@@ -350,9 +365,27 @@
 			name = prototypinig;
 			sourceTree = "<group>";
 		};
+		ABE8783915214B16003652FD /* MultiRowCalloutAnnotationView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE8783A15214B16003652FD /* GenericPinAnnotationView.h */,
+				ABE8783B15214B16003652FD /* GenericPinAnnotationView.m */,
+				ABE8783C15214B16003652FD /* LICENSE.html */,
+				ABE8783D15214B16003652FD /* MultiRowAnnotation.h */,
+				ABE8783E15214B16003652FD /* MultiRowAnnotation.m */,
+				ABE8783F15214B16003652FD /* MultiRowAnnotationProtocol.h */,
+				ABE8784015214B16003652FD /* MultiRowCalloutAnnotationView.h */,
+				ABE8784115214B16003652FD /* MultiRowCalloutAnnotationView.m */,
+				ABE8784215214B16003652FD /* MultiRowCalloutCell.h */,
+				ABE8784315214B16003652FD /* MultiRowCalloutCell.m */,
+			);
+			path = MultiRowCalloutAnnotationView;
+			sourceTree = "<group>";
+		};
 		ABF5600114D533B800872408 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				ABE8783915214B16003652FD /* MultiRowCalloutAnnotationView */,
 				ABF5600214D533D200872408 /* UICustomSwitch */,
 			);
 			name = Libraries;
@@ -540,6 +573,7 @@
 				AB49D8B814F229AF008B3B15 /* TraderAlikeView.xib in Resources */,
 				AB49D92214F397F4008B3B15 /* SurveyCreationDashboardViewController.xib in Resources */,
 				2D8A0F76150CFAF3002348D9 /* Steps in Resources */,
+				ABE8784515214B16003652FD /* LICENSE.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +647,10 @@
 				AB683F49150F1D760050CD71 /* OrganizationsPlaygroundViewController.m in Sources */,
 				AB921248151AED110056043F /* SimpleNews.m in Sources */,
 				AB92124F151B0F9C0056043F /* DeputyNewsLinksViewController.m in Sources */,
+				ABE8784415214B16003652FD /* GenericPinAnnotationView.m in Sources */,
+				ABE8784615214B16003652FD /* MultiRowAnnotation.m in Sources */,
+				ABE8784715214B16003652FD /* MultiRowCalloutAnnotationView.m in Sources */,
+				ABE8784815214B16003652FD /* MultiRowCalloutCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
