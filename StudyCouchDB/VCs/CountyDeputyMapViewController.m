@@ -596,7 +596,7 @@ static int HEIGHT_CELL = 44 ;
     // a simple map/reduce function
     [design defineViewNamed: @"count_nominees_by_area_name" 
                         map: @"function(doc){\
-     if (doc.area_name && doc.area_number && doc.nominee_name)\
+     if (doc.area_name && doc.area_number && doc.name)\
         emit([doc.area_name, doc.area_number], 1 ); \
      } "
                      reduce:@"function(key, values, rereduce) {\
@@ -636,15 +636,15 @@ static int HEIGHT_CELL = 44 ;
     CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
     
     // TODO: is it ok to add the nominees data into the key? Test in tempview!
-    [design defineViewNamed: @"list_nominees_by_area_name_area_number_nominee_name" 
+    [design defineViewNamed: @"list_nominees_by_area_name_area_number_name" 
                         map: @"function(doc){\
-                                if (doc.area_name && doc.area_number && doc.nominee_name){ \
-                                    emit([doc.area_name, doc.area_number, doc.nominee_name], doc ); \
+                                if (doc.area_name && doc.area_number && doc.name){ \
+                                    emit([doc.area_name, doc.area_number, doc.name], doc ); \
                                 } \
                                 }"
     ];
     
-    CouchQuery* query = [design queryViewNamed: @"list_nominees_by_area_name_area_number_nominee_name"];
+    CouchQuery* query = [design queryViewNamed: @"list_nominees_by_area_name_area_number_name"];
     // NOTE:
     //  to filter using just key=, all parts of the complex key must be specified or you will get a null result, as key= is looking for an exact match.
     // REF: http://ryankirkman.github.com/2011/03/30/advanced-filtering-with-couchdb-views.html

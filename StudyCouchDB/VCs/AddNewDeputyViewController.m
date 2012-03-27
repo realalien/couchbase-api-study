@@ -8,6 +8,7 @@
 
 #import "AddNewDeputyViewController.h"
 #import "DeputyAreaPickerController.h"
+#import "DeputyNominee.h"
 
 #import "Foundation-AddsOn.h"
 #import "UICustomSwitch.h"
@@ -25,7 +26,8 @@ enum {
     kTagUISwitchIsReportGPS,
     kTagUILabelGPS,
     
-    kTagAlertSaveDocumentSuccess
+    kTagAlertSaveDocumentSuccessful,
+    kTagAlertSaveDocumentFailed
 };
 
 @interface AddNewDeputyViewController  ()
@@ -340,64 +342,49 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
 -(void)doneAction:(id)sender{
     // data validation
     // TODO: more robust sanity check like active_record, IDEA: more validation be handled at the server side?!
+    
+    // name
     UIView* target = [self.view viewWithTag:kTagUITextFieldDeputyName];
     NSString* name = ((UITextField*)target).text;
-    if ([tempData valueForKey:DATA_KEY_nominee_area]
-        && [tempData valueForKey:DATA_KEY_nominee_number]
+    
+    if ([tempData valueForKey:DATA_KEY_nominee_area] != [NSNull null]
+        && [tempData valueForKey:DATA_KEY_nominee_number] != [NSNull null]
         && ([name isNotEmpty]) ) {
         // save to database
         NSLog(@"Going to save to the database");
-        
-        // Ensure database creation
-        self.database = [[CouchbaseServerManager getServer] databaseNamed: kDeputyNominees];
-//#if !INSTALL_CANNED_DATABASE && !defined(USE_REMOTE_SERVER)
-        // Create the database on the first run of the app.
-        NSError* error;
-        if (![self.database ensureCreated: &error]) {
-            [self showAlert: @"Couldn't create local database." error: error fatal: YES];
-            return;
-        }
-//#endif
-        database.tracksChanges = YES;
-
-        // IDEA: some reflective methods to avoid burden of maintenance.
-        // Insert data
-        // Create the new document's properties:
         
         // TODO: make conversion into general class
         NSString *plainGPS = [NSString stringWithFormat:@"(%f,%f)",
                               ((CLLocation*)[tempData valueForKey:DATA_KEY_GPS_LAT_LNG]).coordinate.latitude,  
                               ((CLLocation*)[tempData valueForKey:DATA_KEY_GPS_LAT_LNG]).coordinate.longitude];
         
-        NSDictionary *inDocument = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                    [tempData valueForKey:DATA_KEY_nominee_area], @"area_name",
-                                    [tempData valueForKey:DATA_KEY_nominee_number], @"area_number",
-                                    name,@"nominee_name",
-                                    [tempData valueForKey:DATA_KEY_USE_GPS], @"is_report_gps",
-                                    plainGPS, @"lat_lng", //  
-                                    [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
-                                    @"person", @"doc_type", // TODO: doc_type would be better to managed in one place.
-                                    nil];
-        
-        // Save the document, asynchronously:
-        CouchDocument* doc = [database untitledDocument];
-        RESTOperation* op = [doc putProperties:inDocument];
-        [op onCompletion: ^{
-            [inDocument release]; // TODO: research on best place for release.
-            if (op.error){
-                [self showErrorAlert: @"Couldn't save the new item" forOperation: op];
-            }else {
-                // TODO: handle the different responses from the server side. e.g. add more 
-                [self showAlert:@"保存成功！" tag:kTagAlertSaveDocumentSuccess];
-            }
-            // Re-run the query:
-//            [self.dataSource.query start];
-        }];
-        [op start];
+       DeputyNominee *dn = [DeputyNominee addDeputyNomineeWithDatabase:[CouchbaseServerManager getDeputyDB] 
+                                                                  name:name
+                                                             area_name:(NSString*)[tempData valueForKey:DATA_KEY_nominee_area]
+                                                           area_number:[tempData valueForKey:DATA_KEY_nominee_number]
+                                                         is_report_gsp:(BOOL)[tempData valueForKey:DATA_KEY_USE_GPS]
+                                                               lat_lng:plainGPS
+                                                            created_at:[NSDate date] ];
+        if (dn) {
+             [self showAlert:@"保存成功！" tag:kTagAlertSaveDocumentSuccessful];
+        }else {
+            [self showAlert:@"保存失败！" tag:kTagAlertSaveDocumentFailed];
+        }
+    } 
         
         
-    }
-    
+//        // Ensure database creation
+//        self.database = [[CouchbaseServerManager getServer] databaseNamed: kDeputyNominees];
+////#if !INSTALL_CANNED_DATABASE && !defined(USE_REMOTE_SERVER)
+//        // Create the database on the first run of the app.
+//        NSError* error;
+//        if (![self.database ensureCreated: &error]) {
+//            [self showAlert: @"Couldn't create local database." error: error fatal: YES];
+//            return;
+//        }
+////#endif
+//        database.tracksChanges = YES;
+//        // some non-blocking style block code ...... onCompletion:^()
     
     // or navigate to other view controll for sharing or data digging!
 }
@@ -455,7 +442,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
 #pragma mark -
 #pragma mark UIAlertViewDelegate methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == kTagAlertSaveDocumentSuccess) {
+    if (alertView.tag == kTagAlertSaveDocumentSuccessful) {
         [self dismissModalViewControllerAnimated:YES];
     }
     

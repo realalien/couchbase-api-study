@@ -27,6 +27,7 @@
 		2D92AF5F14AA2410007819D7 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF5E14AA2410007819D7 /* libstdc++.dylib */; };
 		2D92AF6114AA241D007819D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D92AF6014AA241D007819D7 /* libz.dylib */; };
 		2D9C2EB214D965E500956FA1 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D9C2EB114D965E500956FA1 /* LocationController.m */; };
+		2DA16F8215220F340046500A /* DeputyNominee.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA16F8115220F340046500A /* DeputyNominee.m */; };
 		2DA8E3A214BF117B009AB6A0 /* Couchbase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */; };
 		2DA8E3B014BF45F8009AB6A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */; };
 		2DABB5A614D974F700988957 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DABB5A514D974F700988957 /* CoreLocation.framework */; };
@@ -49,7 +50,6 @@
 		ABE8784715214B16003652FD /* MultiRowCalloutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784115214B16003652FD /* MultiRowCalloutAnnotationView.m */; };
 		ABE8784815214B16003652FD /* MultiRowCalloutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784315214B16003652FD /* MultiRowCalloutCell.m */; };
 		ABE8784C15214E64003652FD /* DemoStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784B15214E63003652FD /* DemoStatisticsViewController.m */; };
-		ABE8784F15214EC1003652FD /* Representative.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784E15214EC1003652FD /* Representative.m */; };
 		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
 		ABF5600814D533E400872408 /* switchBlueBg.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600314D533E400872408 /* switchBlueBg.png */; };
 		ABF5600914D533E400872408 /* switchOffPlain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600414D533E400872408 /* switchOffPlain.png */; };
@@ -116,6 +116,8 @@
 		2D92AF6014AA241D007819D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2D9C2EB014D965E500956FA1 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationController.h; path = commons/LocationController.h; sourceTree = "<group>"; };
 		2D9C2EB114D965E500956FA1 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationController.m; path = commons/LocationController.m; sourceTree = "<group>"; };
+		2DA16F8015220F340046500A /* DeputyNominee.h */ = {isa = PBXFileReference; fileEncoding = 4; name = DeputyNominee.h; path = Models/DeputyNominee.h; sourceTree = "<group>"; };
+		2DA16F8115220F340046500A /* DeputyNominee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeputyNominee.m; path = Models/DeputyNominee.m; sourceTree = "<group>"; };
 		2DA8E3A114BF117B009AB6A0 /* Couchbase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Couchbase.framework; path = Frameworks/Couchbase.framework; sourceTree = "<group>"; };
 		2DA8E3AF14BF45F8009AB6A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2DABB5A514D974F700988957 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -153,8 +155,6 @@
 		ABE8784315214B16003652FD /* MultiRowCalloutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiRowCalloutCell.m; sourceTree = "<group>"; };
 		ABE8784A15214E62003652FD /* DemoStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoStatisticsViewController.h; path = VCs/DemoStatisticsViewController.h; sourceTree = "<group>"; };
 		ABE8784B15214E63003652FD /* DemoStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoStatisticsViewController.m; path = VCs/DemoStatisticsViewController.m; sourceTree = "<group>"; };
-		ABE8784D15214EC1003652FD /* Representative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Representative.h; path = Models/Representative.h; sourceTree = "<group>"; };
-		ABE8784E15214EC1003652FD /* Representative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Representative.m; path = Models/Representative.m; sourceTree = "<group>"; };
 		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
 		ABF5600314D533E400872408 /* switchBlueBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchBlueBg.png; path = libraries/UICustomSwitch/switchBlueBg.png; sourceTree = "<group>"; };
 		ABF5600414D533E400872408 /* switchOffPlain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchOffPlain.png; path = libraries/UICustomSwitch/switchOffPlain.png; sourceTree = "<group>"; };
@@ -357,10 +357,10 @@
 		AB921244151AE3130056043F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2DA16F8015220F340046500A /* DeputyNominee.h */,
+				2DA16F8115220F340046500A /* DeputyNominee.m */,
 				AB921246151AED110056043F /* SimpleNews.h */,
 				AB921247151AED110056043F /* SimpleNews.m */,
-				ABE8784D15214EC1003652FD /* Representative.h */,
-				ABE8784E15214EC1003652FD /* Representative.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -662,7 +662,7 @@
 				ABE8784715214B16003652FD /* MultiRowCalloutAnnotationView.m in Sources */,
 				ABE8784815214B16003652FD /* MultiRowCalloutCell.m in Sources */,
 				ABE8784C15214E64003652FD /* DemoStatisticsViewController.m in Sources */,
-				ABE8784F15214EC1003652FD /* Representative.m in Sources */,
+				2DA16F8215220F340046500A /* DeputyNominee.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
