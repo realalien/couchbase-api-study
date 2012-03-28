@@ -23,7 +23,7 @@
 @property(nonatomic, retain) NSString *area_name;
 @property(nonatomic, retain) NSString *area_number;
 @property(nonatomic, readonly) NSDate *created_at;
-@property BOOL is_report_gsp;
+@property bool is_report_gps;
 @property(nonatomic, retain) NSString *lat_lng;   // TODO: how to persist CLLocationCoordinate2D here?
 
 
@@ -34,7 +34,7 @@
                                           name:(NSString*)name
                                      area_name:(NSString*)area_name
                                    area_number:(NSString*)area_number
-                                 is_report_gsp:(BOOL)is_report_gsp
+                                 is_report_gps:(BOOL)is_report_gps
                                         lat_lng:(NSString*)lat_lng
                                     created_at:(NSDate*)creationDate;
 
@@ -47,6 +47,7 @@
                                  byAreaName:(NSString*)area_name 
                                  andAreaNumber:(NSString*)area_number;
 
++(NSMutableArray *)loadAllNomineesFromDatabase:(CouchDatabase*)database;
 
 
 @end

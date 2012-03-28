@@ -740,6 +740,10 @@ static int HEIGHT_CELL = 44 ;
     // TODO, following code should not be embedded here, should setup depending on the design document
     if (nomineesGroupingLevel == 1) {
         keyIndexForUI = 0;
+        NSLog(@"key--->%@", [[row documentProperties] allKeys]);
+        NSLog(@"val--->%@", [[row documentProperties] allValues]);
+        NSLog(@"row.value --->%@",row.value);
+        NSLog(@"row0 %@ ,  row1  %@  ",row.key0, row.key1);
         cellValue = [NSString stringWithFormat:@"%@ (共%@个选区)",  [row keyAtIndex:keyIndexForUI] ,[row.value description] ] ;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else if (nomineesGroupingLevel == 2) {
@@ -749,10 +753,8 @@ static int HEIGHT_CELL = 44 ;
     }else if (nomineesGroupingLevel == 3) {
 //        keyIndexForUI = 2;
 //        cellValue = [NSString stringWithFormat:@"%@",  [row keyAtIndex:keyIndexForUI] ]; // the nominee's name
-        
         DeputyNominee *d = (DeputyNominee*)[popoverDataHolder objectAtIndex:indexPath.row];
         cellValue = d.name;
-        
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     

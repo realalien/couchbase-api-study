@@ -14,7 +14,7 @@
 @dynamic area_name;
 @dynamic area_number;
 @dynamic created_at;
-@dynamic is_report_gsp;
+@dynamic is_report_gps;
 @dynamic lat_lng;   // TODO: how to persist CLLocationCoordinate2D here?
 @dynamic name;
 
@@ -23,14 +23,14 @@
                                           name:(NSString*)name
                                      area_name:(NSString*)area_name
                                    area_number:(NSString*)area_number
-                                 is_report_gsp:(BOOL)is_report_gsp
+                                 is_report_gps:(BOOL)is_report_gps
                                        lat_lng:(NSString*)lat_lng
                                     created_at:(NSDate*)creationDate{
     NSDictionary* properties = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSString stringWithFormat:@"%@",name],             @"name",
                                 [NSString stringWithFormat:@"%@",area_name],        @"area_name",
                                 [NSString stringWithFormat:@"%@",area_number],      @"area_number",
-                                [NSNumber numberWithBool:is_report_gsp],            @"is_report_gsp",
+                                [NSNumber numberWithBool:is_report_gps],            @"is_report_gps",
                                 [NSString stringWithFormat:@"%@",lat_lng],          @"lat_lng",
                                 [RESTBody JSONObjectWithDate: creationDate],        @"created_at",
                                 @"human", @"doc_type",
@@ -72,9 +72,49 @@
 }
 
 
++(NSMutableArray *)countByAreaNameAreaNumberFromDatabase:(CouchDatabase*)database
+                                       withGroupingLevel:(NSInteger)levelOfGrouping
+                                                startKey:(id)aStartKey
+                                                  endKey:(id)aEndKey {
+    
+    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
+    
+    // a simple map/reduce function
+    [design defineViewNamed: @"count_nominees_by_area_name" 
+                        map: @"function(doc){\
+     if (doc.area_name && doc.area_number && doc.name)\
+     emit([doc.area_name, doc.area_number], 1 ); \
+     } "
+                     reduce:@"function(key, values, rereduce) {\
+     return sum(values);\
+     }"
+     ];
+    
+    CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name"];
+    query.groupLevel = levelOfGrouping;
+    query.startKey = aStartKey;
+    query.endKey = aEndKey;
+    
+    //    [query start];
+    NSLog(@"total count: %d", query.rows.count);
+    
+    NSMutableArray *ret = [[NSMutableArray alloc]init];
+    
+    // Q: TODO: shall I cache the data or request everytime?
+    // A: 
+    for (int i=0; i< query.rows.count; i++) {
+        CouchQueryRow *row = [query.rows rowAtIndex:i];
+        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
+        //[ret setValue:[row.value description]forKey:[row.key description]];
+        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
+    }
+    
+    return [ret autorelease];
+}
+
 +(NSMutableArray *)loadNomineesFromDatabase:(CouchDatabase*)database
                                  byAreaName:(NSString*)area_name 
-                                 andAreaNumber:(NSString*)area_number{
+                              andAreaNumber:(NSString*)area_number{
     CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
     
     // TODO: is it ok to add the nominees data into the key? Test in tempview!
@@ -111,44 +151,9 @@
     return ret;
 }
 
-+(NSMutableArray *)countByAreaNameAreaNumberFromDatabase:(CouchDatabase*)database
-                                       withGroupingLevel:(NSInteger)levelOfGrouping
-                                                     startKey:(id)aStartKey
-                                                       endKey:(id)aEndKey {
-    
-    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
-    
-    // a simple map/reduce function
-    [design defineViewNamed: @"count_nominees_by_area_name" 
-                        map: @"function(doc){\
-     if (doc.area_name && doc.area_number && doc.name)\
-     emit([doc.area_name, doc.area_number], 1 ); \
-     } "
-                     reduce:@"function(key, values, rereduce) {\
-     return sum(values);\
-     }"
-     ];
-    
-    CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name"];
-    query.groupLevel = levelOfGrouping;
-    query.startKey = aStartKey;
-    query.endKey = aEndKey;
-    
-    //    [query start];
-    NSLog(@"total count: %d", query.rows.count);
-    
-    NSMutableArray *ret = [[NSMutableArray alloc]init];
-    
-    // Q: TODO: shall I cache the data or request everytime?
-    // A: 
-    for (int i=0; i< query.rows.count; i++) {
-        CouchQueryRow *row = [query.rows rowAtIndex:i];
-        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
-        //[ret setValue:[row.value description]forKey:[row.key description]];
-        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
-    }
-    
-    return [ret autorelease];
+
++(NSMutableArray *)loadAllNomineesFromDatabase:(CouchDatabase*)database{
+    return [DeputyNominee loadNomineesFromDatabase:database byAreaName:nil andAreaNumber:nil ];
 }
 
 

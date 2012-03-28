@@ -362,11 +362,13 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
                                                                   name:name
                                                              area_name:(NSString*)[tempData valueForKey:DATA_KEY_nominee_area]
                                                            area_number:[tempData valueForKey:DATA_KEY_nominee_number]
-                                                         is_report_gsp:(BOOL)[tempData valueForKey:DATA_KEY_USE_GPS]
+                                                         is_report_gps:[[tempData valueForKey:DATA_KEY_USE_GPS] boolValue]
                                                                lat_lng:plainGPS
                                                             created_at:[NSDate date] ];
         if (dn) {
              [self showAlert:@"保存成功！" tag:kTagAlertSaveDocumentSuccessful];
+            NSLog(@"%@", dn.is_report_gps ? @"YES":@"NO");
+            NSLog(@"%@", dn.lat_lng );
         }else {
             [self showAlert:@"保存失败！" tag:kTagAlertSaveDocumentFailed];
         }
@@ -473,7 +475,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
 #pragma mark callback methods
 -(void)handleReportGPSSwitch:(id)sender {
     UICustomSwitch* reportGPS = (UICustomSwitch*)[self.view viewWithTag:kTagUISwitchIsReportGPS];
-    
+    [tempData setValue:[NSNumber numberWithBool:NO] forKey:DATA_KEY_USE_GPS];
     if (reportGPS != nil) {
         if (reportGPS.on) {
             // NOTE: * do NOT change UI here as user fires the UI change! 
