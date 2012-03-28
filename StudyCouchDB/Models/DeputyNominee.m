@@ -72,4 +72,84 @@
 }
 
 
++(NSMutableArray *)loadNomineesFromDatabase:(CouchDatabase*)database
+                                 byAreaName:(NSString*)area_name 
+                                 andAreaNumber:(NSString*)area_number{
+    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
+    
+    // TODO: is it ok to add the nominees data into the key? Test in tempview!
+    [design defineViewNamed: @"list_nominees_by_area_name_area_number_name" 
+                        map: @"function(doc){\
+     if (doc.area_name && doc.area_number && doc.name){ \
+        emit([doc.area_name, doc.area_number, doc.name], doc ); \
+     } \
+     }"
+     ];
+    
+    CouchQuery* query = [design queryViewNamed: @"list_nominees_by_area_name_area_number_name"];
+    // NOTE:
+    //  to filter using just key=, all parts of the complex key must be specified or you will get a null result, as key= is looking for an exact match.
+    // REF: http://ryankirkman.github.com/2011/03/30/advanced-filtering-with-couchdb-views.html
+    //    query.keys = [NSArray arrayWithObjects: area_name, [NSArray array], nil ];
+    query.startKey = [NSArray arrayWithObjects:area_name, area_number, nil] ;
+    query.endKey = [NSArray arrayWithObjects: area_name, area_number, [NSDictionary dictionary], nil ];
+    //    query.groupLevel = 3;
+    
+    NSLog(@"total count: %d", query.rows.count);
+    
+    NSMutableArray *ret = [[NSMutableArray alloc]init];
+    
+    // Q: TODO: shall I cache the data or request everytime?
+    // A: 
+    for (int i=0; i< query.rows.count; i++) {
+        CouchQueryRow *row = [query.rows rowAtIndex:i];
+        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
+        //[ret setValue:[row.value description]forKey:[row.key description]];
+        [ret addObject: [DeputyNominee modelForDocument:row.document ]]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
+    }
+    
+    return ret;
+}
+
++(NSMutableArray *)countByAreaNameAreaNumberFromDatabase:(CouchDatabase*)database
+                                       withGroupingLevel:(NSInteger)levelOfGrouping
+                                                     startKey:(id)aStartKey
+                                                       endKey:(id)aEndKey {
+    
+    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
+    
+    // a simple map/reduce function
+    [design defineViewNamed: @"count_nominees_by_area_name" 
+                        map: @"function(doc){\
+     if (doc.area_name && doc.area_number && doc.name)\
+     emit([doc.area_name, doc.area_number], 1 ); \
+     } "
+                     reduce:@"function(key, values, rereduce) {\
+     return sum(values);\
+     }"
+     ];
+    
+    CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name"];
+    query.groupLevel = levelOfGrouping;
+    query.startKey = aStartKey;
+    query.endKey = aEndKey;
+    
+    //    [query start];
+    NSLog(@"total count: %d", query.rows.count);
+    
+    NSMutableArray *ret = [[NSMutableArray alloc]init];
+    
+    // Q: TODO: shall I cache the data or request everytime?
+    // A: 
+    for (int i=0; i< query.rows.count; i++) {
+        CouchQueryRow *row = [query.rows rowAtIndex:i];
+        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
+        //[ret setValue:[row.value description]forKey:[row.key description]];
+        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
+    }
+    
+    return [ret autorelease];
+}
+
+
 @end

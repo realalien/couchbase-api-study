@@ -12,6 +12,10 @@
 #import "DeputyAnnotationView.h"
 #import "AppDelegate.h"
 #import "Foundation-AddsOn.h"
+#import "DeputyNominee.h"
+#import <CouchCocoa/CouchCocoa.h>
+
+
 
 #define METERS_PER_MILE 1609.344
 
@@ -414,7 +418,7 @@ static int HEIGHT_CELL = 44 ;
     
     // create a standard "add" button
     UIBarButtonItem *bi = [[UIBarButtonItem alloc]
-                           initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewDeputy:)];
+                           initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewDeputyButtonClicked:)];
     bi.style = UIBarButtonItemStyleBordered;
     [buttons addObject:bi];
     [bi release];
@@ -548,7 +552,7 @@ static int HEIGHT_CELL = 44 ;
 
 
 
--(void)addNewDeputy:(id)sender {
+-(void)addNewDeputyButtonClicked:(id)sender {
     AddNewDeputyViewController *addDeputyVc = [[AddNewDeputyViewController alloc]init]; 
     addDeputyVc.modalPresentationStyle = UIModalPresentationFormSheet;
     addDeputyVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -583,91 +587,7 @@ static int HEIGHT_CELL = 44 ;
 }
 
 
--(NSMutableArray *)countByAreaNameAreaNumberWithGroupingLevel:(NSInteger)levelOfGrouping
-                                                     startKey:(id)aStartKey
-                                                       endKey:(id)aEndKey {
-    // read database.
-    NSLog(@"loadAnnotations");
-    
-    CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
-    
-    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
- 
-    // a simple map/reduce function
-    [design defineViewNamed: @"count_nominees_by_area_name" 
-                        map: @"function(doc){\
-     if (doc.area_name && doc.area_number && doc.name)\
-        emit([doc.area_name, doc.area_number], 1 ); \
-     } "
-                     reduce:@"function(key, values, rereduce) {\
-     return sum(values);\
-     }"
-     ];
 
-    CouchQuery* query = [design queryViewNamed: @"count_nominees_by_area_name"];
-    query.groupLevel = levelOfGrouping;
-    query.startKey = aStartKey;
-    query.endKey = aEndKey;
-    
-//    [query start];
-    NSLog(@"total count: %d", query.rows.count);
-    
-    NSMutableArray *ret = [[NSMutableArray alloc]init];
-    
-    // Q: TODO: shall I cache the data or request everytime?
-    // A: 
-    for (int i=0; i< query.rows.count; i++) {
-        CouchQueryRow *row = [query.rows rowAtIndex:i];
-        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
-        //[ret setValue:[row.value description]forKey:[row.key description]];
-        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
-    }
-    
-    return ret;
-}
-
-
--(NSMutableArray *)loadNomineesByAreaName:(NSString*)area_name areaNumber:(NSString*)area_number{
-    // read database.
-    NSLog(@"loadAnnotations");
-    
-    CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
-    
-    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
-    
-    // TODO: is it ok to add the nominees data into the key? Test in tempview!
-    [design defineViewNamed: @"list_nominees_by_area_name_area_number_name" 
-                        map: @"function(doc){\
-                                if (doc.area_name && doc.area_number && doc.name){ \
-                                    emit([doc.area_name, doc.area_number, doc.name], doc ); \
-                                } \
-                                }"
-    ];
-    
-    CouchQuery* query = [design queryViewNamed: @"list_nominees_by_area_name_area_number_name"];
-    // NOTE:
-    //  to filter using just key=, all parts of the complex key must be specified or you will get a null result, as key= is looking for an exact match.
-    // REF: http://ryankirkman.github.com/2011/03/30/advanced-filtering-with-couchdb-views.html
-    //    query.keys = [NSArray arrayWithObjects: area_name, [NSArray array], nil ];
-    query.startKey = [NSArray arrayWithObjects:area_name, area_number, nil] ;
-    query.endKey = [NSArray arrayWithObjects: area_name, area_number, [NSDictionary dictionary], nil ];
-//    query.groupLevel = 3;
-    
-    NSLog(@"total count: %d", query.rows.count);
-    
-    NSMutableArray *ret = [[NSMutableArray alloc]init];
-    
-    // Q: TODO: shall I cache the data or request everytime?
-    // A: 
-    for (int i=0; i< query.rows.count; i++) {
-        CouchQueryRow *row = [query.rows rowAtIndex:i];
-        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
-        //[ret setValue:[row.value description]forKey:[row.key description]];
-        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
-    }
-    
-    return ret;
-}
 
 
 #pragma mark -
@@ -827,8 +747,12 @@ static int HEIGHT_CELL = 44 ;
         cellValue = [NSString stringWithFormat:@"第%@选区 (共%@位代表)",  [row keyAtIndex:keyIndexForUI] ,[row.value description] ] ;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else if (nomineesGroupingLevel == 3) {
-        keyIndexForUI = 2;
-        cellValue = [NSString stringWithFormat:@"%@",  [row keyAtIndex:keyIndexForUI] ]; // the nominee's name
+//        keyIndexForUI = 2;
+//        cellValue = [NSString stringWithFormat:@"%@",  [row keyAtIndex:keyIndexForUI] ]; // the nominee's name
+        
+        DeputyNominee *d = (DeputyNominee*)[popoverDataHolder objectAtIndex:indexPath.row];
+        cellValue = d.name;
+        
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
@@ -849,10 +773,11 @@ static int HEIGHT_CELL = 44 ;
         
         // refresh data in case new data has been added.
         [popoverDataHolder removeAllObjects];
-        NSMutableArray *data  = [self countByAreaNameAreaNumberWithGroupingLevel:1 
-                                                                        startKey:nil 
-                                                                          endKey:nil];
-        popoverDataHolder = data;// TODO: this looks wired, what's then? A:
+        NSMutableArray *data  = [DeputyNominee countByAreaNameAreaNumberFromDatabase:[CouchbaseServerManager getDeputyDB]
+                                                                   withGroupingLevel:1 
+                                                                            startKey:nil
+                                                                              endKey:nil];
+        self.popoverDataHolder = data;// TODO: this looks wired, what's then? A:
         
         if ([self.areaSelectPopup.contentViewController isKindOfClass:[UINavigationController class]] ) {
             UINavigationController *aggreNav = (UINavigationController*) self.areaSelectPopup.contentViewController;
@@ -867,18 +792,19 @@ static int HEIGHT_CELL = 44 ;
         
         
         [popoverDataHolder removeAllObjects];
-        NSMutableArray *data  = [self countByAreaNameAreaNumberWithGroupingLevel:2 
-                                                                        startKey:[NSArray arrayWithObjects: self.currentSelectAreaName, nil,nil ] 
-                                                                          endKey:[NSArray arrayWithObjects: self.currentSelectAreaName, [NSDictionary dictionary],nil ]];
+        NSMutableArray *data  = [DeputyNominee countByAreaNameAreaNumberFromDatabase:[CouchbaseServerManager getDeputyDB]
+                                                                   withGroupingLevel:2 
+                                                                            startKey:[NSArray arrayWithObjects: self.currentSelectAreaName, nil,nil ]
+                                                                              endKey:[NSArray arrayWithObjects: self.currentSelectAreaName, [NSDictionary dictionary],nil ]];
         self.popoverDataHolder = data;
-        
         
     }else if (viewController.view.tag == kTagUITableViewOfNominees){
         nomineesGroupingLevel = 3;
         
         [popoverDataHolder removeAllObjects];
-        NSMutableArray *data  = [self loadNomineesByAreaName:self.currentSelectAreaName
-                                                  areaNumber:self.currentSelectAreaNumber];
+        NSMutableArray *data  = [DeputyNominee loadNomineesFromDatabase:[CouchbaseServerManager getDeputyDB]                                                             
+                                                             byAreaName:self.currentSelectAreaName
+                                                             andAreaNumber:self.currentSelectAreaNumber];
         self.popoverDataHolder = data;
 
     }
