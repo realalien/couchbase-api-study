@@ -17,6 +17,7 @@ build/
 *.pbxuser
 *.xcworkspace
 xcuserdata
+./StudyCouchDB.xcodeproj/project.xcworkspace/xcuserdata
 
 # Exclude temp nibs and swap files
 *~.nib
