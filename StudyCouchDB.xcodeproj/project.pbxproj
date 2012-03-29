@@ -50,6 +50,7 @@
 		ABE8784715214B16003652FD /* MultiRowCalloutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784115214B16003652FD /* MultiRowCalloutAnnotationView.m */; };
 		ABE8784815214B16003652FD /* MultiRowCalloutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784315214B16003652FD /* MultiRowCalloutCell.m */; };
 		ABE8784C15214E64003652FD /* DemoStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8784B15214E63003652FD /* DemoStatisticsViewController.m */; };
+		ABE87872152401E6003652FD /* js_xcode_formatter.rb in Resources */ = {isa = PBXBuildFile; fileRef = ABE87871152401E6003652FD /* js_xcode_formatter.rb */; };
 		ABF55FFF14D5259600872408 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF55FFE14D5259600872408 /* CouchCocoa.framework */; };
 		ABF5600814D533E400872408 /* switchBlueBg.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600314D533E400872408 /* switchBlueBg.png */; };
 		ABF5600914D533E400872408 /* switchOffPlain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF5600414D533E400872408 /* switchOffPlain.png */; };
@@ -155,6 +156,7 @@
 		ABE8784315214B16003652FD /* MultiRowCalloutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiRowCalloutCell.m; sourceTree = "<group>"; };
 		ABE8784A15214E62003652FD /* DemoStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoStatisticsViewController.h; path = VCs/DemoStatisticsViewController.h; sourceTree = "<group>"; };
 		ABE8784B15214E63003652FD /* DemoStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoStatisticsViewController.m; path = VCs/DemoStatisticsViewController.m; sourceTree = "<group>"; };
+		ABE87871152401E6003652FD /* js_xcode_formatter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = js_xcode_formatter.rb; path = scripts/js_xcode_formatter.rb; sourceTree = "<group>"; };
 		ABF55FFE14D5259600872408 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = Frameworks/CouchCocoa.framework; sourceTree = "<group>"; };
 		ABF5600314D533E400872408 /* switchBlueBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchBlueBg.png; path = libraries/UICustomSwitch/switchBlueBg.png; sourceTree = "<group>"; };
 		ABF5600414D533E400872408 /* switchOffPlain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchOffPlain.png; path = libraries/UICustomSwitch/switchOffPlain.png; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 		2D92AF2C14AA22E6007819D7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ABE878701523FA83003652FD /* Scripts */,
 				2D92AF2D14AA22E6007819D7 /* StudyCouchDB-Info.plist */,
 				2D92AF2E14AA22E6007819D7 /* InfoPlist.strings */,
 				2D92AF3114AA22E6007819D7 /* main.m */,
@@ -388,6 +391,14 @@
 				ABE8784315214B16003652FD /* MultiRowCalloutCell.m */,
 			);
 			path = MultiRowCalloutAnnotationView;
+			sourceTree = "<group>";
+		};
+		ABE878701523FA83003652FD /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				ABE87871152401E6003652FD /* js_xcode_formatter.rb */,
+			);
+			name = Scripts;
 			sourceTree = "<group>";
 		};
 		ABF5600114D533B800872408 /* Libraries */ = {
@@ -584,6 +595,7 @@
 				AB49D92214F397F4008B3B15 /* SurveyCreationDashboardViewController.xib in Resources */,
 				2D8A0F76150CFAF3002348D9 /* Steps in Resources */,
 				ABE8784515214B16003652FD /* LICENSE.html in Resources */,
+				ABE87872152401E6003652FD /* js_xcode_formatter.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

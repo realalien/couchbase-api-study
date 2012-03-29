@@ -72,7 +72,58 @@
 }
 
 
-+(NSMutableArray *)countByAreaNameAreaNumberFromDatabase:(CouchDatabase*)database
+// NOTE: study ref. http://stackoverflow.com/questions/4287107/how-to-return-values-between-dates-and-group-results-in-couchdb
++(NSMutableArray *)countAreaNumberGroupByAreaNameFromDatabase:(CouchDatabase*)database {
+                               //forAreaName:(NSString*)areaName{  // TODO: see if we can make query on it.
+    CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
+    
+    // a simple map/reduce function
+    [design defineViewNamed: @"count_area_number_groupby_area_name" 
+                        map: @"function(doc){"
+                                 "if (doc.area_name && doc.area_number && doc.name){"
+                                     "var r = {};"
+                                     "r[doc.area_number] = 1;"
+                                     "emit([doc.area_name], r);"
+                                 "}"
+                              "}"
+                     reduce:@"function (keys, values, rereduce) {"
+                                 "var r = {};"
+                                 "for (var i in values) {" 
+                                    "for (var k in values[i]) {"
+                                        "if (k in r) r[k] += values[i][k];"
+                                        "else r[k] = values[i][k];"
+                                    "}"
+                                 "}"
+                                 "return Object.keys(r).length;"
+                            "}"
+     ];
+    
+    CouchQuery* query = [design queryViewNamed: @"count_area_number_groupby_area_name"];
+//    query.keys = [NSArray arrayWithObject:areaName];
+    query.groupLevel = 1;
+    
+    //    [query start];
+    NSLog(@"total count: %d", query.rows.count);
+    
+    NSMutableArray *ret = [[NSMutableArray alloc]init];
+    
+    // Q: TODO: shall I cache the data or request everytime?
+    // A: 
+    for (int i=0; i< query.rows.count; i++) {
+        CouchQueryRow *row = [query.rows rowAtIndex:i];
+        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
+        //[ret setValue:[row.value description]forKey:[row.key description]];
+        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
+    }
+    
+    return [ret autorelease];
+    
+    return nil;
+}
+
+
+
++(NSMutableArray *)countNomineesByAreaNameAreaNumberFromDatabase:(CouchDatabase*)database
                                        withGroupingLevel:(NSInteger)levelOfGrouping
                                                 startKey:(id)aStartKey
                                                   endKey:(id)aEndKey {

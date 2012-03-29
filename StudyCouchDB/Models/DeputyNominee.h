@@ -38,7 +38,12 @@
                                         lat_lng:(NSString*)lat_lng
                                     created_at:(NSDate*)creationDate;
 
-+(NSMutableArray *)countByAreaNameAreaNumberFromDatabase:(CouchDatabase*)database
+
++(NSMutableArray *)countAreaNumberGroupByAreaNameFromDatabase:(CouchDatabase*)database;
+//                                                  forAreaName:(NSString*)areaName;
+    
+    
++(NSMutableArray *)countNomineesByAreaNameAreaNumberFromDatabase:(CouchDatabase*)database
                                        withGroupingLevel:(NSInteger)levelOfGrouping
                                                 startKey:(id)aStartKey
                                                   endKey:(id)aEndKey;

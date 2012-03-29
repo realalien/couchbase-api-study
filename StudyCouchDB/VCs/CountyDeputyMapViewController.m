@@ -625,7 +625,7 @@ static int HEIGHT_CELL = 44 ;
         areaNumberTableVc.tableView.delegate = self;
         
         
-        [aggreNav pushViewController:[areaNumberTableVc autorelease] animated:YES]; // NOTE: can't set animation to YES, the popover contentSize will be resized.
+        [aggreNav pushViewController:[areaNumberTableVc autorelease] animated:YES]; 
         
         // Customize the navigationbar
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回"
@@ -636,6 +636,7 @@ static int HEIGHT_CELL = 44 ;
         areaNumberTableVc.navigationItem.backBarButtonItem = backButton;
         [backButton release];
         
+        // Customized the navigationbar text
         UILabel *l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
         l.backgroundColor = [UIColor clearColor];
         l.textAlignment = UITextAlignmentCenter;
@@ -643,9 +644,7 @@ static int HEIGHT_CELL = 44 ;
         l.text = [NSString stringWithFormat:@"%@", currentSelectAreaName];
         areaNumberTableVc.navigationItem.titleView = l;
         [l release];
-        
-//        [self.areaSelectPopup setPopoverContentSize:CGSizeMake(260, [popoverDataHolder count] * HEIGHT_CELL + 44 )];
-    
+            
     }else if (tableView.tag == kTagUITableViewOfAreaNumbers){   // did select a 'area number'
         
         CouchQueryRow *row = (CouchQueryRow*)[popoverDataHolder objectAtIndex:indexPath.row];        
@@ -775,10 +774,12 @@ static int HEIGHT_CELL = 44 ;
         
         // refresh data in case new data has been added.
         [popoverDataHolder removeAllObjects];
-        NSMutableArray *data  = [DeputyNominee countByAreaNameAreaNumberFromDatabase:[CouchbaseServerManager getDeputyDB]
-                                                                   withGroupingLevel:1 
-                                                                            startKey:nil
-                                                                              endKey:nil];
+        NSMutableArray *data  = [DeputyNominee countAreaNumberGroupByAreaNameFromDatabase:[CouchbaseServerManager getDeputyDB] ];
+        
+//        [DeputyNominee countByAreaNameAreaNumberFromDatabase:[CouchbaseServerManager getDeputyDB]
+//                                                                   withGroupingLevel:1 
+//                                                                            startKey:nil
+//                                                                              endKey:nil];
         self.popoverDataHolder = data;// TODO: this looks wired, what's then? A:
         
         if ([self.areaSelectPopup.contentViewController isKindOfClass:[UINavigationController class]] ) {
@@ -794,7 +795,7 @@ static int HEIGHT_CELL = 44 ;
         
         
         [popoverDataHolder removeAllObjects];
-        NSMutableArray *data  = [DeputyNominee countByAreaNameAreaNumberFromDatabase:[CouchbaseServerManager getDeputyDB]
+        NSMutableArray *data  = [DeputyNominee countNomineesByAreaNameAreaNumberFromDatabase:[CouchbaseServerManager getDeputyDB]
                                                                    withGroupingLevel:2 
                                                                             startKey:[NSArray arrayWithObjects: self.currentSelectAreaName, nil,nil ]
                                                                               endKey:[NSArray arrayWithObjects: self.currentSelectAreaName, [NSDictionary dictionary],nil ]];
