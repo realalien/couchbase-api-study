@@ -282,6 +282,7 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
     
     [areaPicker release];
     [areaPickerPopup release];
+    [super dealloc];
 }
 
 #pragma mark -

@@ -84,6 +84,8 @@ enum {
 -(void)dealloc{
     self.v1 = nil;
     self.v2 = nil;
+    
+    [super dealloc];
 }
 
 @end

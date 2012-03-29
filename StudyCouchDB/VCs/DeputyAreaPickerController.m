@@ -162,6 +162,8 @@ enum {
     [areaNames release]; areaNames = nil;
     
     delegate = nil;
+    
+    [super dealloc];
 }
 
 #pragma mark -

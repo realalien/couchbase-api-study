@@ -111,8 +111,6 @@
     // A: 
     for (int i=0; i< query.rows.count; i++) {
         CouchQueryRow *row = [query.rows rowAtIndex:i];
-        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
-        //[ret setValue:[row.value description]forKey:[row.key description]];
         [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
     }
     
@@ -155,9 +153,7 @@
     // A: 
     for (int i=0; i< query.rows.count; i++) {
         CouchQueryRow *row = [query.rows rowAtIndex:i];
-        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
-        //[ret setValue:[row.value description]forKey:[row.key description]];
-        [ret addObject:row]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
+        [ret addObject:row];
     }
     
     return [ret autorelease];
@@ -168,7 +164,6 @@
                               andAreaNumber:(NSString*)area_number{
     CouchDesignDocument* design = [database designDocumentWithName: @"nominees"];
     
-    // TODO: is it ok to add the nominees data into the key? Test in tempview!
     [design defineViewNamed: @"list_nominees_by_area_name_area_number_name" 
                         map: @"function(doc){\
      if (doc.area_name && doc.area_number && doc.name){ \
@@ -181,7 +176,6 @@
     // NOTE:
     //  to filter using just key=, all parts of the complex key must be specified or you will get a null result, as key= is looking for an exact match.
     // REF: http://ryankirkman.github.com/2011/03/30/advanced-filtering-with-couchdb-views.html
-    //    query.keys = [NSArray arrayWithObjects: area_name, [NSArray array], nil ];
     query.startKey = [NSArray arrayWithObjects:area_name, area_number, nil] ;
     query.endKey = [NSArray arrayWithObjects: area_name, area_number, [NSDictionary dictionary], nil ];
     //    query.groupLevel = 3;
@@ -194,9 +188,7 @@
     // A: 
     for (int i=0; i< query.rows.count; i++) {
         CouchQueryRow *row = [query.rows rowAtIndex:i];
-        //NSLog(@"row %d  =>  %@ : %@ ",i, [row.key description], [row.value description]  );
-        //[ret setValue:[row.value description]forKey:[row.key description]];
-        [ret addObject: [DeputyNominee modelForDocument:row.document ]]; // NOTE: it looks like the data structure is loose, i.e. not enforce any attributes! What's the best practice here?
+        [ret addObject: [DeputyNominee modelForDocument:row.document ]];
     }
     
     return ret;
