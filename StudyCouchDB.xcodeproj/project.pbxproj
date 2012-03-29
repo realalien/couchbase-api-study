@@ -550,7 +550,7 @@
 		2D92AF1814AA22E6007819D7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 2D92AF1B14AA22E6007819D7 /* Build configuration list for PBXProject "StudyCouchDB" */;
 			compatibilityVersion = "Xcode 3.2";

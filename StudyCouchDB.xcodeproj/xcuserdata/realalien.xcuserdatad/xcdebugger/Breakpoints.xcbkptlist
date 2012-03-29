@@ -13,6 +13,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "769"
          endingLineNumber = "769"
+         landmarkName = "-navigationController:willShowViewController:animated:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

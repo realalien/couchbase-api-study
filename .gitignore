@@ -18,7 +18,7 @@ build/
 *.xcworkspace
 xcuserdata
 ./StudyCouchDB.xcodeproj/project.xcworkspace/xcuserdata
-
+./StudyCouchDB.xcodeproj/xcuserdata
 # Exclude temp nibs and swap files
 *~.nib
 *.swp
