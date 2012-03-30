@@ -685,11 +685,13 @@ static int HEIGHT_CELL = 44 ;
         // temp: add a profile view controller
         DeputyProfileViewController *pv = [[DeputyProfileViewController alloc]init];
         
-        CouchQueryRow *row = (CouchQueryRow*)[popoverDataHolder objectAtIndex:indexPath.row]; 
-        CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
-        CouchDocument *doc = [database documentWithID: row.documentID];
-        if (doc) {
-            [pv.data setValue:doc forKey:@"nominee"];  // TODO: should use doc_type to indicate.
+//        CouchQueryRow *row = (CouchQueryRow*)[popoverDataHolder objectAtIndex:indexPath.row]; 
+//        CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
+//        CouchDocument *doc = [database documentWithID: row.documentID];
+        DeputyNominee *d = (DeputyNominee*)[popoverDataHolder objectAtIndex:indexPath.row];
+        
+        if (d) {
+            [pv.data setValue:d forKey:@"nominee"];  // TODO: should use doc_type to indicate.
             [[(AppDelegate *)[[UIApplication sharedApplication] delegate] navController] pushViewController:[pv autorelease] animated:YES];
             
         }else{

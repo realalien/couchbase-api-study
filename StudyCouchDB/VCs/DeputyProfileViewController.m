@@ -372,25 +372,32 @@
     //       __actions__ will be 'check those attributes', 'giving statics'(which depends other tool/target), 
     
     
-     
-    // NOTE: some attributes are just for viewing.
-    ListingAttributesTool *tool = [[ListingAttributesTool alloc]initWithName:@"Personal Info"];
-    [tool addAttributesToLookFor:[NSArray arrayWithObjects:@"area_name",@"area_number", @"nominee_name", nil]];
-    [self.tools addObject:tool];  
-    [tool release];  // TODO:
+//    //       First iteration, the concept of diggable inforamtion based on checklist style listing
+//     //  ------------------------------------------------------------------------------------------
+//     //
+//    // NOTE: some attributes are just for viewing.
+//    ListingAttributesTool *tool = [[ListingAttributesTool alloc]initWithName:@"Personal Info"];
+//    [tool addAttributesToLookFor:[NSArray arrayWithObjects:@"area_name",@"area_number", @"nominee_name", nil]];
+//    [self.tools addObject:tool];  
+//    [tool release];  // TODO:
+//    
+//    // NOTE: some attributes are the interfaces to outside data, like personal page of the SNS, the data crawling tools key words.
+//    ListingAttributesTool *tool2 = [[ListingAttributesTool alloc]initWithName:@"Sociality"];
+//    [tool2 addAttributesToLookFor:[NSArray arrayWithObjects:@"weibo_account",@"twitter_account",@"blog",nil]];
+//    [self.tools addObject:tool2];  
+//    [tool2 release];
+//    
+//    UITableView *tv = (UITableView*)[self.view viewWithTag:100];
+//    if (tv) {
+//        [tv reloadData];
+//    }
+//    // NOTE: IDEA: * the tools should be materialized as documents * the tools should follow some protocols, like produce some documents or not, 
+//    // NOTE: if tool doens't comply with the some kind of protocol, then it's not very obvious to bind the tools to a tableview(or any other UI)
+//    
+//    //  ------------------------------------------------------------------------------------------
     
-    // NOTE: some attributes are the interfaces to outside data, like personal page of the SNS, the data crawling tools key words.
-    ListingAttributesTool *tool2 = [[ListingAttributesTool alloc]initWithName:@"Sociality"];
-    [tool2 addAttributesToLookFor:[NSArray arrayWithObjects:@"weibo_account",@"twitter_account",@"blog",nil]];
-    [self.tools addObject:tool2];  
-    [tool2 release];
     
-    UITableView *tv = (UITableView*)[self.view viewWithTag:100];
-    if (tv) {
-        [tv reloadData];
-    }
-    // NOTE: IDEA: * the tools should be materialized as documents * the tools should follow some protocols, like produce some documents or not, 
-    // NOTE: if tool doens't comply with the some kind of protocol, then it's not very obvious to bind the tools to a tableview(or any other UI)
+    
     
     
     

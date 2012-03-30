@@ -357,6 +357,21 @@
 			name = Organizations;
 			sourceTree = "<group>";
 		};
+		AB79D38D15258FD000004FFA /* DeputyMap */ = {
+			isa = PBXGroup;
+			children = (
+				ABFC503314CA92DB00BA484B /* CountyDeputyMapViewController.h */,
+				ABFC503414CA92DB00BA484B /* CountyDeputyMapViewController.m */,
+				ABF5600E14D61D7E00872408 /* DeputyAnnotation.h */,
+				ABF5600F14D61D7E00872408 /* DeputyAnnotation.m */,
+				ABF5601114D6202700872408 /* DeputyAnnotationView.h */,
+				ABF5601214D6202800872408 /* DeputyAnnotationView.m */,
+				ABFC503514CA92DB00BA484B /* DeputyAreaPickerController.h */,
+				ABFC503614CA92DB00BA484B /* DeputyAreaPickerController.m */,
+			);
+			name = DeputyMap;
+			sourceTree = "<group>";
+		};
 		AB921244151AE3130056043F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,16 +464,9 @@
 		ABFC501314CA3D5200BA484B /* VCs */ = {
 			isa = PBXGroup;
 			children = (
+				AB79D38D15258FD000004FFA /* DeputyMap */,
 				ABFC503114CA92DB00BA484B /* AddNewDeputyViewController.h */,
 				ABFC503214CA92DB00BA484B /* AddNewDeputyViewController.m */,
-				ABFC503314CA92DB00BA484B /* CountyDeputyMapViewController.h */,
-				ABFC503414CA92DB00BA484B /* CountyDeputyMapViewController.m */,
-				ABFC503514CA92DB00BA484B /* DeputyAreaPickerController.h */,
-				ABFC503614CA92DB00BA484B /* DeputyAreaPickerController.m */,
-				ABF5600E14D61D7E00872408 /* DeputyAnnotation.h */,
-				ABF5600F14D61D7E00872408 /* DeputyAnnotation.m */,
-				ABF5601114D6202700872408 /* DeputyAnnotationView.h */,
-				ABF5601214D6202800872408 /* DeputyAnnotationView.m */,
 				ABF5603C14D77D3900872408 /* DeputyProfileViewController.h */,
 				ABF5603D14D77D3A00872408 /* DeputyProfileViewController.m */,
 				AB92124D151B0F990056043F /* DeputyNewsLinksViewController.h */,
