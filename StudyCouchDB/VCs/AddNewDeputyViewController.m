@@ -359,20 +359,52 @@ static NSString* DATA_KEY_GPS_LAT_LNG = @"GPS_LAT_LNG";
                               ((CLLocation*)[tempData valueForKey:DATA_KEY_GPS_LAT_LNG]).coordinate.latitude,  
                               ((CLLocation*)[tempData valueForKey:DATA_KEY_GPS_LAT_LNG]).coordinate.longitude];
         
-       DeputyNominee *dn = [DeputyNominee addDeputyNomineeWithDatabase:[CouchbaseServerManager getDeputyDB] 
-                                                                  name:name
-                                                             area_name:(NSString*)[tempData valueForKey:DATA_KEY_nominee_area]
-                                                           area_number:[tempData valueForKey:DATA_KEY_nominee_number]
-                                                         is_report_gps:[[tempData valueForKey:DATA_KEY_USE_GPS] boolValue]
-                                                               lat_lng:plainGPS
-                                                            created_at:[NSDate date] ];
-        if (dn) {
-             [self showAlert:@"保存成功！" tag:kTagAlertSaveDocumentSuccessful];
-            NSLog(@"%@", dn.is_report_gps ? @"YES":@"NO");
-            NSLog(@"%@", dn.lat_lng );
+        NSLog(@"[[tempData valueForKey:DATA_KEY_USE_GPS] boolValue] ....... %@", [[tempData valueForKey:DATA_KEY_USE_GPS] boolValue] ?  @"yes": @"no"); 
+        
+//       DeputyNominee *dn = [DeputyNominee addDeputyNomineeWithDatabase:[CouchbaseServerManager getDeputyDB] 
+//                                                                  name:name
+//                                                             area_name:(NSString*)[tempData valueForKey:DATA_KEY_nominee_area]
+//                                                           area_number:[tempData valueForKey:DATA_KEY_nominee_number]
+//                                                         is_report_gps:[[tempData valueForKey:DATA_KEY_USE_GPS] boolValue]
+//                                                               lat_lng:plainGPS
+//                                                            created_at:[NSDate date] ];
+//        DeputyNominee *dn2 = [[DeputyNominee alloc]initWithDeputyName:name
+//                                                            area_name:(NSString*)[tempData valueForKey:DATA_KEY_nominee_area]
+//                                                          area_number:[tempData valueForKey:DATA_KEY_nominee_number]
+//                                                        is_report_gps:[[tempData valueForKey:DATA_KEY_USE_GPS] boolValue]
+//                                                              lat_lng:plainGPS
+//                                                           ];
+        
+        
+        DeputyNominee *dn2 = [[DeputyNominee alloc]initWithNewDocumentInDatabase:[CouchbaseServerManager getDeputyDB] ];
+        dn2.name = name;
+        dn2.area_name = (NSString*)[tempData valueForKey:DATA_KEY_nominee_area];
+        dn2.area_number = (NSString*)[tempData valueForKey:DATA_KEY_nominee_number];
+        dn2.is_report_gps = [[tempData valueForKey:DATA_KEY_USE_GPS] boolValue] ? true : false;
+        dn2.lat_lng = plainGPS;
+        
+        
+//        if (dn) {  // dn
+//             [self showAlert:@"保存成功！" tag:kTagAlertSaveDocumentSuccessful];
+//            NSLog(@"%@", dn.is_report_gps ? @"YES":@"NO");
+//            NSLog(@"%@", dn.lat_lng );
+//        }else {
+//            [self showAlert:@"保存失败！或数据未更新" tag:kTagAlertSaveDocumentFailed];
+//        }
+        
+        RESTOperation* op  = [dn2 save];
+        
+        // blocking style
+        if (![op wait]) {
+            // TODO: report error
+            NSLog(@"Creating DeputyNominee document via dn2 ..... failed! %@", op.error);
+            [self showAlert:@"保存失败！或数据未更新" tag:kTagAlertSaveDocumentFailed];
         }else {
-            [self showAlert:@"保存失败！" tag:kTagAlertSaveDocumentFailed];
+            NSLog(@"Creating DeputyNominee document via dn2 ..... ok! dn2.id is %@",dn2.document.documentID);
+            [self showAlert:@"保存成功！" tag:kTagAlertSaveDocumentSuccessful];
         }
+        
+        [dn2 release];
     } 
         
         

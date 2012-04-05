@@ -22,10 +22,12 @@
 @property(nonatomic, retain) NSString *name;
 @property(nonatomic, retain) NSString *area_name;
 @property(nonatomic, retain) NSString *area_number;
-@property(nonatomic, readonly) NSDate *created_at;
+@property(nonatomic, readonly) NSDate *created_at;  // TODO: this property is not supposed to be set at the client side but the server side, how to set the property at the server side?
 @property bool is_report_gps;
 @property(nonatomic, retain) NSString *lat_lng;   // TODO: how to persist CLLocationCoordinate2D here?
 
+
+@property(nonatomic, readonly) NSString *doc_type; // Q: does that mean either we set the property either at the server side or in the class self? Then how to? A: 
 
 // TODO:IDEA: like SCM or Wiki modification, each update on document(s) should have a message bundled. 
 

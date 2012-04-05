@@ -17,10 +17,12 @@
 
 #import <CouchCocoa/CouchCocoa.h>
 
+@class DeputyNominee;
+
 @interface SimpleNews : CouchModel{
-    NSString* title;
-    NSString* newsLink;
-    NSString* userId;  // the user who added this infor
+//    NSString* title;
+//    NSString* newsLink;
+//    NSString* userId;  // the user who added this infor
     
 }
 
@@ -33,11 +35,15 @@
                                  userId:(NSString*)theUserIdentity
                            creationDate:(NSDate*)creationDate;
 
+@property (nonatomic, retain) DeputyNominee* deputyNominee;
+
 @property (nonatomic, retain) NSString* title;
-@property (nonatomic, retain) NSString* newsLink;
-@property (nonatomic, readonly) NSString* userId;
+@property (nonatomic, retain) NSString* url;
+
+@property (nonatomic, retain) NSString* userId;  // who submit
 
 @property (nonatomic, readonly) NSDate *creationDate;
 
+@property (nonatomic, retain) NSString* doc_type;
 
 @end

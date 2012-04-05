@@ -10,6 +10,7 @@
 
 @implementation DeputyNominee
 
+// Q:TODO: for a subclass of CouchModel, how to write setter to set default value in the class itself? A:
 
 @dynamic area_name;
 @dynamic area_number;
@@ -17,6 +18,15 @@
 @dynamic is_report_gps;
 @dynamic lat_lng;   // TODO: how to persist CLLocationCoordinate2D here?
 @dynamic name;
+
+// NOTE: it looks ugly that each model has a doc_type to specify its nosql presence.
+// deprecated: customize the getter and setter.
+@dynamic doc_type;    // Q: WTF how to save readonly data?
+// TODO: if newly created, what's the default?
+// Q: what's the behavior/data presentation at the db?
+//-(NSString*)doc_type{
+//    return @"Human"; 
+//}
 
 
 + (DeputyNominee*)addDeputyNomineeWithDatabase:(CouchDatabase*)database 

@@ -8,13 +8,19 @@
 
 #import "SimpleNews.h"
 
+@class DeputyNominee;
 @implementation SimpleNews
 
-@synthesize title;
-@synthesize newsLink;
-@synthesize userId;
-@synthesize creationDate;
 
+@dynamic deputyNominee;
+
+@dynamic title;
+@dynamic url;
+
+@dynamic userId;
+
+@dynamic creationDate;
+@dynamic doc_type;
 
 + (SimpleNews*) addNewsLinkWithDatabase:(CouchDatabase*)database 
                               forDeputy:(NSString*)deputyId
@@ -40,11 +46,21 @@
 }
 
 
+//-(void)setDeputyNominee:(DeputyNominee *)deputyNominee {
+//    [self setValue: [[deputyNominee document] documentID] ofProperty:@"deputyNominee"];
+//}
+//
+//-(DeputyNominee*)deputyNominee {
+//    NSString *docID = [self getValueOfProperty:@"deputyNominee"];
+//    DeputyNominee *dn = [DeputyNominee ];
+//}
+
+
 - (void)dealloc {
-    [title release];
-    [newsLink release];
-    [userId release];
-    [creationDate release];
+//    [title release];
+//    [newsLink release];
+//    [userId release];
+//    [creationDate release];
     [super dealloc];
 }
 

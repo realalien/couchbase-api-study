@@ -8,17 +8,50 @@
 
 #import "DeputyNewsLinksViewController.h"
 
+#import "SimpleNews.h"
+#import "CouchbaseServerManager.h"
+
+#import "Foundation-AddsOn.h"
+
 @implementation DeputyNewsLinksViewController
 
+@synthesize data;
 
-- (id)initWithStyle:(UITableViewStyle)style
+
+- (void)loadView {
+    UIScrollView *v = [[UIScrollView alloc]initWithFrame:CGRectMake(0,0,1024,768)];
+    self.view = v;
+    //self.view.backgroundColor = [UIColor greenColor];
+    [v release];
+    
+    // how to make orientation agnostic? 
+    UITableView *tv = [[UITableView alloc]initWithFrame:CGRectMake(40, 0, 400, 500) style:UITableViewStyleGrouped];
+    tv.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    //tv.dataSource = self;
+    //tv.delegate = self;
+    tv.tag = 100;
+    [self.view addSubview:tv];
+    [tv release];
+    
+    UIButton *b = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    b.frame = CGRectMake(0 , 0, 20, 20);
+    [b addTarget:self action:@selector(addNewsButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:b];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        NSMutableDictionary *p = [[NSMutableDictionary alloc] init];
+        self.data = p;
+        [p release];
     }
     return self;
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -156,5 +189,78 @@
      [detailViewController release];
      */
 }
+
+
+-(void)processNewsLink:(NSString*)url{
+    // TODO: sanity check for url
+    // TODO: use link to retrieve a title, abstract and other information.
+    if ( true ) {
+        SimpleNews  *sn = [[SimpleNews alloc]initWithNewDocumentInDatabase:[CouchbaseServerManager getDeputyDB]];
+        sn.title = @"模拟标题，待从url访问后处理"; // We may just need to request header rather than bulk of html in order to save bandwidth.
+        sn.url = url;
+        NSLog(@"---> %@", [(DeputyNominee*)[self.data valueForKey:@"nominee"] description]);
+        sn.deputyNominee = ((DeputyNominee*)[self.data valueForKey:@"nominee"]).document.documentID ;
+        sn.doc_type = @"news"; // TODO: this setter should be private.
+        
+        RESTOperation* op  = [sn save];
+        
+        // blocking style
+        if (![op wait]) {
+            // TODO: report error
+            NSLog(@"Creating news document via dn2 ..... failed! %@", op.error);
+            [self showAlert:@"保存失败！或数据未更新" tag:110];
+        }else {
+            NSLog(@"Creating news document via dn2 ..... ok! dn2.id is %@",sn.document.documentID);
+            [self showAlert:@"保存成功！" tag:111];
+        }
+        
+        [sn release];
+    }
+}
+
+#pragma mark -
+#pragma mark UITextFieldDelegate methods
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField.tag == 202) {
+        UIAlertView *av = (UIAlertView*)[self.view viewWithTag:201];
+        if (av) {
+            [av dismissWithClickedButtonIndex:1 animated:NO];
+        }
+    }
+    return YES;
+}
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 101) {
+        if (buttonIndex== 0) { // cancel
+            // do nothing
+        }else if (buttonIndex== 1){
+            [self processNewsLink:[alertView textFieldAtIndex:0].text ];
+        }
+    }else if(alertView.tag == 110){
+        
+    }else if(alertView.tag == 111){
+        
+    }
+}
+
+
+#pragma mark -
+#pragma mark callback methods
+
+-(void)addNewsButtonClicked:(id)sender {
+    
+    // Temp solution
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"请输入" message:@"消息的链接(URL地址,例如:'http://www.google.com')" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+    av.tag = 101;
+    [av textFieldAtIndex:0].delegate = self;
+    [av textFieldAtIndex:0].tag = 202;
+    [av show];
+}
+
+
 
 @end

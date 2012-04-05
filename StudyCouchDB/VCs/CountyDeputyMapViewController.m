@@ -7,6 +7,8 @@
 //
 
 #import "CountyDeputyMapViewController.h"
+#import "DeputyNewsLinksViewController.h"
+
 #import "AddNewDeputyViewController.h"
 #import "DeputyAnnotation.h"
 #import "DeputyAnnotationView.h"
@@ -682,13 +684,20 @@ static int HEIGHT_CELL = 44 ;
         // show other view controll (probably the details of the nominees
         [self.areaSelectPopup dismissPopoverAnimated:YES];
         
+        // Test of DeputyProfileViewController
+        // -----------------------------------------------------------------------------------------------
         // temp: add a profile view controller
-        DeputyProfileViewController *pv = [[DeputyProfileViewController alloc]init];
+//        DeputyProfileViewController *pv = [[DeputyProfileViewController alloc]init];
+//        DeputyNominee *d = (DeputyNominee*)[popoverDataHolder objectAtIndex:indexPath.row];
+        // -----------------------------------------------------------------------------------------------
         
-//        CouchQueryRow *row = (CouchQueryRow*)[popoverDataHolder objectAtIndex:indexPath.row]; 
-//        CouchDatabase *database = [CouchbaseServerManager getDeputyDB]; 
-//        CouchDocument *doc = [database documentWithID: row.documentID];
+        // Test of DeputyNewsLinksViewController
+        // -----------------------------------------------------------------------------------------------
+        // temp: add a profile view controller
+        DeputyNewsLinksViewController *pv = [[DeputyNewsLinksViewController alloc]init];
         DeputyNominee *d = (DeputyNominee*)[popoverDataHolder objectAtIndex:indexPath.row];
+        // -----------------------------------------------------------------------------------------------
+        
         
         if (d) {
             [pv.data setValue:d forKey:@"nominee"];  // TODO: should use doc_type to indicate.
@@ -697,6 +706,7 @@ static int HEIGHT_CELL = 44 ;
         }else{
             [self showAlert:@"Failed to load nominee data"];
         }
+        
     }
 }
 
