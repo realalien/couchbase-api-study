@@ -31,7 +31,10 @@
 //#define USE_REMOTE_SERVER @"http://localhost:5984/"
 #define USE_REMOTE_SERVER @"http://192.168.3.128:5984/"
 
+
+
 @implementation CouchbaseServerManager
+
 
 @synthesize server;
 
@@ -75,7 +78,7 @@ static CouchbaseServerManager *sharedInstance = nil;
     theServer = [[CouchEmbeddedServer alloc] init];
 #endif
     self.server = theServer;
-    
+
     [theServer release];
     
     [server start: ^{  // ... this block runs later on when the server has started up:

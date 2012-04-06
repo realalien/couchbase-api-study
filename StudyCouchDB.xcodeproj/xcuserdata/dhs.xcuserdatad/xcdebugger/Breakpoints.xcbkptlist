@@ -121,12 +121,26 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "StudyCouchDB/VCs/DeputyNewsLinksViewController.m"
-         timestampString = "355306595.311061"
+         timestampString = "355393883.764691"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "199"
-         endingLineNumber = "199"
-         landmarkName = "-processNewsLink:"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
+         landmarkName = "-viewDidUnload"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "StudyCouchDB/VCs/DeputyNewsLinksViewController.m"
+         timestampString = "355393064.628951"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
+         landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

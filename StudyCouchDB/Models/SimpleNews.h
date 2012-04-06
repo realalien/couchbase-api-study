@@ -20,9 +20,6 @@
 @class DeputyNominee;
 
 @interface SimpleNews : CouchModel{
-//    NSString* title;
-//    NSString* newsLink;
-//    NSString* userId;  // the user who added this infor
     
 }
 
@@ -35,7 +32,7 @@
                                  userId:(NSString*)theUserIdentity
                            creationDate:(NSDate*)creationDate;
 
-@property (nonatomic, retain) DeputyNominee* deputyNominee;
+@property (readwrite, retain) DeputyNominee* deputyNominee;
 
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* url;
