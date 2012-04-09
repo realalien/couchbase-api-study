@@ -30,7 +30,7 @@
 // or modify the database contents.
 //#define USE_REMOTE_SERVER @"http://localhost:5984/"
 #define USE_REMOTE_SERVER @"http://192.168.3.128:5984/"
-
+//#define USE_REMOTE_SERVER @"http://127.0.0.1:8091/"  
 
 
 @implementation CouchbaseServerManager
