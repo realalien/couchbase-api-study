@@ -15,6 +15,7 @@
 #import "TraderAlikeViewController.h"
 #import "SurveyCreationDashboardViewController.h"
 #import "OrganizationsPlaygroundViewController.h"
+#import "OrganzationNewsMapViewController.h"
 
 @implementation AppDelegate
 
@@ -67,8 +68,12 @@
 //    [self.navController pushViewController:[addDeputyVc autorelease] animated:YES];    
 
     
-    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
-    [self.navController pushViewController:[cdMapVc autorelease] animated:YES];
+    OrganzationNewsMapViewController *onm = [[OrganzationNewsMapViewController alloc] init];
+    [self.navController pushViewController:[onm autorelease] animated:YES];
+    
+    
+//    CountyDeputyMapViewController *cdMapVc = [[CountyDeputyMapViewController alloc]init];
+//    [self.navController pushViewController:[cdMapVc autorelease] animated:YES];
     
     
     // TEST: 

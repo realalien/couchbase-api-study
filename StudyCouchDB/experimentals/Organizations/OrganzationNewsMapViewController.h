@@ -11,7 +11,34 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h> 
+#import "BMapKit.h"
+#import <CouchCocoa/CouchUITableSource.h>
 
-@interface OrganzationNewsMapViewController : UIViewController<MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface OrganzationNewsMapViewController : UIViewController<BMKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, BMKSearchDelegate, UIAlertViewDelegate, CouchUITableDelegate> {
+    BMKMapView *map;
+    BMKMapManager* _mapManager;
+    
+    // 用于各种搜索
+    BMKSearch* _search;
+    
+    
+    NSMutableArray *mapSearchResult;
+    
+    NSMutableDictionary *data;
+    
+    UITableView *poiTableView;
+    
+    
+    CouchUITableSource* organizationAnnotationDataSource;
+}
+
+@property (nonatomic, retain)  BMKMapView *map;
+@property (nonatomic, retain)  NSMutableArray *mapSearchResult;
+
+@property (nonatomic, retain)   NSMutableDictionary *data;
+@property (nonatomic, retain)  UITableView *poiTableView;
+
+@property(nonatomic, retain) CouchUITableSource* organizationAnnotationDataSource;
 
 @end
+
